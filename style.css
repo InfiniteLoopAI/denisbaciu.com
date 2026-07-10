@@ -1,0 +1,216 @@
+/* denisbaciu.com — one stylesheet, no dependencies, no build step.
+   Palette: cool technical paper + petrol accent. Mono is reserved for
+   the provenance layer (status line, nav, dates, tags) — the site's
+   signature. Everything else stays quiet. */
+
+:root {
+  --bg: #F7F9FB;
+  --ink: #1B2733;
+  --muted: #5C6B78;
+  --accent: #0E6B66;
+  --accent-strong: #0A4F4B;
+  --line: #DEE5EA;
+  --card: #FFFFFF;
+  --tag: #EDF2F1;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, "Liberation Mono", monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #10161C;
+    --ink: #E7EEF3;
+    --muted: #8C9BA8;
+    --accent: #53B8B0;
+    --accent-strong: #7FD0C9;
+    --line: #24303A;
+    --card: #161E27;
+    --tag: #1B262C;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0 auto;
+  max-width: 42rem;
+  padding: 1.5rem 1.25rem 3rem;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+}
+
+/* ---------- provenance layer (the signature) ---------- */
+
+.status {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+nav {
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  margin-bottom: 2.5rem;
+}
+
+nav a {
+  color: var(--muted);
+  text-decoration: none;
+  margin-right: 1.25rem;
+}
+
+nav a:hover { color: var(--accent); }
+
+nav a[aria-current="page"] {
+  color: var(--ink);
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 2px;
+}
+
+.prov {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  line-height: 1.7;
+  color: var(--muted);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  margin: 1.5rem 0 2rem;
+}
+
+.prov a { color: var(--accent); }
+
+/* ---------- text ---------- */
+
+h1 {
+  font-size: 2rem;
+  font-weight: 750;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 0 0 0.75rem;
+}
+
+h2 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  margin: 2.75rem 0 0.75rem;
+}
+
+h2::after {
+  content: "";
+  display: block;
+  width: 2rem;
+  border-bottom: 2px solid var(--accent);
+  margin-top: 0.4rem;
+}
+
+.lede {
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.5;
+  margin: 0 0 1.25rem;
+}
+
+p { margin: 0 0 1.1rem; }
+
+a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
+a:hover { color: var(--accent-strong); }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.muted { color: var(--muted); }
+
+/* ---------- the log (writing index) ---------- */
+
+.log { list-style: none; padding: 0; margin: 0; }
+
+.log li {
+  display: grid;
+  grid-template-columns: 5.5rem 1fr auto;
+  gap: 0.75rem;
+  align-items: baseline;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.log time {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.tag {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--accent-strong);
+  background: var(--tag);
+  border-radius: 999px;
+  padding: 0.15rem 0.6rem;
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .log li { grid-template-columns: 1fr auto; }
+  .log time { grid-column: 1 / -1; }
+}
+
+/* ---------- project cards ---------- */
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 1.1rem 1.25rem;
+  margin: 0 0 1rem;
+}
+
+.card h3 { margin: 0 0 0.4rem; font-size: 1.05rem; }
+
+.card p { margin: 0 0 0.6rem; font-size: 0.975rem; }
+
+.card .tag { margin-right: 0.4rem; }
+
+.graveyard { font-family: var(--mono); font-size: 0.85rem; line-height: 2; color: var(--muted); }
+
+/* ---------- article ---------- */
+
+article h1 { font-size: 1.65rem; }
+
+article { margin-bottom: 2rem; }
+
+/* ---------- footer ---------- */
+
+footer {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+  border-top: 1px solid var(--line);
+  margin-top: 3.5rem;
+  padding-top: 1rem;
+  line-height: 1.8;
+}
+
+footer a { color: var(--muted); }
+footer a:hover { color: var(--accent); }
