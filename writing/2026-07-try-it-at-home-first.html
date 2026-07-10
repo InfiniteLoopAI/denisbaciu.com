@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Try it at home first — Denis Baciu</title>
+<meta name="description" content="Why my public GitHub is full of local RAG stacks, OCR pipelines, and PDF diffing sketches — and what a home lab buys you in a regulated industry.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-07-try-it-at-home-first.html">
+<meta property="og:title" content="Try it at home first">
+<meta property="og:description" content="Why my public GitHub is full of local RAG stacks, OCR pipelines, and PDF diffing sketches — and what a home lab buys you in a regulated industry.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-07-try-it-at-home-first.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-07-10">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<p class="status">denisbaciu.com/writing · canonical archive · est. 2026</p>
+
+<nav>
+  <a href="/">home</a>
+  <a href="/writing/" aria-current="page">writing</a>
+  <a href="/projects/">projects</a>
+  <a href="/now.html">now</a>
+  <a href="/about.html">about</a>
+</nav>
+
+<article>
+
+<h1>Try it at home first</h1>
+
+<div class="prov">
+  source: <strong>site</strong> — written for denisbaciu.com<br>
+  published: 2026-07-10 · status: canonical
+</div>
+
+<p>My public <a href="https://github.com/Barsun">GitHub</a> looks nothing like my CV. The CV says production systems in specialty insurance. The GitHub says: a fork of privateGPT, a local RAG stack, OCRmyPDF, a sketch for diffing PDFs, a chatbot widget for Rasa, a self-hosting guide. Weekend stuff. Nothing with a pager attached.</p>
+
+<p>That gap is deliberate, and it runs in one direction: the sketchbook comes first, the production system comes later.</p>
+
+<p>I was forking OCR and PDF-rendering libraries years before I shipped a document-comparison system to hundreds of underwriters. I was running retrieval-augmented generation against my own documents, on my own hardware, before I put hybrid semantic search in front of an insurance organisation. The home lab is where the technology gets to fail privately, cheaply, and without a change-approval board watching.</p>
+
+<p>In a regulated industry this matters more, not less. At work, every experiment carries overhead: data classification, vendor review, audit trails. All of it justified — that overhead is the immune system of a business that handles other people's risk. But it means work is a terrible place to find out whether a technology is fundamentally sound. By the time something reaches production planning, I want to already know where it breaks, because it broke on my desk first.</p>
+
+<p>Running these things locally also strips the marketing off. A vector database on someone else's demo data is magic. The same database pointed at your own messy documents — scanned PDFs, tables, seventeen versions of the same contract — tells you the truth in about an hour. Most of what I now believe about retrieval quality, OCR failure modes, and document structure I learned from experiments that never left my house.</p>
+
+<p>So the sketchbook stays public, unpolished, and honest. It isn't a portfolio; the production work lives in private repos and behind NDAs, which is rather the point. But if you want to know what I'll be shipping in two years, don't read my CV. Read the forks.</p>
+
+</article>
+
+<footer>
+  © Denis Baciu · <a href="/writing/">back to the archive</a>
+</footer>
+
+</body>
+</html>
