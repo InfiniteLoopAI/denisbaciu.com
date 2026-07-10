@@ -64,7 +64,9 @@ deploying the About page, or swap the address there.
 2. Fill in the provenance block.
 3. Add one row to `writing/index.html` under the right year, and update
    the "Latest writing" row on `index.html`.
-4. Commit with a plain message. Push.
+4. Add the post's URL to `sitemap.xml` (and bump `lastmod` on pages
+   you touched) so Google picks it up quickly.
+5. Commit with a plain message. Push.
 
 ## Importing your history
 

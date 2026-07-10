@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /writing/_template-imported.html
+
+Sitemap: https://denisbaciu.com/sitemap.xml
