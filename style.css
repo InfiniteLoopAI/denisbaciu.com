@@ -1,31 +1,35 @@
 /* denisbaciu.com — one stylesheet, no dependencies, no build step.
-   Palette: cool technical paper + petrol accent. Mono is reserved for
-   the provenance layer (status line, nav, dates, tags) — the site's
-   signature. Everything else stays quiet. */
+   Design: the ledger. Iron-gall blue-black ink and a technical serif on
+   pale paper, feint blue rules, and a red margin line — the colours of
+   ruled ledger paper. Red is the stamp colour, reserved for the
+   provenance layer (tags, current page, underlines). Mono remains the
+   registry apparatus: status line, nav, dates, tags. All system fonts. */
 
 :root {
-  --bg: #F7F9FB;
-  --ink: #1B2733;
-  --muted: #5C6B78;
-  --accent: #0E6B66;
-  --accent-strong: #0A4F4B;
-  --line: #DEE5EA;
+  --bg: #FBFAF7;
+  --ink: #1E2735;
+  --muted: #5D6878;
+  --accent: #A33128;
+  --accent-strong: #7E241E;
+  --line: #DCE1E8;
+  --line-strong: #26313F;
   --card: #FFFFFF;
-  --tag: #EDF2F1;
-  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --wash: #F1F2EF;
+  --serif: Charter, "Bitstream Charter", "Iowan Old Style", "Palatino Linotype", Cambria, Georgia, serif;
   --mono: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, "Liberation Mono", monospace;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #10161C;
-    --ink: #E7EEF3;
-    --muted: #8C9BA8;
-    --accent: #53B8B0;
-    --accent-strong: #7FD0C9;
-    --line: #24303A;
-    --card: #161E27;
-    --tag: #1B262C;
+    --bg: #12161D;
+    --ink: #E4E8EE;
+    --muted: #8B96A5;
+    --accent: #D97C70;
+    --accent-strong: #E9A198;
+    --line: #262E3A;
+    --line-strong: #9AA5B4;
+    --card: #171C24;
+    --wash: #1A202A;
   }
 }
 
@@ -36,12 +40,30 @@ html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0 auto;
   max-width: 42rem;
-  padding: 1.5rem 1.25rem 3rem;
+  padding: 1.75rem 1.25rem 3.5rem;
   background: var(--bg);
   color: var(--ink);
-  font-family: var(--sans);
+  font-family: var(--serif);
   font-size: 1.0625rem;
-  line-height: 1.65;
+  line-height: 1.68;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+/* the red margin rule of ledger paper */
+@media (min-width: 52rem) {
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: calc(50% - 22.5rem);
+    width: 1px;
+    background: color-mix(in srgb, var(--accent) 38%, transparent);
+  }
 }
 
 /* ---------- provenance layer (the signature) ---------- */
@@ -49,23 +71,35 @@ body {
 .status {
   font-family: var(--mono);
   font-size: 0.75rem;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
   color: var(--muted);
-  border-bottom: 1px solid var(--line);
-  padding-bottom: 0.75rem;
-  margin-bottom: 0.75rem;
+  margin: 0;
+}
+
+/* opening rule: thick over thin, booktabs-style */
+.status::after {
+  content: "";
+  display: block;
+  height: 7px;
+  margin-top: 0.75rem;
+  border-top: 3px solid var(--line-strong);
+  border-bottom: 1px solid var(--line-strong);
 }
 
 nav {
   font-family: var(--mono);
   font-size: 0.8125rem;
-  margin-bottom: 2.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.35rem;
+  margin: 0.9rem 0 3rem;
 }
 
 nav a {
   color: var(--muted);
   text-decoration: none;
-  margin-right: 1.25rem;
+  letter-spacing: 0.02em;
 }
 
 nav a:hover { color: var(--accent); }
@@ -81,76 +115,83 @@ nav a[aria-current="page"] {
   font-size: 0.8rem;
   line-height: 1.7;
   color: var(--muted);
-  background: var(--card);
+  background: var(--wash);
   border: 1px solid var(--line);
   border-left: 3px solid var(--accent);
-  border-radius: 6px;
-  padding: 0.75rem 1rem;
+  padding: 0.8rem 1.1rem;
   margin: 1.5rem 0 2rem;
 }
+
+.prov strong { color: var(--ink); font-weight: 600; }
 
 .prov a { color: var(--accent); }
 
 /* ---------- text ---------- */
 
 h1 {
-  font-size: 2rem;
-  font-weight: 750;
-  letter-spacing: -0.02em;
-  line-height: 1.2;
-  margin: 0 0 0.75rem;
+  font-size: clamp(2.1rem, 5.5vw, 2.6rem);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  margin: 0 0 1rem;
+  text-wrap: balance;
 }
 
 h2 {
-  font-size: 1.05rem;
-  font-weight: 700;
-  letter-spacing: 0.01em;
-  margin: 2.75rem 0 0.75rem;
-}
-
-h2::after {
-  content: "";
-  display: block;
-  width: 2rem;
-  border-bottom: 2px solid var(--accent);
-  margin-top: 0.4rem;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+  border-top: 1px solid var(--line);
+  padding-top: 0.9rem;
+  margin: 3rem 0 1rem;
 }
 
 .lede {
-  font-size: 1.25rem;
-  font-weight: 500;
-  line-height: 1.5;
-  margin: 0 0 1.25rem;
+  font-size: 1.3rem;
+  font-style: italic;
+  line-height: 1.45;
+  margin: 0 0 1.5rem;
 }
 
 p { margin: 0 0 1.1rem; }
 
 a {
-  color: var(--accent);
+  color: var(--ink);
   text-decoration: underline;
-  text-underline-offset: 3px;
   text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--accent);
+  text-decoration-color: color-mix(in srgb, var(--accent) 55%, transparent);
+  transition: color 0.12s ease, text-decoration-color 0.12s ease;
 }
 
-a:hover { color: var(--accent-strong); }
+a:hover {
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+}
 
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
-  border-radius: 2px;
 }
 
 .muted { color: var(--muted); }
 
-/* ---------- portrait ---------- */
+time { font-variant-numeric: tabular-nums; }
+
+/* ---------- portrait: a mounted print ---------- */
 
 .portrait {
   float: right;
   width: 9.5rem;
   height: auto;
-  margin: 0.25rem 0 0.75rem 1.25rem;
+  padding: 0.3rem;
+  background: var(--card);
   border: 1px solid var(--line);
-  border-radius: 8px;
+  margin: 0.4rem 0 0.9rem 1.5rem;
 }
 
 @media (max-width: 480px) {
@@ -172,7 +213,7 @@ a:hover { color: var(--accent-strong); }
   grid-template-columns: 5.5rem 1fr auto;
   gap: 0.75rem;
   align-items: baseline;
-  padding: 0.55rem 0;
+  padding: 0.6rem 0;
   border-bottom: 1px solid var(--line);
 }
 
@@ -184,12 +225,17 @@ a:hover { color: var(--accent-strong); }
 
 .tag {
   font-family: var(--mono);
-  font-size: 0.7rem;
-  color: var(--accent-strong);
-  background: var(--tag);
-  border-radius: 999px;
-  padding: 0.15rem 0.6rem;
+  font-size: 0.65rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  border-radius: 2px;
+  padding: 0.1rem 0.5rem;
   white-space: nowrap;
+  text-decoration: none;
 }
 
 @media (max-width: 480px) {
@@ -197,27 +243,37 @@ a:hover { color: var(--accent-strong); }
   .log time { grid-column: 1 / -1; }
 }
 
-/* ---------- project cards ---------- */
+/* ---------- projects: ruled ledger entries, not cards ---------- */
 
 .card {
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 1.1rem 1.25rem;
-  margin: 0 0 1rem;
+  border-top: 1px solid var(--line);
+  padding: 1.15rem 0 1rem;
+  margin: 0;
 }
 
-.card h3 { margin: 0 0 0.4rem; font-size: 1.05rem; }
+.card:last-of-type { border-bottom: 1px solid var(--line); }
 
-.card p { margin: 0 0 0.6rem; font-size: 0.975rem; }
+.card h3 {
+  margin: 0 0 0.4rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+}
+
+.card p { margin: 0 0 0.7rem; font-size: 0.98rem; }
 
 .card .tag { margin-right: 0.4rem; }
 
-.graveyard { font-family: var(--mono); font-size: 0.85rem; line-height: 2; color: var(--muted); }
+.graveyard {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  line-height: 2;
+  color: var(--muted);
+}
 
 /* ---------- article ---------- */
 
-article h1 { font-size: 1.65rem; }
+article h1 { font-size: 1.9rem; }
 
 article { margin-bottom: 2rem; }
 
@@ -227,11 +283,19 @@ footer {
   font-family: var(--mono);
   font-size: 0.75rem;
   color: var(--muted);
-  border-top: 1px solid var(--line);
-  margin-top: 3.5rem;
-  padding-top: 1rem;
+  margin-top: 4rem;
   line-height: 1.8;
 }
 
-footer a { color: var(--muted); }
-footer a:hover { color: var(--accent); }
+/* closing rule: thin over thick */
+footer::before {
+  content: "";
+  display: block;
+  height: 7px;
+  margin-bottom: 1rem;
+  border-top: 1px solid var(--line-strong);
+  border-bottom: 3px solid var(--line-strong);
+}
+
+footer a { color: var(--muted); text-decoration-color: var(--line-strong); }
+footer a:hover { color: var(--accent); text-decoration-color: var(--accent); }
