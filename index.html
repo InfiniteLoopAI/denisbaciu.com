@@ -43,48 +43,154 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<p class="status">denisbaciu.com · canonical archive · est. 2026</p>
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/" aria-current="page">home</a>
+      <a href="/writing/">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
 
-<nav>
-  <a href="/" aria-current="page">home</a>
-  <a href="/writing/">writing</a>
-  <a href="/projects/">projects</a>
-  <a href="/now.html">now</a>
-  <a href="/about.html">about</a>
-</nav>
+<main>
 
-<h1>Denis Baciu</h1>
+<section class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Tech Lead, Data &amp; AI — AXA XL</p>
+    <h1>Denis Baciu</h1>
+    <p class="lede">I industrialise AI in financial services — taking proof-of-concepts and turning them into production systems people actually rely on.</p>
 
-<p class="lede">I industrialise AI in financial services — taking proof-of-concepts and turning them into production systems people actually rely on.</p>
+    <figure class="pipeline">
+      <figcaption>The pattern, every time</figcaption>
+      <div class="pipe">
+        <svg class="pipe-line" viewBox="0 0 900 4" preserveAspectRatio="none" aria-hidden="true">
+          <line class="base" x1="0" y1="2" x2="900" y2="2" stroke-width="2" stroke-dasharray="1 9" stroke-linecap="round"/>
+          <line class="pulse" x1="0" y1="2" x2="900" y2="2" stroke-width="2" stroke-dasharray="6 18" stroke-linecap="round"/>
+        </svg>
+        <span class="pipe-dot" aria-hidden="true"></span>
+        <div class="stage">
+          <span class="stage-dot"></span>
+          <div><strong>Proof of concept</strong><small>the demo that works</small></div>
+        </div>
+        <div class="stage">
+          <span class="stage-dot"></span>
+          <div><strong>AI Lab pilot</strong><small>observability, audit, edge cases</small></div>
+        </div>
+        <div class="stage stage--active">
+          <span class="stage-dot"></span>
+          <div><strong>Production system</strong><small>people actually rely on it</small></div>
+        </div>
+      </div>
+    </figure>
+  </div>
+</section>
 
-<p>I lead Data &amp; AI engineering at AXA XL, running an AI Lab of 15+ engineers and data scientists. Before that: fourteen years across pensions platforms, insurance comparison, and specialty insurance — the unglamorous, load-bearing end of software.</p>
+<section class="band">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="eyebrow">01 / Latest writing</h2>
+      <a class="more" href="/writing/">full archive →</a>
+    </div>
+    <ul class="log">
+      <li>
+        <a class="row" href="/writing/2026-07-try-it-at-home-first.html">
+          <span class="row-date">2026-07</span>
+          <span class="row-title">Try it at home first</span>
+          <span class="row-tag">site</span>
+        </a>
+      </li>
+      <li>
+        <a class="row" href="/writing/2026-07-boring-on-purpose.html">
+          <span class="row-date">2026-07</span>
+          <span class="row-title">Why this site is boring on purpose</span>
+          <span class="row-tag">site</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</section>
 
-<p>This site is the permanent home for my writing and projects. Platforms come and go; this address doesn't. Anything I publish elsewhere gets archived here, with provenance.</p>
+<section class="band band-alt">
+  <div class="wrap">
+    <h2 class="eyebrow">02 / Projects</h2>
+    <p class="band-intro">Shipped work, described at the level already public on my CV. Systems, not demos.</p>
+    <div class="cards">
+      <article class="card">
+        <div class="card-num">01</div>
+        <h3>Document comparison at scale</h3>
+        <p>10-user proof-of-concept to a production system serving 350 concurrent users on 50&nbsp;MB files — event-driven, fully observable.</p>
+        <div class="tags"><span class="tag tag-accent">shipped</span><span class="tag">insurance</span></div>
+      </article>
+      <article class="card">
+        <div class="card-num">02</div>
+        <h3>Hybrid semantic search</h3>
+        <p>Org-wide ingestion into vector search, upgraded to hybrid semantic + keyword — underwriters find the right document in seconds.</p>
+        <div class="tags"><span class="tag tag-accent">shipped</span><span class="tag">insurance</span></div>
+      </article>
+      <article class="card">
+        <div class="card-num">03</div>
+        <h3>AI code review</h3>
+        <p>Internal PR-review agent wired into GitHub and CI/CD, flagging issues before human review — cutting review time, lifting quality.</p>
+        <div class="tags"><span class="tag tag-accent">shipped</span><span class="tag">dev-tooling</span></div>
+      </article>
+    </div>
+    <p class="band-more"><a class="more" href="/projects/">public experiments →</a></p>
+  </div>
+</section>
 
-<h2>Latest writing</h2>
+<section class="band">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="eyebrow">03 / Now</h2>
+      <span class="section-meta">updated 2026-07</span>
+    </div>
+    <ul class="now-list">
+      <li>Building the production-assurance layer for AI systems at work — evals, tracing, cost and rollback for agentic workflows in a regulated environment.</li>
+      <li>Preparing one conference talk on making AI agents pass production standards in financial services.</li>
+      <li>Consolidating everything I've ever published into this archive, so it stops depending on anyone else's platform.</li>
+      <li>Protecting the fixed slots: training, swimming, family evenings. Side work fits the residual, never the reverse.</li>
+    </ul>
+  </div>
+</section>
 
-<ul class="log">
-  <li>
-    <time datetime="2026-07">2026-07</time>
-    <a href="/writing/2026-07-try-it-at-home-first.html">Try it at home first</a>
-    <span class="tag">site</span>
-  </li>
-  <li>
-    <time datetime="2026-07">2026-07</time>
-    <a href="/writing/2026-07-boring-on-purpose.html">Why this site is boring on purpose</a>
-    <span class="tag">site</span>
-  </li>
-</ul>
+<section class="band band-alt">
+  <div class="wrap about-grid">
+    <div class="about-side">
+      <img class="portrait" src="/assets/denis.jpg" alt="Denis Baciu" width="800" height="1014">
+      <div class="contact-card">
+        <a href="mailto:hello@denisbaciu.com">hello@denisbaciu.com</a><br>
+        <a rel="me" href="https://www.linkedin.com/in/baciudenis/">in/baciudenis</a><br>
+        <a rel="me" href="https://github.com/Barsun">github.com/Barsun</a>
+      </div>
+    </div>
+    <div class="about-text">
+      <h2 class="eyebrow">04 / About</h2>
+      <p>I started in Chișinău — applied informatics, then a master's in software — writing C#/.NET for logistics systems. The route since ran through Belgium, the Isle of Man, Birmingham, and the London market: pensions platforms, insurance comparison, and now specialty insurance at AXA XL, where I lead Data &amp; AI engineering and an AI Lab of 15+ engineers and data scientists.</p>
+      <p>The pattern across fourteen years is the same one twice a decade: a promising system meets messy reality. That last mile — observability, audit, actual users — is my specialty, and in financial services it's the mile that matters.</p>
+      <p class="band-more"><a class="more" href="/about.html">more about me →</a></p>
+    </div>
+  </div>
+</section>
 
-<p style="margin-top:1rem;"><a href="/writing/">Full archive →</a></p>
+</main>
 
 <footer>
-  © Denis Baciu · <a href="/writing/">writing</a> · <a href="/projects/">projects</a><br>
-  Built with plain HTML on purpose. The archive is a <a href="https://github.com/InfiniteLoopAI/denisbaciu.com">git repository</a>; the host is replaceable; the address is not.
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span>Built with plain HTML on purpose. The <a href="https://github.com/InfiniteLoopAI/denisbaciu.com">archive is a git repository</a>; the host is replaceable; the address is not.</span>
+  </div>
 </footer>
 
 </body>

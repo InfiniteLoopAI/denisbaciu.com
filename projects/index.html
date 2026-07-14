@@ -13,78 +13,114 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../style.css">
 </head>
 <body>
 
-<p class="status">denisbaciu.com/projects · canonical archive · est. 2026</p>
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/">writing</a>
+      <a href="/projects/" aria-current="page">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
 
-<nav>
-  <a href="/">home</a>
-  <a href="/writing/">writing</a>
-  <a href="/projects/" aria-current="page">projects</a>
-  <a href="/now.html">now</a>
-  <a href="/about.html">about</a>
-</nav>
+<main>
 
-<h1>Projects</h1>
+<section class="hero hero--page">
+  <div class="wrap">
+    <p class="eyebrow">02 / Projects</p>
+    <h1>Projects</h1>
+    <p class="intro">Shipped work, described at the level already public on my CV. Systems, not demos.</p>
+  </div>
+</section>
 
-<p class="muted">Shipped work, described at the level already public on my CV. Systems, not demos.</p>
+<section class="band">
+  <div class="wrap">
+    <div class="cards">
+      <article class="card">
+        <div class="card-num">01</div>
+        <h3>Document comparison at scale</h3>
+        <p>Took a document-comparison tool from a 10-user proof-of-concept to a production system serving 350 concurrent users on 50&nbsp;MB files — event-driven microservices, full observability, runbooks, alerting.</p>
+        <div class="tags"><span class="tag tag-accent">shipped</span><span class="tag">insurance</span></div>
+      </article>
+      <article class="card">
+        <div class="card-num">02</div>
+        <h3>Hybrid semantic search</h3>
+        <p>Organisation-wide document ingestion into vector search, upgraded to hybrid semantic + keyword retrieval — so underwriters find the right document in seconds instead of hunting across systems.</p>
+        <div class="tags"><span class="tag tag-accent">shipped</span><span class="tag">insurance</span></div>
+      </article>
+      <article class="card">
+        <div class="card-num">03</div>
+        <h3>AI code review</h3>
+        <p>An internal pull-request review agent wired into GitHub and CI/CD, using frontier models to flag issues and suggest better approaches before human review — cutting review time and lifting code quality.</p>
+        <div class="tags"><span class="tag tag-accent">shipped</span><span class="tag">dev-tooling</span></div>
+      </article>
+    </div>
+  </div>
+</section>
 
-<div class="card">
-  <h3>Document comparison at scale</h3>
-  <p>Took a document-comparison tool from a 10-user proof-of-concept to a production system serving 350 concurrent users on 50&nbsp;MB files — event-driven microservices, full observability, runbooks, alerting.</p>
-  <span class="tag">shipped</span> <span class="tag">insurance</span>
-</div>
+<section class="band band-alt">
+  <div class="wrap">
+    <h2 class="eyebrow">Public experiments</h2>
+    <p class="band-intro">My public GitHub, <a rel="me" href="https://github.com/Barsun">@Barsun</a>, is a sketchbook, not a portfolio — small probes, usually a few years ahead of the production work above.</p>
+    <ul class="log">
+      <li>
+        <a class="row" href="https://github.com/Barsun/pfd-diff">
+          <span class="row-date">2025</span>
+          <span class="row-title">pfd-diff</span>
+          <span class="row-tag">pdf</span>
+        </a>
+      </li>
+      <li>
+        <a class="row" href="https://github.com/Barsun/cv-page-react">
+          <span class="row-date">2023</span>
+          <span class="row-title">cv-page-react</span>
+          <span class="row-tag">web</span>
+        </a>
+      </li>
+      <li>
+        <a class="row" href="https://github.com/Barsun/SentimentAnalysis">
+          <span class="row-date">2022</span>
+          <span class="row-title">SentimentAnalysis</span>
+          <span class="row-tag">r</span>
+        </a>
+      </li>
+      <li>
+        <a class="row" href="https://github.com/Barsun/image-analysis">
+          <span class="row-date">2022</span>
+          <span class="row-title">image-analysis</span>
+          <span class="row-tag">c#</span>
+        </a>
+      </li>
+      <li>
+        <a class="row" href="https://github.com/Barsun/wikipedia-infobox">
+          <span class="row-date">2019</span>
+          <span class="row-title">wikipedia-infobox</span>
+          <span class="row-tag">scala</span>
+        </a>
+      </li>
+    </ul>
+    <p class="band-intro" style="margin:32px 0 0;">The forks tell the rest: local RAG (privateGPT, RAGFlow), OCR pipelines (OCRmyPDF), chatbot widgets for Rasa, self-hosting. I try things at home before I trust them at work.</p>
+  </div>
+</section>
 
-<div class="card">
-  <h3>Hybrid semantic search</h3>
-  <p>Organisation-wide document ingestion into vector search, upgraded to hybrid semantic + keyword retrieval — so underwriters find the right document in seconds instead of hunting across systems.</p>
-  <span class="tag">shipped</span> <span class="tag">insurance</span>
-</div>
-
-<div class="card">
-  <h3>AI code review</h3>
-  <p>An internal pull-request review agent wired into GitHub and CI/CD, using frontier models to flag issues and suggest better approaches before human review — cutting review time and lifting code quality.</p>
-  <span class="tag">shipped</span> <span class="tag">dev-tooling</span>
-</div>
-
-<h2>Public experiments</h2>
-
-<p class="muted">My public GitHub, <a rel="me" href="https://github.com/Barsun">@Barsun</a>, is a sketchbook, not a portfolio — small probes, usually a few years ahead of the production work above.</p>
-
-<ul class="log">
-  <li>
-    <time datetime="2025">2025</time>
-    <a href="https://github.com/Barsun/pfd-diff">pfd-diff</a>
-    <span class="tag">pdf</span>
-  </li>
-  <li>
-    <time datetime="2023">2023</time>
-    <a href="https://github.com/Barsun/cv-page-react">cv-page-react</a>
-    <span class="tag">web</span>
-  </li>
-  <li>
-    <time datetime="2022">2022</time>
-    <a href="https://github.com/Barsun/SentimentAnalysis">SentimentAnalysis</a>
-    <span class="tag">r</span>
-  </li>
-  <li>
-    <time datetime="2022">2022</time>
-    <a href="https://github.com/Barsun/image-analysis">image-analysis</a>
-    <span class="tag">c#</span>
-  </li>
-  <li>
-    <time datetime="2019">2019</time>
-    <a href="https://github.com/Barsun/wikipedia-infobox">wikipedia-infobox</a>
-    <span class="tag">scala</span>
-  </li>
-</ul>
-
-<p class="muted" style="margin-top:1rem;">The forks tell the rest: local RAG (privateGPT, RAGFlow), OCR pipelines (OCRmyPDF), chatbot widgets for Rasa, self-hosting. I try things at home before I trust them at work.</p>
+</main>
 
 <footer>
-  © Denis Baciu
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span>Built with plain HTML on purpose. The host is replaceable; the address is not.</span>
+  </div>
 </footer>
 
 </body>
