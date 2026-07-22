@@ -179,12 +179,14 @@ h1 {
 .pipe {
   position: relative;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
-  min-height: 120px;
+  padding-bottom: 8px;
 }
 
-.pipe-line { position: absolute; top: 38px; left: 0; width: 100%; height: 4px; }
+/* line sits at the vertical centre (y=8px) of the 16px node dots, which are
+   pinned to the top of each stage so wrapping captions can't shift them */
+.pipe-line { position: absolute; top: 6px; left: 0; width: 100%; height: 4px; }
 
 .pipe-line .base { stroke: color-mix(in oklab, var(--ink) 15%, transparent); }
 
@@ -192,7 +194,7 @@ h1 {
 
 .pipe-dot {
   position: absolute;
-  top: 33px;
+  top: 2px;
   left: 0;
   width: 12px;
   height: 12px;
