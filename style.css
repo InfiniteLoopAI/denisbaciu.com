@@ -466,6 +466,44 @@ a { color: var(--blue); text-underline-offset: 3px; text-decoration-thickness: 1
 .prov strong { color: var(--ink); font-weight: 600; }
 .prov a { color: var(--blue); }
 
+/* the image or clip that accompanied the original post */
+
+.article .lead {
+  margin: 0 0 28px;
+}
+
+.article .lead img,
+.article .lead video {
+  display: block;
+  width: 100%;
+  /* post media varies wildly — cap the height so a tall image can't
+     push the article body off the first screen */
+  max-height: 420px;
+  border: 1px solid var(--hair);
+  border-radius: 8px;
+}
+
+.article .lead img { object-fit: cover; }
+
+/* letterbox video rather than cropping it */
+.article .lead video {
+  height: auto;
+  background: var(--ink);
+  object-fit: contain;
+}
+
+/* "originally covered at …" link under the article body */
+
+.source-link {
+  font: 400 13px/1.7 var(--mono);
+  color: var(--ink-3);
+  border-top: 1px solid var(--hair);
+  margin: 32px 0 0;
+  padding-top: 16px;
+}
+
+.source-link a { color: var(--blue); }
+
 .muted { color: var(--ink-2); }
 
 .graveyard { font: 400 13px/2 var(--mono); color: var(--ink-2); }
