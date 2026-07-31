@@ -80,18 +80,6 @@
 
 </article>
 
-<section class="original">
-  <h2 class="eyebrow">As originally posted on LinkedIn</h2>
-  <blockquote>
-  <p>When we deploy AI agents into production, the infrastructure surprises aren&#x27;t about model quality—they&#x27;re about runtime behavior.</p>
-  <p>An agent that autonomously queries databases, calls APIs, and retries on failure can generate a completely unpredictable pattern of load. Traditional systems expect requests to be defined, bounded, and idempotent. Agents break that assumption.</p>
-  <p>The tension is simple: the autonomy that makes an agent useful is exactly what makes it dangerous if left unbounded.</p>
-  <p>In plain English: an agent might retry a database call ten times with exponential backoff, not because it&#x27;s malicious, but because it&#x27;s trying to complete a task. Multiply by dozens of concurrent agents, and you have a self-inflicted DDoS.</p>
-  <p>I’ve seen a proof-of-concept agent for invoice processing, where a single misconfigured retry loop spiked database CPU to 100% and blocked the entire order pipeline. The fix wasn’t a smarter model—it was a hard limit of 3 retries per step and a maximum of 20 tool calls per run.</p>
-  <p>Before scaling AI workloads, every team should set explicit runtime constraints: retry budgets, step limits, concurrency caps, and blast-radius isolation. Treat these as non-negotiable safety nets, not afterthoughts.</p>
-  <p>The article from InfoQ captures this hidden infrastructure problem well: https://www.infoq.com/presentations/ai-infrastructure-scaling-architecture/?utm_source=tldrit</p>
-  </blockquote>
-</section>
 
 </main>
 
