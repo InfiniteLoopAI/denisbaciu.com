@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Model AI agents as platform citizens now, not special cases later — Denis Baciu</title>
+<meta name="description" content="Platform engineering was built for human developers, but AI agents require the same identity, permissions, and governance to avoid blind spots at scale.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-07-model-ai-agents-platform-citizens-now.html">
+<meta property="og:title" content="Model AI agents as platform citizens now, not special cases later">
+<meta property="og:description" content="Platform engineering was built for human developers, but AI agents require the same identity, permissions, and governance to avoid blind spots at scale.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-07-model-ai-agents-platform-citizens-now.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-07-26">
+<meta property="og:image" content="https://denisbaciu.com/assets/denis.jpg">
+<meta name="twitter:card" content="summary">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Model AI agents as platform citizens now, not special cases later",
+  "description": "Platform engineering was built for human developers, but AI agents require the same identity, permissions, and governance to avoid blind spots at scale.",
+  "datePublished": "2026-07-26",
+  "url": "https://denisbaciu.com/writing/2026-07-model-ai-agents-platform-citizens-now.html",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  }
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>Model AI agents as platform citizens now, not special cases later</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7487087824320569344">original ↗</a><br>
+  published: 2026-07-26 · status: canonical · expanded from the original post
+</div>
+
+<p>Platform engineering has been built around a clear assumption: the consumers of internal developer platforms, APIs, and guardrails are human developers. We design IDPs to reduce cognitive load, enforce standards, and give developers self-service paths to production. That assumption has held up well, but it’s starting to crack. AI agents—whether they’re coding assistants, automated ops bots, or fully autonomous systems—are becoming first-class consumers of the same platform services.</p>
+
+<p>A recent CNCF article on platform engineering for the agentic enterprise lays out what that shift means. It makes two points worth internalizing. The first is that agents need identity, permissions, and auditable actions in the same way humans do. When we treat an agent as just another API caller, we create blind spots that can grow into real problems at scale. An agent might have a service account with broad access, but no one is tracking what that agent did, why it did it, or whether it should have been allowed to do it. Without identity and audit trails tied to that agent’s purpose, you lose the ability to understand or control its behavior.</p>
+
+<p>The article points to teams that learned this the hard way. They gave AI agents service accounts with generous permissions, betting that speed and convenience outweighed the risk. The result was that agents easily sidestepped role-based access controls, creating policy violations and fragmented audit trails. When something went wrong—a misconfigured deployment, a toxic change—reconstructing the sequence felt like untangling a knot with a few critical threads missing. The human approvals and policy checks that the platform enforced for developers simply didn’t apply to the agent’s path, because it looked like just another system-to-system call.</p>
+
+<p>The second point from the CNCF piece is that governance cannot stay split between human and agent interactions. If every agent operates under its own set of rules—or worse, under no set of rules—the platform’s security model becomes swiss cheese. Fragmented audit trails are more than an inconvenience; they make compliance impossible and obscure the full picture of what’s happening inside your systems. Unified governance means that whether a request comes from a developer clicking a UI or an agent making an API call, it’s evaluated against the same policies, logged in the same way, and subject to the same oversight.</p>
+
+<p>The real shift here is toward a single control plane where every actor—human or agent—is managed under the same lifecycle policies, relationship models, and security boundary. Not a separate channel for agents, not a bolt-on integration that tries to map agent identities onto human ones after the fact. It means treating agents as platform citizens from the moment they’re registered, with clear ownership, scoped permissions, and revocable credentials. That might sound like a lot of overhead, but the alternative is what we’re already seeing: patches, workarounds, and a growing gap between how the platform protects human-driven work and how it exposes itself to automated consumers.</p>
+
+<p>None of this is futuristic. Teams are already running agents that trigger CI/CD pipelines, provision infrastructure, and even approve pull requests. The platform engineering community has a window to define what responsible agent access looks like before widespread adoption forces ad-hoc solutions. Modeling agents as platform citizens now, rather than special cases later, keeps the platform’s integrity intact and its governance model coherent. The assumption that platforms are only for humans was never explicitly written down, but it’s time to strike it out.</p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
