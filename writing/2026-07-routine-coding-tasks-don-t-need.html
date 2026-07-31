@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Routine coding tasks don&#x27;t need expensive reasoning models — Denis Baciu</title>
+<meta name="description" content="Routine coding tasks don&#x27;t need deep chain-of-thought, and using expensive models for them wastes money; a router sending simple prompts to cheap models solves that.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-07-routine-coding-tasks-don-t-need.html">
+<meta property="og:title" content="Routine coding tasks don&#x27;t need expensive reasoning models">
+<meta property="og:description" content="Routine coding tasks don&#x27;t need deep chain-of-thought, and using expensive models for them wastes money; a router sending simple prompts to cheap models solves that.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-07-routine-coding-tasks-don-t-need.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-07-27">
+<meta property="og:image" content="https://denisbaciu.com/assets/denis.jpg">
+<meta name="twitter:card" content="summary">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Routine coding tasks don't need expensive reasoning models",
+  "description": "Routine coding tasks don't need deep chain-of-thought, and using expensive models for them wastes money; a router sending simple prompts to cheap models solves that.",
+  "datePublished": "2026-07-27",
+  "url": "https://denisbaciu.com/writing/2026-07-routine-coding-tasks-don-t-need.html",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  }
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>Routine coding tasks don&#x27;t need expensive reasoning models</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7487417236320681984">original ↗</a><br>
+  published: 2026-07-27 · status: canonical · expanded from the original post
+</div>
+
+<p>Expensive reasoning models are powerful. When you need a novel algorithm or a system design that requires connecting distant ideas, their long chain-of-thought can produce clever solutions. But most daily development isn’t like that. Most days, you’re fixing a null pointer, adding a logging statement, generating boilerplate, or translating a SQL query into an ORM call. Those tasks don’t benefit from deep reasoning. They just need fast, predictable answers.</p>
+
+<p>The New Stack recently published a piece that reinforces this point. Their article, ‘Are expensive reasoning models always worth it?’, points out that most coding work doesn’t require deep chain-of-thought. If you route every prompt you type into an IDE to a reasoning model by default, you’re spending more money and time than you need to. The cost adds up quietly across a team.</p>
+
+<p>Think about the typical breakdown of programming requests. A large fraction are simple: syntax corrections, variable renames across a file, extracting a method, or generating a test for a straightforward function. A capable small model can handle these in milliseconds and for a fraction of a cent per call. Yet many developers and platforms now push every interaction through heavyweight models because they’re the new shiny option. The result is an inflated inference bill that no one keeps track of at the prompt level.</p>
+
+<p>Reasoning models do have a place. When you’re debugging a subtle concurrency bug, architecting a multi-service data flow, or refactoring a legacy module with hidden dependencies, the extra steps of chain-of-thought can surface edge cases that a lean model would miss. Those moments genuinely benefit from more compute. But they are the minority—maybe 5 or 10 percent of total requests in a typical week.</p>
+
+<p>The right infrastructure move is to stop treating all prompts equally. A simple policy-based router can classify an incoming prompt and decide where to send it. For routine, low-ambiguity tasks, it routes to a fast, cheap model. When the intent is complex—signalled by the length of the prompt, the presence of multiple constraints, or explicit keywords like ‘design’ or ‘refactor’—it escalates to the reasoning model. This isn’t science fiction; it’s a straightforward inference pipeline that some teams already prototype internally.</p>
+
+<p>The savings from such a router are not hypothetical. If even 80 percent of daily prompts can be served by a model that costs 50 times less per token, the reduction in monthly inference spend is dramatic. More importantly, you’re not slowing down developers: simple answers come back faster. The reasoning models stay available for the hard problems where they make a genuine difference, without being overloaded by trivia.</p>
+
+<p>The next default for developer infrastructure won’t be a single model endpoint. It will be a smart routing layer that understands the shape of a request and picks the right tool for the job. Many organisations will adopt this not because they’re chasing efficiency, but because the alternative—treating every prompt as a heavyweight reasoning task—simply becomes too expensive to ignore. The real savings sit in making that routing decision automatic and invisible.</p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
