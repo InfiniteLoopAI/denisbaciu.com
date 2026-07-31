@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Centralized AI gateways: necessary but not sufficient — Denis Baciu</title>
+<meta name="description" content="Exploring the practical benefits and limitations of using a centralized AI gateway like Prisma AIRS to manage enterprise GenAI risk.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-07-centralized-ai-gateways-necessary-not-sufficient.html">
+<meta property="og:title" content="Centralized AI gateways: necessary but not sufficient">
+<meta property="og:description" content="Exploring the practical benefits and limitations of using a centralized AI gateway like Prisma AIRS to manage enterprise GenAI risk.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-07-centralized-ai-gateways-necessary-not-sufficient.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-07-20">
+<meta property="og:image" content="https://denisbaciu.com/assets/denis.jpg">
+<meta name="twitter:card" content="summary">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Centralized AI gateways: necessary but not sufficient",
+  "description": "Exploring the practical benefits and limitations of using a centralized AI gateway like Prisma AIRS to manage enterprise GenAI risk.",
+  "datePublished": "2026-07-20",
+  "url": "https://denisbaciu.com/writing/2026-07-centralized-ai-gateways-necessary-not-sufficient.html",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  }
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>Centralized AI gateways: necessary but not sufficient</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7484880787901751296">original ↗</a><br>
+  published: 2026-07-20 · status: canonical · expanded from the original post
+</div>
+
+<p>Palo Alto Networks recently announced the general availability of Prisma AIRS, a centralized AI gateway designed to help enterprises enforce policy and security around generative AI usage. That kind of tool fills a gap that many organizations have been struggling with. As someone who works closely with teams adopting large language models, I&#x27;ve seen the tension between wanting to give people access to these powerful tools and needing to control cost, protect data, and prevent misuse. A gateway like this promises to resolve that tension by providing a single control plane. But is it enough?</p>
+
+<p>The argument in favor is straightforward. When you have dozens of teams using different models from various providers, it&#x27;s almost impossible to manage access, track token spend, and defend against prompt injection attacks without a centralized point of enforcement. A gateway gives you that: role-based access controls, token cost visibility, guardrails against malicious prompts, and the ability to verify agent identities. These are table-stakes capabilities for any responsible AI platform operating in regulated environments. Instead of conducting slow, manual security reviews for each new use case, you can define policies once and apply them broadly. This reduces fragmentation and can accelerate internal adoption, allowing teams to experiment safely without having to reinvent the compliance wheel.</p>
+
+<p>But a gateway is not a silver bullet. The controls are only as current and context-aware as the policies you write. A one-size-fits-all default might block legitimate research or innovative applications, turning the gateway into a bottleneck. There&#x27;s also a risk of compliance theater—feeling secure because you have a gateway, while ignoring deeper issues. Relying too heavily on perimeter defenses can create blind spots: what about prompt flows that happen entirely inside a trusted agent? Or what if one component is compromised and the attacker moves laterally? The gateway might not see those interactions. And then there&#x27;s the operational debt. Integrating a gateway securely across all your services is not trivial; it can shift the burden from application teams to a central team that now must understand the nuances of every AI interaction.</p>
+
+<p>I see a policy gateway as essential but not sufficient. Think of it as the foundation, not the fortress. You need it to establish a baseline of control, but you can&#x27;t stop there. The real work is pairing that centralized enforcement with real-time runtime controls and tight internal feedback loops. You need to instrument agent behavior, capture metrics on how models are actually being used, and correlate that access with business outcomes. Only then can you continuously tune both the gateway policies and your observability—spotting anomalies, refining what&#x27;s allowed, and learning from near-misses. This turns the gateway from a static guardrail into a dynamic system that evolves with usage.</p>
+
+<p>Over the next 12 to 18 months, I expect the organizations that do this well won&#x27;t be the ones with the most restrictive gateways. They&#x27;ll be the ones that can rapidly adapt their policies and responses as AI usage scales. The differentiator will be the ability to safely accelerate adoption, not just lock things down. That means investing in the feedback loops now: the dashboards, the alerting, the cross-functional processes that let you learn from every interaction. A gateway like Prisma AIRS is a practical starting point, but it&#x27;s the team&#x27;s capacity to iterate that will determine long-term success.</p>
+
+</article>
+
+<section class="original">
+  <h2 class="eyebrow">As originally posted on LinkedIn</h2>
+  <blockquote>
+  <p>Debate Brief</p>
+  <p>The case for: Centralized AI gateways like Prisma AIRS (just announced GA: https://www.paloaltonetworks.com/blog/2026/07/announcing-general-availability-of-prisma-airs-ai-gateway/?utm_source=tldrit) offer a practical starting point for enterprises finally wrestling policy and security around GenAI. Access controls, token cost visibility, prompt attack protection, and agent identity verification—these are table stakes for responsible AI platforms in regulated domains. Having a single control plane to enforce and audit reduces fragmentation and can speed up internal adoption without slow, case-by-case reviews. For enterprises facing pressure to open up LLMs but manage risk, this architectural pattern is overdue.</p>
+  <p>The case against: A gateway is only as strong (and current) as the policies and context it enforces. One-size-fits-all controls risk blocking valid GenAI use cases, stifling innovation, or yielding to compliance theater. Relying too heavily on perimeter defenses can lead to blind spots—like unsafe prompt flows inside trusted agents, or escalating lateral movement if one component is compromised. Technical and org debt may shift—secure integration is not just a gateway problem.</p>
+  <p>My take: A policy gateway is essential—but not sufficient. I’d treat it as the foundation, not the fortress. Pair real-time runtime controls with internal feedback loops: instrument agent behavior, correlate model access with business outcomes, and continuously tune both policy and observability as usage evolves. In 12-18 months, I expect the differentiator will be in teams&#x27; ability to rapidly adapt—not just enforce—AI usage at scale, safely.</p>
+  <p>#GenAI #EnterpriseAI #Security #Observability</p>
+  </blockquote>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Set Runtime Constraints on AI Agents Before They Hit Production — Denis Baciu</title>
+<meta name="description" content="Autonomous AI agents can generate unpredictable loads that crash systems, so hard limits on retries, steps, and concurrency are essential safety nets before deployment.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-07-set-runtime-constraints-ai-agents-before.html">
+<meta property="og:title" content="Set Runtime Constraints on AI Agents Before They Hit Production">
+<meta property="og:description" content="Autonomous AI agents can generate unpredictable loads that crash systems, so hard limits on retries, steps, and concurrency are essential safety nets before deployment.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-07-set-runtime-constraints-ai-agents-before.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-07-25">
+<meta property="og:image" content="https://denisbaciu.com/assets/denis.jpg">
+<meta name="twitter:card" content="summary">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Set Runtime Constraints on AI Agents Before They Hit Production",
+  "description": "Autonomous AI agents can generate unpredictable loads that crash systems, so hard limits on retries, steps, and concurrency are essential safety nets before deployment.",
+  "datePublished": "2026-07-25",
+  "url": "https://denisbaciu.com/writing/2026-07-set-runtime-constraints-ai-agents-before.html",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  }
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>Set Runtime Constraints on AI Agents Before They Hit Production</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7486710143045509120">original ↗</a><br>
+  published: 2026-07-25 · status: canonical · expanded from the original post
+</div>
+
+<p>When we deploy AI agents into production, the infrastructure surprises aren&#x27;t about model quality. They&#x27;re about runtime behavior. An agent that autonomously queries databases, calls APIs, and retries on failure can generate a completely unpredictable pattern of load. Traditional systems expect requests to be defined, bounded, and idempotent. Agents break that assumption. The autonomy that makes an agent useful is exactly what makes it dangerous if left unbounded.</p>
+
+<p>In plain English: an agent might retry a database call ten times with exponential backoff, not because it&#x27;s malicious, but because it&#x27;s trying to complete a task. It&#x27;s doing what we asked it to do, just overzealously. Multiply that by dozens of concurrent agents, each with its own retry loop, and you have a self-inflicted DDoS. The originating request might be a single user action, but the downstream effect is a storm of internal calls that the system wasn&#x27;t provisioned for.</p>
+
+<p>I saw this play out in a proof-of-concept for invoice processing. A single misconfigured retry loop spiked database CPU to 100% and blocked the entire order pipeline. The agent wasn&#x27;t broken; it was simply retrying a step that kept failing, each retry hammering the database harder. The fix wasn&#x27;t a smarter model or better prompt engineering. It was a hard limit: three retries per step, and a maximum of twenty tool calls per run. That&#x27;s it. A simple runtime constraint turned a dangerous agent back into a useful one.</p>
+
+<p>Before scaling any AI workload, every team should set explicit runtime constraints. These aren&#x27;t afterthoughts—they&#x27;re non-negotiable safety nets. Retry budgets keep transient failures from becoming cascading outages. Step limits prevent an agent from wandering off into an infinite loop of tool calls. Concurrency caps stop a single agent from spawning too many parallel actions. Blast-radius isolation ensures that if one agent goes rogue, it doesn&#x27;t take down shared infrastructure.</p>
+
+<p>The pattern extends beyond retries. Any bounded context—token limits, execution timeouts, memory caps—can act as a circuit breaker. The key is to design these constraints into the agent&#x27;s operating environment from the start. It&#x27;s easy to focus on the clever reasoning and forget that agents are programs that consume real resources. When we forget, we build systems that work beautifully in demos and fail spectacularly under load.</p>
+
+<p>The InfoQ article &#x27;The hidden infrastructure problem behind production AI&#x27; captures this issue well. It&#x27;s a reminder that scaling AI is as much about software engineering discipline as it is about models. Autonomy is a feature, but only with the right guardrails. Hard limits don&#x27;t constrain usefulness—they protect it.</p>
+
+</article>
+
+<section class="original">
+  <h2 class="eyebrow">As originally posted on LinkedIn</h2>
+  <blockquote>
+  <p>When we deploy AI agents into production, the infrastructure surprises aren&#x27;t about model quality—they&#x27;re about runtime behavior.</p>
+  <p>An agent that autonomously queries databases, calls APIs, and retries on failure can generate a completely unpredictable pattern of load. Traditional systems expect requests to be defined, bounded, and idempotent. Agents break that assumption.</p>
+  <p>The tension is simple: the autonomy that makes an agent useful is exactly what makes it dangerous if left unbounded.</p>
+  <p>In plain English: an agent might retry a database call ten times with exponential backoff, not because it&#x27;s malicious, but because it&#x27;s trying to complete a task. Multiply by dozens of concurrent agents, and you have a self-inflicted DDoS.</p>
+  <p>I’ve seen a proof-of-concept agent for invoice processing, where a single misconfigured retry loop spiked database CPU to 100% and blocked the entire order pipeline. The fix wasn’t a smarter model—it was a hard limit of 3 retries per step and a maximum of 20 tool calls per run.</p>
+  <p>Before scaling AI workloads, every team should set explicit runtime constraints: retry budgets, step limits, concurrency caps, and blast-radius isolation. Treat these as non-negotiable safety nets, not afterthoughts.</p>
+  <p>The article from InfoQ captures this hidden infrastructure problem well: https://www.infoq.com/presentations/ai-infrastructure-scaling-architecture/?utm_source=tldrit</p>
+  </blockquote>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
