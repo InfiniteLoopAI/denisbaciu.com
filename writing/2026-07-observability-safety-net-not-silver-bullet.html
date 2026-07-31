@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Observability Is a Safety Net, Not a Silver Bullet, for Vibe Coding — Denis Baciu</title>
+<meta name="description" content="Observability exposes gaps in AI-generated code, but its feedback loop is slow; enforce contracts and use runtime data for targeted fixes.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-07-observability-safety-net-not-silver-bullet.html">
+<meta property="og:title" content="Observability Is a Safety Net, Not a Silver Bullet, for Vibe Coding">
+<meta property="og:description" content="Observability exposes gaps in AI-generated code, but its feedback loop is slow; enforce contracts and use runtime data for targeted fixes.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-07-observability-safety-net-not-silver-bullet.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-07-30">
+<meta property="og:image" content="https://denisbaciu.com/assets/denis.jpg">
+<meta name="twitter:card" content="summary">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Observability Is a Safety Net, Not a Silver Bullet, for Vibe Coding",
+  "description": "Observability exposes gaps in AI-generated code, but its feedback loop is slow; enforce contracts and use runtime data for targeted fixes.",
+  "datePublished": "2026-07-30",
+  "url": "https://denisbaciu.com/writing/2026-07-observability-safety-net-not-silver-bullet.html",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  }
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>Observability Is a Safety Net, Not a Silver Bullet, for Vibe Coding</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7488550098759696385">original ↗</a><br>
+  published: 2026-07-30 · status: canonical · expanded from the original post
+</div>
+
+<p>The promise of vibe coding is seductive: describe what you want, and an AI agent writes the code. But the result is often fragile. Error handling gets skipped, rate limits are ignored, and external calls lack timeouts or circuit breakers. It is exactly the sort of thing that observability tooling was designed to surface. I was reminded of this while reading an article that argued observability can transform vibe coding into proper AI engineering. The idea makes intuitive sense, but after sitting with it, I think the reality is more nuanced.</p>
+
+<p>There’s a straightforward case for weaving observability into AI-driven development right from the start. Distributed tracing and metrics can catch the missing instrumentation and reliability patterns that an agent overlooks. In a pre-production environment, you can see where a service breaks under load, which endpoints fail silently, and which third-party calls hang without a timeout. That runtime signal is concrete and measurable, far better than hoping the agent got it right. The real power comes when you feed that data back into the agent’s planning loop. Instead of asking the LLM to guess what ‘better error handling’ means, you can show it the exact span that failed and say: here, fix this. That turns an opaque process into something closer to an engineering cycle.</p>
+
+<p>The problem is that this feedback loop, as commonly described, is slow and noisy. If you wait until staging to discover that your AI-generated code has no circuit breaker, you’ve already wasted cycles. By then, the agent might have moved on to generating new features, and the context is stale. More importantly, observability tells you that something broke, but it rarely tells you why the code was brittle in the first place. It won’t fix fundamental design flaws or prompt misalignment. And the final link in the chain is the most fragile: can an LLM agent look at a trace of a distributed system, reason about the root cause, and produce a meaningful code change? Right now, the answer is almost certainly no. OpenTelemetry spans are rich with data, but they are not a natural fit for a model that works best with concise, structured prompts.</p>
+
+<p>So where does that leave us? I’d treat the AI agent like a junior engineer and observability like a mandatory CI check. Before anything ships, enforce a contract: every endpoint must emit a trace, every external call must have an explicit timeout and a circuit breaker. That’s a hard gate, not a post-hoc inspection. Observability isn’t just for finding bugs—it’s the proof that the contract was met. Then, when you do have runtime data from staging or canary deployments, use it to generate targeted examples for the next prompt refinement. Don’t feed the entire trace dump to the agent. Extract the specific code path that failed, the precise error, and the conditions that led to it. The prompt becomes: this exact function hung under load because it had no timeout; add one. That’s a much tighter loop.</p>
+
+<p>This approach doesn’t pretend that observability alone solves the engineering problem. It still requires a human to define the contract and curate the feedback. But it closes the gap between the promise of vibe coding and the reality of production systems. The agent learns from real, concrete failures rather than abstract advice. And you get a safety net that catches the repetitive, mechanical gaps that AI tends to introduce, without waiting for a slow, noisy post-mortem. It’s not magic, but it’s progress.</p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
