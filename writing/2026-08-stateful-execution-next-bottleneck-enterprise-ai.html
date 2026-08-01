@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stateful Execution Is the Next Bottleneck for Enterprise AI Agents — Denis Baciu</title>
+<meta name="description" content="Stateful execution environments are set to become the primary bottleneck for enterprise AI agents, with Perplexity’s SPACE as an early signal.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-08-stateful-execution-next-bottleneck-enterprise-ai.html">
+<meta property="og:title" content="Stateful Execution Is the Next Bottleneck for Enterprise AI Agents">
+<meta property="og:description" content="Stateful execution environments are set to become the primary bottleneck for enterprise AI agents, with Perplexity’s SPACE as an early signal.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-08-stateful-execution-next-bottleneck-enterprise-ai.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-08-01">
+<meta property="og:image" content="https://denisbaciu.com/assets/denis.jpg">
+<meta name="twitter:card" content="summary">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Stateful Execution Is the Next Bottleneck for Enterprise AI Agents",
+  "description": "Stateful execution environments are set to become the primary bottleneck for enterprise AI agents, with Perplexity’s SPACE as an early signal.",
+  "datePublished": "2026-08-01",
+  "url": "https://denisbaciu.com/writing/2026-08-stateful-execution-next-bottleneck-enterprise-ai.html",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  }
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>Stateful Execution Is the Next Bottleneck for Enterprise AI Agents</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7489247235327737857">original ↗</a><br>
+  published: 2026-08-01 · status: canonical · expanded from the original post
+</div>
+
+<p>Most conversations about AI agents focus on model capabilities, tool use, or prompt engineering. But I think the harder problem, the one that will reveal itself over the next year and a half, is stateful execution. Right now, it’s an obscure infrastructure challenge that only platform engineers wrestle with. Soon, it will be the primary bottleneck slowing down complex agents in the enterprise.</p>
+
+<p>The shift is already visible. Perplexity’s SPACE platform is an early, concrete signal. SPACE cleanly separates short-lived sandboxes—where individual reasoning steps happen—from durable sessions that persist across them. Under the hood, it uses frequent snapshots so an agent can pause, resume, migrate to a different node, or even fork its entire state without losing a beat. That’s more than orchestration. It treats the file system itself as the state layer for autonomous reasoning. For an agent that chains dozens of steps together over hours, that kind of durability is non-negotiable.</p>
+
+<p>Building this is genuinely hard. Stateful systems demand careful handling of consistency, snapshot performance, and recovery—problems databases have struggled with for decades. When you apply them to ephemeral compute environments like Firecracker microVMs, the complexity multiplies. SPACE’s approach suggests that regular snapshots and clean separation of concerns might be the pragmatic path, but it’s not a solved problem. The question is whether the hyperscale clouds will step in with managed “agent session state” primitives, or if teams will keep stitching together their own solutions with DIY snapshots and microVM tooling.</p>
+
+<p>I’ll be watching for two signals. The first is whether AWS, Azure, or GCP launch services that explicitly handle agent session state, not just generic object storage or caching. The second is the number of enterprise agent frameworks that adopt session persistence as a first-class concept, rather than treating it as an afterthought. When that number climbs, it will mean the ecosystem is maturing around this need.</p>
+
+<p>Of course, not every agent workflow needs state. Many simple retrieval-augmented pipelines will stay stateless and event-driven, because they complete in a single request-response cycle. But for agents that plan, reason, and act over long time horizons—hours, days, even longer—ephemeral compute won’t cut it. They need memory that survives restarts, migrations, and failures. That’s the frontier, and it’s where infrastructure and AI strategy converge.</p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
