@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Overprivileged AI Agents Repeat Old IAM Mistakes — Denis Baciu</title>
+<meta name="description" content="71% of organizations have AI agents that can reach sensitive data; one-third of developers saw incidents from overprivileged non-human identities.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-08-overprivileged-ai-agents-repeat-old-iam.html">
+<meta property="og:title" content="Overprivileged AI Agents Repeat Old IAM Mistakes">
+<meta property="og:description" content="71% of organizations have AI agents that can reach sensitive data; one-third of developers saw incidents from overprivileged non-human identities.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-08-overprivileged-ai-agents-repeat-old-iam.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-08-02">
+<meta property="article:modified_time" content="2026-08-02">
+<meta property="og:image" content="https://denisbaciu.com/assets/writing/7118ed27ae2eebba.webp">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Overprivileged AI Agents Repeat Old IAM Mistakes",
+  "description": "71% of organizations have AI agents that can reach sensitive data; one-third of developers saw incidents from overprivileged non-human identities.",
+  "datePublished": "2026-08-02",
+  "dateModified": "2026-08-02",
+  "url": "https://denisbaciu.com/writing/2026-08-overprivileged-ai-agents-repeat-old-iam.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://denisbaciu.com/writing/2026-08-overprivileged-ai-agents-repeat-old-iam.html"
+  },
+  "image": "https://denisbaciu.com/assets/writing/7118ed27ae2eebba.webp",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  },
+  "citation": "https://www.helpnetsecurity.com/2026/07/29/1password-ai-agent-governance/"
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>Overprivileged AI Agents Repeat Old IAM Mistakes</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7489625399711309824">original ↗</a><br>
+  published: 2026-08-02 · status: canonical · expanded from the original post
+</div>
+
+<figure class="lead">
+  <img src="/assets/writing/7118ed27ae2eebba.webp" alt="Overprivileged AI Agents Repeat Old IAM Mistakes" loading="lazy" decoding="async">
+</figure>
+
+<p>Granting an AI agent broad data access “just in case” feels a lot like giving a build pipeline full sudo on production because it needs to read a single config file. On the surface, it seems harmless. You avoid the friction of scoping permissions precisely, and the agent works. The problem is that it works until it doesn’t—and when it doesn’t, the blast radius is enormous. The pipeline that only needed to read one file can now alter or destroy production infrastructure. Similarly, an AI agent with unrestricted access can exfiltrate or corrupt data far beyond its original purpose.</p>
+
+<p>A recent 1Password survey put numbers to this unease. They found that 71% of organizations have AI agents that can reach sensitive data. One-third of developers reported a security incident tied to overprivileged non-human identities. Those identities aren’t just bots; they’re the increasingly autonomous agents we’re wiring into our applications and workflows. The survey underscores that the risk isn’t hypothetical—it’s already causing real damage.</p>
+
+<p>The root cause is rarely malice. It’s convenience-driven identity and access management. We assign broad scopes to avoid the friction of renewing or refining tokens. You’ve seen this before: in Kubernetes, we used to grant namespace-wide RBAC just so a pod could read logs from a single container. The same pattern repeats with AI agents. Rather than invest the time to define what an agent actually needs, we hand it a master key and move on. The immediate payoff is speed; the long-term cost is a sprawling set of overprivileged non-human actors.</p>
+
+<p>The fix isn’t novel. Apply least privilege to agent identities exactly as you would to microservice service accounts. Scope tokens to specific resources—a particular document repository, a bounded set of APIs. Enforce short-lived credentials so that even if a token leaks, its window of misuse is narrow. And audit actual usage, not just posture. Check what the agent did, not just what it could do. This approach has worked for years with service accounts; it works just as well for AI agents.</p>
+
+<p>The analogy holds: a build pipeline shouldn’t have more privileges than strictly needed to push an artifact, and an AI agent shouldn’t see a customer database just to summarize a public FAQ. When we treat agent identities with the same discipline we’ve slowly learned for other automation, the blast radius shrinks. The convenience trade-off is worth revisiting. A few extra minutes spent on scoping today can prevent a significant incident tomorrow.</p>
+
+<p class="source-link">Originally covered at <a href="https://www.helpnetsecurity.com/2026/07/29/1password-ai-agent-governance/" rel="noopener">helpnetsecurity.com ↗</a></p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
