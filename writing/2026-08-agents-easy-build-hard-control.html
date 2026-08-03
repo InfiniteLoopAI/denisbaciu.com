@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agents Are Easy to Build, Hard to Control — Denis Baciu</title>
+<meta name="description" content="Real-time observability and governance must be built into AI agents from day one, or organizations face black-box risks and spiraling costs.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-08-agents-easy-build-hard-control.html">
+<meta property="og:title" content="Agents Are Easy to Build, Hard to Control">
+<meta property="og:description" content="Real-time observability and governance must be built into AI agents from day one, or organizations face black-box risks and spiraling costs.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-08-agents-easy-build-hard-control.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-08-03">
+<meta property="article:modified_time" content="2026-08-03">
+<meta property="og:image" content="https://denisbaciu.com/assets/writing/651a7470dd16b5e6.webp">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Agents Are Easy to Build, Hard to Control",
+  "description": "Real-time observability and governance must be built into AI agents from day one, or organizations face black-box risks and spiraling costs.",
+  "datePublished": "2026-08-03",
+  "dateModified": "2026-08-03",
+  "url": "https://denisbaciu.com/writing/2026-08-agents-easy-build-hard-control.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://denisbaciu.com/writing/2026-08-agents-easy-build-hard-control.html"
+  },
+  "image": "https://denisbaciu.com/assets/writing/651a7470dd16b5e6.webp",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  },
+  "citation": "https://www.cio.com/article/4202795/snowflake-launches-ai-agent-governance-layer-to-track-activity-control-costs.html"
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>Agents Are Easy to Build, Hard to Control</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7489953531828006912">original ↗</a><br>
+  published: 2026-08-03 · status: canonical · expanded from the original post
+</div>
+
+<figure class="lead">
+  <img src="/assets/writing/651a7470dd16b5e6.webp" alt="Agents Are Easy to Build, Hard to Control" loading="lazy" decoding="async">
+</figure>
+
+<p>Building an AI agent is surprisingly straightforward these days. You wire up a large language model, give it a few tools or API endpoints, and within an afternoon you have something that can carry out multi-step tasks on its own. But once that agent is running inside an enterprise environment, the story changes. The ease of creation masks a deeper challenge: these things are difficult to monitor and even harder to govern. I keep seeing this pattern across teams I work with—what starts as a promising autonomous workflow quickly becomes a source of anxiety once it touches real data and real budgets.</p>
+
+<p>The symptoms are predictable. Token usage creeps upward as prompts grow complex and the model churns through context. Access to internal systems spreads without a clear picture of who or what is calling which service. Suddenly you’re firefighting a black box, unable to answer basic questions about what the agent did this morning or why a particular API call went over budget. The agility agents promise gets offset by the operational risk they introduce.</p>
+
+<p>Snowflake’s new Cortex AI Gateway is an attempt to address this head-on. It acts as a runtime control plane that sits between agents and the models and services they depend on. From that position, it can enforce access policies consistently, track token consumption in real time, and trace every action an agent takes—across different models and even across MCP servers. Governance isn’t something you layer on six months in; it’s built into the way agents operate from the start.</p>
+
+<p>The real lesson here isn’t about one product; it’s a design principle. Observability for autonomous software needs to be a day-one constraint, not a dashboard you scramble to build once you get a surprise cloud bill. When you treat cost and activity monitoring as afterthoughts, you’re essentially running a production system without any instrumentation. That might fly in a prototype, but it doesn’t scale in an enterprise where multiple agents interact with sensitive data and business-critical processes.</p>
+
+<p>What strikes me about the Gateway’s approach is how it unifies three concerns that are often handled separately: policy enforcement, cost tracking, and activity logs. When these are separate tools stitched together, you end up with gaps and blind spots. A single pane that shows you who accessed what, how much it cost, and what decisions were made is closer to the model we’ve established for cloud infrastructure. Agents deserve that same maturity.</p>
+
+<p>I’ve seen firsthand that cost visibility changes behavior. When developers and product teams can see the token spend tied to specific agent actions, they start to optimize prompts, trim unnecessary tool calls, and question whether every step in a workflow is truly worth the inference cost. That sort of feedback loop doesn’t happen when the bill arrives in aggregate at the end of the month. Real-time governance makes the economics of AI concrete, and that’s when you start getting responsible adoption.</p>
+
+<p>The direction enterprise AI needs to take is toward control that feels native, not reactive. As agents multiply and become part of everyday operations, the difference between a manageable system and a chaotic one will come down to whether observability was designed in from the beginning. The tools are starting to catch up to that reality.</p>
+
+<p class="source-link">Originally covered at <a href="https://www.cio.com/article/4202795/snowflake-launches-ai-agent-governance-layer-to-track-activity-control-costs.html" rel="noopener">cio.com ↗</a></p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
