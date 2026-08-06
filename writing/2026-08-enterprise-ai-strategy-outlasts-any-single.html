@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The enterprise AI strategy that outlasts any single model — Denis Baciu</title>
+<meta name="description" content="An effective AI strategy abstracts providers, evaluates on real tasks, monitors costs and latency, and avoids vendor lock-in.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-08-enterprise-ai-strategy-outlasts-any-single.html">
+<meta property="og:title" content="The enterprise AI strategy that outlasts any single model">
+<meta property="og:description" content="An effective AI strategy abstracts providers, evaluates on real tasks, monitors costs and latency, and avoids vendor lock-in.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-08-enterprise-ai-strategy-outlasts-any-single.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-08-06">
+<meta property="article:modified_time" content="2026-08-06">
+<meta property="og:image" content="https://denisbaciu.com/assets/writing/4c13dac17f6a4de8.webp">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "The enterprise AI strategy that outlasts any single model",
+  "description": "An effective AI strategy abstracts providers, evaluates on real tasks, monitors costs and latency, and avoids vendor lock-in.",
+  "datePublished": "2026-08-06",
+  "dateModified": "2026-08-06",
+  "url": "https://denisbaciu.com/writing/2026-08-enterprise-ai-strategy-outlasts-any-single.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://denisbaciu.com/writing/2026-08-enterprise-ai-strategy-outlasts-any-single.html"
+  },
+  "image": "https://denisbaciu.com/assets/writing/4c13dac17f6a4de8.webp",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  },
+  "citation": "https://www.cio.com/article/4204569/the-enterprise-ai-strategy-that-outlasts-any-single-model.html"
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>The enterprise AI strategy that outlasts any single model</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7491086094684389376">original ↗</a><br>
+  published: 2026-08-06 · status: canonical · expanded from the original post
+</div>
+
+<figure class="lead">
+  <img src="/assets/writing/4c13dac17f6a4de8.webp" alt="The enterprise AI strategy that outlasts any single model" loading="lazy" decoding="async">
+</figure>
+
+<p>When I talk with engineering leaders about their AI roadmaps, the conversation often starts with which model to choose. It’s the wrong opening question. The enterprise AI strategy that outlasts any single model isn’t about picking winners—it’s about designing for constant change. Models will come and go. What stays is the system you build around them. If your architecture assumes a particular provider or API will always be the right fit, you’re already behind.</p>
+
+<p>One of the first things I look for is a clean separation between the application logic and the model endpoints. Abstracting model interfaces behind a unified API layer means you can swap providers without rewriting prompt chains or retooling your pipeline. This isn’t just a theoretical nicety. When a new model drops that’s cheaper, faster, or better suited to a subset of your tasks, being able to slot it in with minimal friction gives you real leverage. Your system stays stable while the model landscape shifts.</p>
+
+<p>Another area where I see teams fall short is evaluation. Public benchmarks and leaderboard scores rarely reflect the messy, domain-specific tasks that matter inside an enterprise. A model might ace a generic reasoning test but fail to understand your product catalog or internal policy documents. That’s why I push for continuous evaluation on your own data. Run your actual prompts against the model, measure performance over time, and build a dataset that mirrors what the system faces day to day. If you’re not evaluating on your domain, you’re flying blind.</p>
+
+<p>Observability should extend well beyond whether a prompt succeeded. I treat cost, latency, and accuracy as core signals, instrumented per model, and I set budget alerts to prevent surprise bills. It’s easy to get excited about a model’s capabilities and forget that each call racks up a cost. Without visibility, you might discover at the end of the month that a single API endpoint consumed half your cloud budget. Monitoring these metrics helps you make pragmatic trade-offs—sometimes a slightly less accurate but much cheaper model is the right call.</p>
+
+<p>Perhaps the most common architectural misstep I see is inadvertently locking into a vendor. Fine-tuning APIs, custom function calling, or specialized model features often don’t map cleanly to other providers. Once you build a workflow around them, you’re stuck. Even if a better option emerges, switching means a rewrite. The short‑term convenience of a vendor-specific feature can turn into a long‑term constraint. Staying neutral at the architecture level preserves your ability to adapt.</p>
+
+<p>Each of these practices points to the same underlying mindset: are you building for the model or the system? If you optimize for a particular model, you’re betting the farm on a moving target. If you build a system that treats models as interchangeable components, you create something that can evolve gracefully. That’s the difference between a strategy that lasts a season and one that lasts a decade.</p>
+
+<p class="source-link">Originally covered at <a href="https://www.cio.com/article/4204569/the-enterprise-ai-strategy-that-outlasts-any-single-model.html" rel="noopener">cio.com ↗</a></p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
