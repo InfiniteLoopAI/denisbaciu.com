@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Real Bottleneck in Data Platforms Is Neglected Orchestration — Denis Baciu</title>
+<meta name="description" content="While tool sprawl gets the blame, the true problem is treating orchestration as a cron job instead of a control plane with SLOs for freshness, failure recovery, and cost.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-08-real-bottleneck-data-platforms-neglected-orchestration.html">
+<meta property="og:title" content="The Real Bottleneck in Data Platforms Is Neglected Orchestration">
+<meta property="og:description" content="While tool sprawl gets the blame, the true problem is treating orchestration as a cron job instead of a control plane with SLOs for freshness, failure recovery, and cost.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-08-real-bottleneck-data-platforms-neglected-orchestration.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-08-10">
+<meta property="article:modified_time" content="2026-08-10">
+<meta property="og:image" content="https://denisbaciu.com/assets/writing/2fe0fe0031517640.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "The Real Bottleneck in Data Platforms Is Neglected Orchestration",
+  "description": "While tool sprawl gets the blame, the true problem is treating orchestration as a cron job instead of a control plane with SLOs for freshness, failure recovery, and cost.",
+  "datePublished": "2026-08-10",
+  "dateModified": "2026-08-10",
+  "url": "https://denisbaciu.com/writing/2026-08-real-bottleneck-data-platforms-neglected-orchestration.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://denisbaciu.com/writing/2026-08-real-bottleneck-data-platforms-neglected-orchestration.html"
+  },
+  "image": "https://denisbaciu.com/assets/writing/2fe0fe0031517640.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  },
+  "citation": "https://dataopsleadership.substack.com/p/elt-is-moving-back-to-best-of-breed"
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>The Real Bottleneck in Data Platforms Is Neglected Orchestration</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7492490223080230913">original ↗</a><br>
+  published: 2026-08-10 · status: canonical · expanded from the original post
+</div>
+
+<figure class="lead">
+  <img src="/assets/writing/2fe0fe0031517640.jpg" alt="The Real Bottleneck in Data Platforms Is Neglected Orchestration" loading="lazy" decoding="async">
+</figure>
+
+<p>Breaking up application monoliths into microservices has become a standard move for organizations looking to ship faster and scale independently. But while the software world has largely internalized this pattern, the data world is just beginning its own version of the journey. The monoliths here are the all-in-one data platforms that bundled storage, transformation, and orchestration into a single stack. Teams are increasingly drawn to best-of-breed tools for each layer, yet the conversation often stays stuck on tool sprawl. I think that focus misses the real bottleneck.</p>
+
+<p>What gets overlooked is the orchestration layer. Too many teams treat it as an afterthought, wiring together tools with a basic scheduler and calling it a day. They treat orchestration like a cron job: fire this task at 3 a.m., email on failure. That approach breaks down as pipelines grow in complexity and as the business comes to depend on fresh, accurate data. Orchestration isn&#x27;t just a trigger mechanism. It&#x27;s the control plane for your data platform, responsible for coordination, dependency management, and recovery from partial failures.</p>
+
+<p>A control plane demands clear service-level objectives. Data freshness — how current the data needs to be for consumers — isn&#x27;t a nice-to-have; it&#x27;s a contract. Recovery from failures shouldn&#x27;t be a manual scramble at 6 a.m. because nobody defined what &#x27;acceptable recovery time&#x27; means. And cost is easy to ignore when orchestration doesn&#x27;t let you reason about how resources are provisioned and released. Without SLOs around freshness, failure recovery, and cost, the orchestration layer is blind, and teams end up firefighting instead of improving.</p>
+
+<p>The move toward best-of-breed tools amplifies this. When you decouple storage, transformation, and serving layers, the coordination burden shifts squarely onto orchestration. A tightly integrated stack might have handled state internally; now you have to manage it explicitly across separate systems. That can actually be a good thing if you invest in the orchestration layer up front. But too often, teams adopt specialized tools without strengthening the glue that holds them together, and then wonder why reliability erodes.</p>
+
+<p>There are still cases where a tightly integrated stack makes sense. When data volumes are small and the pipeline is simple, an all-in-one platform can reduce operational overhead. You don&#x27;t need sophisticated orchestration to keep things running. But that window closes as soon as the data footprint grows or the business starts asking harder questions. At that point, the lack of orchestration SLOs goes from a non-issue to the primary source of grief.</p>
+
+<p>The article goes into more detail on why this pattern is repeating across the industry and what it looks like when orchestration SLOs finally catch up with a team. The bottom line is that the data platform&#x27;s control plane deserves the same rigor we apply to the services we build. Otherwise, the migration away from monoliths just swaps one kind of fragility for another.</p>
+
+<p>Orchestration isn&#x27;t a cron job with a dashboard. It&#x27;s the system that decides whether your data arrives on time, whether failures cascade, and whether you&#x27;re burning money on idle compute. Treating it as anything less is a bet that your data pipelines will stay simple forever. That&#x27;s rarely a bet worth taking.</p>
+
+<p class="source-link">Originally covered at <a href="https://dataopsleadership.substack.com/p/elt-is-moving-back-to-best-of-breed" rel="noopener">dataopsleadership.substack.com ↗</a></p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
