@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Multi-cloud AI observability needs a common transponder — Denis Baciu</title>
+<meta name="description" content="How OpenTelemetry and AWS AgentCore Observability can turn fragmented AI agent monitoring into one operational pane across clouds.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-08-multi-cloud-ai-observability-needs-common.html">
+<meta property="og:title" content="Multi-cloud AI observability needs a common transponder">
+<meta property="og:description" content="How OpenTelemetry and AWS AgentCore Observability can turn fragmented AI agent monitoring into one operational pane across clouds.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-08-multi-cloud-ai-observability-needs-common.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-08-15">
+<meta property="article:modified_time" content="2026-08-15">
+<meta property="og:image" content="https://denisbaciu.com/assets/writing/d1678529090fd5f5.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Multi-cloud AI observability needs a common transponder",
+  "description": "How OpenTelemetry and AWS AgentCore Observability can turn fragmented AI agent monitoring into one operational pane across clouds.",
+  "datePublished": "2026-08-15",
+  "dateModified": "2026-08-15",
+  "url": "https://denisbaciu.com/writing/2026-08-multi-cloud-ai-observability-needs-common.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://denisbaciu.com/writing/2026-08-multi-cloud-ai-observability-needs-common.html"
+  },
+  "image": "https://denisbaciu.com/assets/writing/d1678529090fd5f5.png",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  },
+  "citation": "https://aws.amazon.com/blogs/machine-learning/monitor-on-premises-and-multi-cloud-ai-agents-with-agentcore-observability/"
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>Multi-cloud AI observability needs a common transponder</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7494321253395177472">original ↗</a><br>
+  published: 2026-08-15 · status: canonical · expanded from the original post
+</div>
+
+<figure class="lead">
+  <img src="/assets/writing/d1678529090fd5f5.png" alt="Multi-cloud AI observability needs a common transponder" loading="lazy" decoding="async">
+</figure>
+
+<p>When I look at production AI agents spread across several clouds, I keep coming back to an air traffic control analogy. Monitoring these agents feels a lot like running air traffic control for a mixed fleet of aircraft. The planes look different, fly different routes, and answer to different towers, but they all need to be tracked in one place if you want to keep the whole system safe and moving.</p>
+
+<p>Each agent is a flight. Some depart from AWS, others from Azure, GCP, or your own data center. They navigate different runways, weather, and airspace rules. Without a common transponder signal, you end up watching separate radar screens and stitching together logs after the fact. That kind of manual reconstruction is not observability; it is archaeology. You can eventually figure out what happened, but you cannot respond in time to prevent the next problem.</p>
+
+<p>OpenTelemetry is that common transponder. It gives every agent a standard way to report where it is, what it is doing, and how much fuel it is burning, regardless of where it is flying. The value is not just in collecting more data. It is in having the same data shape from every cloud so you can compare agents and trace a request across boundaries without translating formats first. That consistency matters more than any single dashboard widget.</p>
+
+<p>AWS&#x27;s AgentCore Observability acts as the unified control tower. It pulls those signals into one dashboard so you can trace actions, monitor token usage, and catch reliability problems before they become incidents. What stands out to me is that you do not need to be in AWS to use it. It watches flights from on-premises, Azure, and GCP too, which makes it useful for teams that already have a mixed estate. That cross-cloud reach is the part I hear most people get wrong when they first hear about AgentCore.</p>
+
+<p>That is the practical shift. Agent observability stops being per-cloud guesswork and becomes a single operational pane. Instead of asking whether an agent failed in AWS or Azure, you can ask what happened to the request as a whole and where the delay or error actually occurred. The distinction sounds small, but it changes how you investigate issues and how you design reliability budgets for agentic systems.</p>
+
+<p>AWS has published a walkthrough of this setup for on-premises and multi-cloud agents. If you are running agentic workloads in production, it is worth examining. The point is not that one vendor solves everything; the point is that a standard signal and a shared control plane make a mixed fleet manageable. Once you have that, the old per-cloud radar screens start to feel like a thing of the past.</p>
+
+<p class="source-link">Originally covered at <a href="https://aws.amazon.com/blogs/machine-learning/monitor-on-premises-and-multi-cloud-ai-agents-with-agentcore-observability/" rel="noopener">aws.amazon.com ↗</a></p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
