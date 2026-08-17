@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MCP session handles are capability tokens, not pointers — Denis Baciu</title>
+<meta name="description" content="MCP&#x27;s shift to model-held session handles trades server affinity for horizontal scale; short-lived capability tokens keep both.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-08-mcp-session-handles-capability-tokens-not.html">
+<meta property="og:title" content="MCP session handles are capability tokens, not pointers">
+<meta property="og:description" content="MCP&#x27;s shift to model-held session handles trades server affinity for horizontal scale; short-lived capability tokens keep both.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-08-mcp-session-handles-capability-tokens-not.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-08-17">
+<meta property="article:modified_time" content="2026-08-17">
+<meta property="og:image" content="https://denisbaciu.com/assets/writing/4607d57681ff62a4.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "MCP session handles are capability tokens, not pointers",
+  "description": "MCP's shift to model-held session handles trades server affinity for horizontal scale; short-lived capability tokens keep both.",
+  "datePublished": "2026-08-17",
+  "dateModified": "2026-08-17",
+  "url": "https://denisbaciu.com/writing/2026-08-mcp-session-handles-capability-tokens-not.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://denisbaciu.com/writing/2026-08-mcp-session-handles-capability-tokens-not.html"
+  },
+  "image": "https://denisbaciu.com/assets/writing/4607d57681ff62a4.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  },
+  "citation": "https://www.infoworld.com/article/4208733/mcp-didnt-remove-sessions-it-handed-them-to-the-model.html"
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>MCP session handles are capability tokens, not pointers</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7495026965457002498">original ↗</a><br>
+  published: 2026-08-17 · status: canonical · expanded from the original post
+</div>
+
+<figure class="lead">
+  <img src="/assets/writing/4607d57681ff62a4.jpg" alt="MCP session handles are capability tokens, not pointers" loading="lazy" decoding="async">
+</figure>
+
+<p>MCP&#x27;s shift to model-held session handles removes server affinity and lets the protocol scale horizontally. Instead of pinning a conversation to one server, the model carries the handle and passes it along as it moves between tools and models. That means no sticky sessions, no shared session store, and no server-side state to blow up. For agentic workloads where conversations hop between tools and models, that is a real win.</p>
+
+<p>But the same shift quietly moves correlation, authorization, expiry, and retry semantics into the application layer. The server no longer owns the lifecycle of a session, so the application has to decide when a handle expires, how to correlate it across steps, and whether a retry is safe. In distributed systems, session state without a durable owner breeds orphaned handles, inconsistent auth checks, and audit gaps. If the model misplaces a handle, who is responsible? You are.</p>
+
+<p>That question is not rhetorical. A model can drop a handle between steps, reuse one across workflows, or pass it to a tool that should not have received it. When the server no longer owns sessions, the application and the people operating it own the consequences. That is a meaningful change from the old model, where the session object at least had a clear home on the server.</p>
+
+<p>So the tension is straightforward. You get horizontal scalability, but you give up a single, durable place where session state can be controlled. That control used to live in one place; now it is distributed across every application that speaks MCP. I do not think the change is bad. It just means the tradeoff needs to be acknowledged and handled deliberately rather than treated as a pure removal of sessions.</p>
+
+<p>My take is to treat MCP session handles as opaque capability tokens, not pointers. A pointer implies something you can follow to a known object; a capability token implies something you can use for a limited purpose and a limited time. Bind them to a short TTL, rotate them per workflow, log a correlation ID at every hop, and enforce authorization at a gateway or sidecar rather than in the model. The model should not be the security boundary.</p>
+
+<p>That approach keeps the scaling benefit of model-held handles without surrendering auditability or security. The handles become short-lived, observable, and replaceable as work moves forward. The server stays stateless, the application keeps a clear record of what happened, and authorization stays where it can be enforced consistently. That feels like the right balance for a protocol change that is otherwise easy to misread as simply removing sessions.</p>
+
+<p class="source-link">Originally covered at <a href="https://www.infoworld.com/article/4208733/mcp-didnt-remove-sessions-it-handed-them-to-the-model.html" rel="noopener">infoworld.com ↗</a></p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
