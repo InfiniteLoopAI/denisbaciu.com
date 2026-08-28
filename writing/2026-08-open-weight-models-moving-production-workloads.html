@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Open-weight models are moving into production workloads — Denis Baciu</title>
+<meta name="description" content="A practical look at evaluating open-weight models on real traffic, piloting them in low-risk tasks, and choosing managed inference.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-08-open-weight-models-moving-production-workloads.html">
+<meta property="og:title" content="Open-weight models are moving into production workloads">
+<meta property="og:description" content="A practical look at evaluating open-weight models on real traffic, piloting them in low-risk tasks, and choosing managed inference.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-08-open-weight-models-moving-production-workloads.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-08-27">
+<meta property="article:modified_time" content="2026-08-27">
+<meta property="og:image" content="https://denisbaciu.com/assets/writing/d8c0e899032c0682.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Open-weight models are moving into production workloads",
+  "description": "A practical look at evaluating open-weight models on real traffic, piloting them in low-risk tasks, and choosing managed inference.",
+  "datePublished": "2026-08-27",
+  "dateModified": "2026-08-27",
+  "url": "https://denisbaciu.com/writing/2026-08-open-weight-models-moving-production-workloads.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://denisbaciu.com/writing/2026-08-open-weight-models-moving-production-workloads.html"
+  },
+  "image": "https://denisbaciu.com/assets/writing/d8c0e899032c0682.png",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  },
+  "citation": "https://www.constellationr.com/research/blog/open-weight-models-are-gaining-ground-enterprise-ai"
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>Open-weight models are moving into production workloads</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7498696169766752256">original ↗</a><br>
+  published: 2026-08-27 · status: canonical · expanded from the original post
+</div>
+
+<figure class="lead">
+  <img src="/assets/writing/d8c0e899032c0682.png" alt="Open-weight models are moving into production workloads" loading="lazy" decoding="async">
+</figure>
+
+<p>Open-weight models are moving from side projects to production workloads. That is a meaningful change, because it moves the conversation from what is possible to what is sensible to run at scale. When a model is a side project, you can tolerate rough edges. In production, you have to account for cost, reliability, integration time, and the operational burden you are taking on.</p>
+
+<p>The first practical step is to compare cost per token across open-weight and proprietary models on your actual traffic. Public benchmarks are useful for narrowing the field, but they rarely reflect the mix of prompts, sequence lengths, and error rates you see in production. A model that looks cheap on a benchmark can turn out to be more expensive when you account for retries, output length, or the need to run a larger variant to hit quality targets. Measuring on real traffic gives you a number you can defend.</p>
+
+<p>I would not replace a working proprietary model all at once. A better path is to pilot open-weight models in a multi-model setup for non-critical, high-volume tasks first. That gives you room to see how the model behaves with real users, how much tuning it needs, and where integration friction appears without putting a critical workflow at risk. High-volume tasks also give you enough data quickly to make a call.</p>
+
+<p>Before committing to self-hosting, check managed inference options like Vercel, Together, Fireworks, and Azure AI Foundry. Self-hosting can look cheaper on a per-token basis, but it brings hardware procurement, scaling, patching, and capacity planning. That is a different job from model evaluation. Managed inference lets you get most of the open-weight cost benefit while someone else operates the serving layer. For most teams, that is a better trade-off.</p>
+
+<p>It is also worth evaluating agentic workloads separately. In agentic systems, you often do not need one general model to handle every step. Specialized smaller open models can perform better on narrow subtasks, with lower latency and lower cost. A smaller model that is good at tool selection or structured output may outperform a large general model on that specific step. That changes the unit economics of an agent pipeline.</p>
+
+<p>The underlying tension is straightforward. Open weights can cut cost, but they add integration and operational burden. Managed inference flips that trade-off for most teams: you keep much of the cost benefit and give away less of your engineering time. The teams I see doing this well treat open-weight models as one part of a broader routing and evaluation strategy, not as a like-for-like swap. They measure on real traffic, start in low-risk places, and let the operational evidence decide where open weights belong. Constellation Research has a good write-up on this shift for more context.</p>
+
+<p class="source-link">Originally covered at <a href="https://www.constellationr.com/research/blog/open-weight-models-are-gaining-ground-enterprise-ai" rel="noopener">constellationr.com ↗</a></p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
