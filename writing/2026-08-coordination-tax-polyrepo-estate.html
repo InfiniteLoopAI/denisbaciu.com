@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The coordination tax in a polyrepo estate — Denis Baciu</title>
+<meta name="description" content="A polyrepo estate behaves like a distributed system, and recurring coordination work should drive the monorepo decision, not ideology.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-08-coordination-tax-polyrepo-estate.html">
+<meta property="og:title" content="The coordination tax in a polyrepo estate">
+<meta property="og:description" content="A polyrepo estate behaves like a distributed system, and recurring coordination work should drive the monorepo decision, not ideology.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-08-coordination-tax-polyrepo-estate.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-08-29">
+<meta property="article:modified_time" content="2026-08-29">
+<meta property="og:image" content="https://denisbaciu.com/assets/writing/266938a5c3cea3a8.webp">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "The coordination tax in a polyrepo estate",
+  "description": "A polyrepo estate behaves like a distributed system, and recurring coordination work should drive the monorepo decision, not ideology.",
+  "datePublished": "2026-08-29",
+  "dateModified": "2026-08-29",
+  "url": "https://denisbaciu.com/writing/2026-08-coordination-tax-polyrepo-estate.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://denisbaciu.com/writing/2026-08-coordination-tax-polyrepo-estate.html"
+  },
+  "image": "https://denisbaciu.com/assets/writing/266938a5c3cea3a8.webp",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  },
+  "citation": "https://www.differentshelf.com/the-coordination-tax-in-your-software-estate/"
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>The coordination tax in a polyrepo estate</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7499394773905031168">original ↗</a><br>
+  published: 2026-08-29 · status: canonical · expanded from the original post
+</div>
+
+<figure class="lead">
+  <img src="/assets/writing/266938a5c3cea3a8.webp" alt="The coordination tax in a polyrepo estate" loading="lazy" decoding="async">
+</figure>
+
+<p>I think of a polyrepo estate as a distributed system where each repository is a separate database. Each repository has its own owners, history, and release rhythm. That framing makes the cost structure visible. When a change needs to span repositories, I am no longer making a simple local edit. I am coordinating a transaction across ownership domains, backlogs, release trains, and access controls. The work has to move through multiple queues, and each boundary adds a chance for delay or misunderstanding.</p>
+
+<p>In database terms, a commit that touches two repos behaves like a two-phase commit. I prepare changes in both places, then I coordinate the final commit across both. More participants means more latency and more failure modes. If one repo is held up by review or release constraints, the whole change stalls. That coordination tax does not appear as a line item in a sprint plan, but it is real and recurring. It shows up as slower delivery, more meetings, and a heavier cognitive load for engineers who must keep multiple codebases and conventions in their heads.</p>
+
+<p>A monorepo changes the equation. It is like consolidating those separate databases into one database with well-defined schemas. When I make a change that touches three modules, it becomes a single local transaction. I edit, run the relevant tests, and commit. Reuse stops being a service boundary I have to negotiate and starts being a join I can simply use. AI tooling benefits as well: when the whole codebase is indexable in one place, the tools can spot patterns and generate cross-cutting changes with far less friction than they could across a scattered estate.</p>
+
+<p>But a monorepo is not free. I still need strong build tooling, fine-grained ownership, and access controls. Without those, the single database becomes a big ball of mud. A large codebase can turn into a tangle if anyone can change anything and builds are slow or flaky. The size and complexity of the codebase do not go away; they get concentrated. The discipline does not disappear; it moves. I trade cross-repo coordination for internal build and ownership coordination.</p>
+
+<p>That is why I do not think the decision should be driven by ideology. Some teams are better served by polyrepos, especially when ownership is genuinely independent and release cadences diverge. Others will benefit from the local-transaction nature of a monorepo. The business case should rest on measured coordination work: how much time goes into cross-repo reviews, release alignment, duplicated implementation, and waiting on access or ownership changes. If that recurring tax is high, a monorepo may be worth the investment. If it is low, the cost of migration and added tooling may not justify the move. I found the article The Coordination Tax in Your Software Estate to be a useful articulation of this trade-off.</p>
+
+<p class="source-link">Originally covered at <a href="https://www.differentshelf.com/the-coordination-tax-in-your-software-estate/" rel="noopener">differentshelf.com ↗</a></p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
