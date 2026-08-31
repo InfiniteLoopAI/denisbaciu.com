@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why I&#x27;d instrument before building an internal AI cluster — Denis Baciu</title>
+<meta name="description" content="A practical look at Nutanix&#x27;s $20M AI cluster and the build vs buy decision for heavy SaaS AI spend.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-08-i-d-instrument-before-building-internal.html">
+<meta property="og:title" content="Why I&#x27;d instrument before building an internal AI cluster">
+<meta property="og:description" content="A practical look at Nutanix&#x27;s $20M AI cluster and the build vs buy decision for heavy SaaS AI spend.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-08-i-d-instrument-before-building-internal.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-08-30">
+<meta property="article:modified_time" content="2026-08-30">
+<meta property="og:image" content="https://denisbaciu.com/assets/writing/6e92699b7f211264.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Why I'd instrument before building an internal AI cluster",
+  "description": "A practical look at Nutanix's $20M AI cluster and the build vs buy decision for heavy SaaS AI spend.",
+  "datePublished": "2026-08-30",
+  "dateModified": "2026-08-30",
+  "url": "https://denisbaciu.com/writing/2026-08-i-d-instrument-before-building-internal.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://denisbaciu.com/writing/2026-08-i-d-instrument-before-building-internal.html"
+  },
+  "image": "https://denisbaciu.com/assets/writing/6e92699b7f211264.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  },
+  "citation": "https://www.theregister.com/virtualization/2026/08/27/nutanix-built-20m-ai-cluster-to-reduce-use-of-copilot-and-claude-expects-roi-in-a-year/5292823"
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>Why I&#x27;d instrument before building an internal AI cluster</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7499772189404069890">original ↗</a><br>
+  published: 2026-08-30 · status: canonical · expanded from the original post
+</div>
+
+<figure class="lead">
+  <img src="/assets/writing/6e92699b7f211264.jpg" alt="Why I&#x27;d instrument before building an internal AI cluster" loading="lazy" decoding="async">
+</figure>
+
+<p>Nutanix built a $20 million internal AI cluster to reduce its reliance on SaaS AI tools like Copilot and Claude, expecting to break even in about a year. That&#x27;s a significant move, but at enterprise scale it&#x27;s not hard to see the appeal. When you&#x27;re already spending heavily on SaaS AI, the per-token costs add up fast. Owning the capacity changes that math.</p>
+
+<p>The case for owning the hardware is straightforward. You get a predictable cost per request instead of a bill that scales with usage. You can lower latency because traffic stays on your network. You get full control over data, which matters for security and compliance. If Nutanix truly breaks even in about a year, they&#x27;re not buying hype. They&#x27;re buying a pricing floor for heavy internal use.</p>
+
+<p>But there&#x27;s a real case against it. Hardware ages, and models improve quickly. A cluster optimized for today&#x27;s open-weight models may not run tomorrow&#x27;s frontier workloads well. You also inherit all the operational burden: MLOps, security patching, capacity planning, and utilization risk. Idle GPUs are expensive. SaaS vendors handle that burden for you. Utilization is the whole game.</p>
+
+<p>I wouldn&#x27;t frame this as a simple build versus buy decision. I&#x27;d start by instrumenting actual inference volume, latency, and failure modes. That gives you a baseline before you spend anything. You need to know which workloads are heavy, which are latency-sensitive, and which fail in ways that matter. Without that data, you&#x27;re guessing.</p>
+
+<p>Once you have the data, I&#x27;d split the workloads. Self-host the high-volume, deterministic tasks like code completion or internal summarization on smaller models that run efficiently on your own hardware. Keep SaaS for complex reasoning or low-volume, high-stakes work where vendor models are worth the premium. Add a routing layer to send each request to the right backend, and cache aggressively to avoid repeat cost.</p>
+
+<p>The metric that matters is cost per successful request, not raw token price. A cheaper model that fails more often can be more expensive overall. Re-run those numbers monthly because models, volumes, and prices change. Nutanix&#x27;s one-year ROI is impressive, but it only holds if utilization stays above the break-even point. That&#x27;s the metric to watch. If your own cluster sits idle, you&#x27;ve built a very expensive paperweight.</p>
+
+<p class="source-link">Originally covered at <a href="https://www.theregister.com/virtualization/2026/08/27/nutanix-built-20m-ai-cluster-to-reduce-use-of-copilot-and-claude-expects-roi-in-a-year/5292823" rel="noopener">theregister.com ↗</a></p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
