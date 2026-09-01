@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The availability risks that never go away — Denis Baciu</title>
+<meta name="description" content="Rethinking post-incident reviews: some failures are omnipresent, not one-off mistakes, so reliability work should prioritize degradation and fast recovery.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-08-availability-risks-never-go-away.html">
+<meta property="og:title" content="The availability risks that never go away">
+<meta property="og:description" content="Rethinking post-incident reviews: some failures are omnipresent, not one-off mistakes, so reliability work should prioritize degradation and fast recovery.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-08-availability-risks-never-go-away.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-08-31">
+<meta property="article:modified_time" content="2026-08-31">
+<meta property="og:image" content="https://denisbaciu.com/assets/writing/6c6f183e5583472b.webp">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "The availability risks that never go away",
+  "description": "Rethinking post-incident reviews: some failures are omnipresent, not one-off mistakes, so reliability work should prioritize degradation and fast recovery.",
+  "datePublished": "2026-08-31",
+  "dateModified": "2026-08-31",
+  "url": "https://denisbaciu.com/writing/2026-08-availability-risks-never-go-away.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://denisbaciu.com/writing/2026-08-availability-risks-never-go-away.html"
+  },
+  "image": "https://denisbaciu.com/assets/writing/6c6f183e5583472b.webp",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  },
+  "citation": "https://surfingcomplexity.blog/2026/08/29/omnipresent-availability-risks-in-cloud-software/"
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>The availability risks that never go away</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7500277849464053761">original ↗</a><br>
+  published: 2026-08-31 · status: canonical · expanded from the original post
+</div>
+
+<figure class="lead">
+  <img src="/assets/writing/6c6f183e5583472b.webp" alt="The availability risks that never go away" loading="lazy" decoding="async">
+</figure>
+
+<p>Most post-incident reviews I&#x27;ve read end up pointing at something specific: a bad config, a missed limit, a human error. The underlying assumption is that if process were thorough enough, those failures could be prevented. It&#x27;s a comforting idea because it suggests reliability is a matter of finding and plugging the next hole. But it misses a category of risk that doesn&#x27;t go away no matter how good the checklist is.</p>
+
+<p>The piece I read, &#x27;Omnipresent availability risks in cloud software,&#x27; flips that assumption. It lays out four risks that are built into running distributed systems at scale: resource saturation, network partitions, security controls that block legitimate users, and uncommon operational changes. None of these are one-off mistakes. They are omnipresent. They exist in the background of every large system, waiting for the right combination of load, latency, and configuration to turn them into an incident. You can&#x27;t eliminate them by being more careful. You can only design around them.</p>
+
+<p>That reframing changes how I think about reliability work. If a class of failures is unavoidable, then the goal isn&#x27;t a perfect checklist that prevents every failure. The goal is to accept that some failures will happen and to plan for what happens next. That means designing for graceful degradation and fast recovery. It means asking what the system does when a partition occurs, or when a security control locks out a legitimate user, or when a service saturates its resources. The answer can&#x27;t be &#x27;that shouldn&#x27;t happen.&#x27;</p>
+
+<p>The rare operational change is the one that worries me most. When a procedure happens frequently, operators build muscle memory. They know the steps, they recognize the failure modes, they can react quickly when something goes wrong. But when an operational change happens only a few times a year, or once a year, nobody has that muscle memory. The runbook is a document, not a practiced routine. That&#x27;s where incidents find you: in the gap between what the runbook says and what actually happens when you execute it under pressure.</p>
+
+<p>That doesn&#x27;t mean process and runbooks are worthless. They matter, but they matter differently. Instead of trying to prevent every failure, they should be built to support recovery. A checklist is less useful as a guarantee that nothing will go wrong and more useful as a guide for when things do go wrong. The difference is subtle but important: you&#x27;re not writing a script for a perfect run, you&#x27;re writing a fallback for an imperfect one.</p>
+
+<p>So next time I&#x27;m looking at a system, I&#x27;ll watch for the runbook that has only been practiced once, or not at all. That is the most likely place for the next incident. Not because anyone was careless, but because the risk is omnipresent and the recovery path is unpracticed. The more useful posture is not to promise that we will never fail, but to make sure that when we do fail, the system degrades predictably and the people on call can recover quickly.</p>
+
+<p class="source-link">Originally covered at <a href="https://surfingcomplexity.blog/2026/08/29/omnipresent-availability-risks-in-cloud-software/" rel="noopener">surfingcomplexity.blog ↗</a></p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
