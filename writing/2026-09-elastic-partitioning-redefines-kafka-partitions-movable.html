@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Elastic partitioning redefines Kafka partitions as movable units — Denis Baciu</title>
+<meta name="description" content="A look at how dynamically splitting and merging key ranges challenges Kafka&#x27;s fixed-partition assumptions and what that means for operations.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-09-elastic-partitioning-redefines-kafka-partitions-movable.html">
+<meta property="og:title" content="Elastic partitioning redefines Kafka partitions as movable units">
+<meta property="og:description" content="A look at how dynamically splitting and merging key ranges challenges Kafka&#x27;s fixed-partition assumptions and what that means for operations.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-09-elastic-partitioning-redefines-kafka-partitions-movable.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-09-02">
+<meta property="article:modified_time" content="2026-09-02">
+<meta property="og:image" content="https://denisbaciu.com/assets/writing/d46379ac55b0fe46.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Elastic partitioning redefines Kafka partitions as movable units",
+  "description": "A look at how dynamically splitting and merging key ranges challenges Kafka's fixed-partition assumptions and what that means for operations.",
+  "datePublished": "2026-09-02",
+  "dateModified": "2026-09-02",
+  "url": "https://denisbaciu.com/writing/2026-09-elastic-partitioning-redefines-kafka-partitions-movable.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://denisbaciu.com/writing/2026-09-elastic-partitioning-redefines-kafka-partitions-movable.html"
+  },
+  "image": "https://denisbaciu.com/assets/writing/d46379ac55b0fe46.png",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  },
+  "citation": "https://terroir.systems/can-kafka-support-elastic-partitioning/"
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>Elastic partitioning redefines Kafka partitions as movable units</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7500839835851575296">original ↗</a><br>
+  published: 2026-09-02 · status: canonical · expanded from the original post
+</div>
+
+<figure class="lead">
+  <img src="/assets/writing/d46379ac55b0fe46.png" alt="Elastic partitioning redefines Kafka partitions as movable units" loading="lazy" decoding="async">
+</figure>
+
+<p>Many people, myself included, treated Kafka&#x27;s fixed partitions as a hard constraint for maintaining ordering and throughput. The familiar reasoning is that a partition is the unit of parallelism and ordering; if you need more throughput, add partitions; if you need order, put related keys in the same partition. That was long the sensible default. But it is not the whole story.</p>
+
+<p>The article <em>Can Kafka Support Elastic Partitioning?</em> looks at <em>elastic partitioning</em>—dynamically splitting and merging key ranges. It argues that this can scale while preserving per-key ordering and batch efficiency. On the surface, that sounds like a way around the partition bottleneck. But the more I sit with the argument, the clearer it becomes that <strong>the real shift is not about removing partitions but redefining them as logical, movable units</strong>.</p>
+
+<blockquote>
+  <p>The real shift is not about removing partitions but redefining them as logical, movable units.</p>
+</blockquote>
+
+<p>That distinction matters because it changes what client and broker software have to assume. Today, a partition is a stable home: a leader broker owns it, consumers read from a fixed sequence, and offset tracking maps cleanly to a partition ID. Once key ranges can split or merge, that stability disappears. Clients must track which broker owns which range at any given moment, and that tracking has to survive range moves.</p>
+
+<p>First, consumer state locality breaks. In current Kafka idioms, a consumer instance often holds local state keyed to the partitions it is assigned. Rebalancing already has sharp edges; with movable ranges, the mapping between a consumer&#x27;s local state and the ranges it is responsible for becomes much more fluid. Clients cannot simply say &#x27;I own partition 3.&#x27; They have to say &#x27;I own keys in this range, which currently lives on that broker.&#x27; That complicates both rebalancing logic and local state management.</p>
+
+<p>Second, replay and recovery become harder. Offset tracking today is straightforward because a partition&#x27;s offsets are a monotonic sequence within a stable log segment. With dynamic partitions, the log a consumer needs to replay may have split into two ranges, or two ranges may have merged into one. Offset tracking now spans the lifecycle of partitions: a checkpoint needs to know not just a number, but which range boundaries were in effect. Replaying from a previous state becomes an exercise in reconstructing partition history, not just seeking to an offset.</p>
+
+<p>I do not read this as a case that Kafka cannot or should not support elastic partitioning. I read it as a warning about sequencing. If you adopt patterns like <code>KIP-500</code> or <code>tiered storage</code>—moves that already shift assumptions about where state lives and how long it is retained—you will need new operational tooling for partition lifecycle management. That tooling has to handle range splits and merges, consumer reassignment across ranges, and offset reconstruction. It will be needed long before any of this becomes a default.</p>
+
+<p>The article does not promise an easy path, which is why I keep returning to it. Kafka has always scaled by adding partitions. The harder problem is making that scaling feel continuous while preserving the ordering guarantees people rely on. That requires treating partitions less like fixed storage units and more like logical, movable ranges—and accepting that the operational layer has to catch up first.</p>
+
+<p class="source-link">Originally covered at <a href="https://terroir.systems/can-kafka-support-elastic-partitioning/" rel="noopener">terroir.systems ↗</a></p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
