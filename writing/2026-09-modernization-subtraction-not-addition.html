@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Modernization is subtraction, not addition — Denis Baciu</title>
+<meta name="description" content="Incumbent platforms can bolt on AI agents, but the accumulated state is the real bottleneck; an AI-native architecture removes load instead of adding features.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-09-modernization-subtraction-not-addition.html">
+<meta property="og:title" content="Modernization is subtraction, not addition">
+<meta property="og:description" content="Incumbent platforms can bolt on AI agents, but the accumulated state is the real bottleneck; an AI-native architecture removes load instead of adding features.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-09-modernization-subtraction-not-addition.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-09-03">
+<meta property="article:modified_time" content="2026-09-03">
+<meta property="og:image" content="https://denisbaciu.com/assets/writing/7c3b3816988d60a2.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Modernization is subtraction, not addition",
+  "description": "Incumbent platforms can bolt on AI agents, but the accumulated state is the real bottleneck; an AI-native architecture removes load instead of adding features.",
+  "datePublished": "2026-09-03",
+  "dateModified": "2026-09-03",
+  "url": "https://denisbaciu.com/writing/2026-09-modernization-subtraction-not-addition.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://denisbaciu.com/writing/2026-09-modernization-subtraction-not-addition.html"
+  },
+  "image": "https://denisbaciu.com/assets/writing/7c3b3816988d60a2.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  },
+  "citation": "https://www.computerworld.com/article/4216413/qa-serval-ceo-describes-building-an-ai-native-alternative-to-servicenow.html"
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>Modernization is subtraction, not addition</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7501233104909656064">original ↗</a><br>
+  published: 2026-09-03 · status: canonical · expanded from the original post
+</div>
+
+<figure class="lead">
+  <img src="/assets/writing/7c3b3816988d60a2.jpg" alt="Modernization is subtraction, not addition" loading="lazy" decoding="async">
+</figure>
+
+<p>I read the Computerworld Q&amp;A with the Serval CEO about building an AI-native alternative to ServiceNow, and one line kept coming back: <em>AI-native isn&#x27;t a feature you add. It&#x27;s what you don&#x27;t have to carry.</em> The distinction sounds small, but it changes the argument. Most ITSM conversations treat AI as another module to license, another assistant to layer on top of the existing stack. That framing misses what makes an AI-native approach different.</p>
+
+<p>Serval&#x27;s point is architectural, not cosmetic. In that architecture, natural language generates code-based workflows. A repetitive task gets expressed as a workflow and carried out automatically, often faster than a human can manually handle the ticket. That&#x27;s not a chatbot that fills in a form or a copilot that suggests the next field. The request itself becomes the automation path. The model creates something executable, and the system runs it.</p>
+
+<p>That point gets lost in ITSM discussions. Incumbents can bolt on agents. They can offer natural language summaries, suggested resolutions, and automated triage. But they still carry years of custom tables, custom scripts, and configuration choices made under a different set of assumptions. All of that accumulated state is not neutral. It is load. Every new automation attempt has to work around it, reconcile with it, or ignore parts of it. The state itself becomes the bottleneck.</p>
+
+<p>The right comparison is a turbocharger on a car with a seized engine. Adding power does not help if the core cannot turn. An AI agent attached to a platform with years of tangled state has the same problem. It can parse language and call APIs, but it still has to navigate the same brittle configuration beneath it. If the underlying model is dozens of custom tables that no single person fully understands, no agent will make that complexity disappear.</p>
+
+<blockquote>
+  <p>Modernization is subtraction, not addition.</p>
+</blockquote>
+
+<p>That is the real lesson, and it applies beyond ITSM. We tend to evaluate modernization by what we are adding: a new agent, a new integration, a new interface. But the more useful question is what we are willing to remove. Subtraction is harder because it means breaking compatibility with decisions made years ago, sometimes decisions that still show up in reports or contracts. But if accumulated state blocks new paths, no amount of add-on intelligence will fix it.</p>
+
+<p>When I look at platforms described as AI-native now, I try to ask a different question. Not &quot;what can it do with AI?&quot; but &quot;what did they choose not to carry?&quot; That question reveals more about the architecture than any feature list. It is the difference between adding a layer and designing from a smaller base. Serval&#x27;s argument is one way to make that distinction explicit.</p>
+
+<p class="source-link">Originally covered at <a href="https://www.computerworld.com/article/4216413/qa-serval-ceo-describes-building-an-ai-native-alternative-to-servicenow.html" rel="noopener">computerworld.com ↗</a></p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
