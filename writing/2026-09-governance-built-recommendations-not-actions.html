@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IT governance was built for recommendations, not actions — Denis Baciu</title>
+<meta name="description" content="As agents move from recommending to acting, CIOs need an authority matrix and clear escalation paths for every automated action.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-09-governance-built-recommendations-not-actions.html">
+<meta property="og:title" content="IT governance was built for recommendations, not actions">
+<meta property="og:description" content="As agents move from recommending to acting, CIOs need an authority matrix and clear escalation paths for every automated action.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-09-governance-built-recommendations-not-actions.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-09-03">
+<meta property="article:modified_time" content="2026-09-03">
+<meta property="og:image" content="https://denisbaciu.com/assets/writing/4e2a2b8a0426a988.webp">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "IT governance was built for recommendations, not actions",
+  "description": "As agents move from recommending to acting, CIOs need an authority matrix and clear escalation paths for every automated action.",
+  "datePublished": "2026-09-03",
+  "dateModified": "2026-09-03",
+  "url": "https://denisbaciu.com/writing/2026-09-governance-built-recommendations-not-actions.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://denisbaciu.com/writing/2026-09-governance-built-recommendations-not-actions.html"
+  },
+  "image": "https://denisbaciu.com/assets/writing/4e2a2b8a0426a988.webp",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  },
+  "citation": "https://www.cio.com/article/4216532/who-gets-to-decide-the-cio-and-the-new-architecture-of-enterprise-authority.html"
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>IT governance was built for recommendations, not actions</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7501217512345427968">original ↗</a><br>
+  published: 2026-09-03 · status: canonical · expanded from the original post
+</div>
+
+<figure class="lead">
+  <img src="/assets/writing/4e2a2b8a0426a988.webp" alt="IT governance was built for recommendations, not actions" loading="lazy" decoding="async">
+</figure>
+
+<p>The article I keep coming back to is titled “Who gets to decide?”, and the question is more precise than it looks. Most IT governance was built for systems that recommend, not systems that act. A dashboard can suggest, a scoring model can rank, a rules engine can flag. Governance around those systems is mostly about review, validation, and sign-off. When the system itself takes an action, that governance no longer fits. The assumption underneath the old model is that a person will always be there to accept or reject the recommendation. That assumption is now the bottleneck.</p>
+
+<p>The shift matters because agents are moving from the recommend side to the act side. They don&#x27;t just surface an exception; they approve it. They don&#x27;t just flag a transaction; they block it. The architecture of authority changes at that boundary. A recommendation can be wrong without doing damage. An action can be wrong and create a liability, a customer incident, or a compliance problem before anyone notices. The gap between those two outcomes is where the new architecture of enterprise authority has to live.</p>
+
+<p>This is where I part company with the idea that model confidence solves the problem. Confidence is a technical property. Authority is not. If a model is 94% sure a payment is fraudulent, that still doesn&#x27;t answer whether it is allowed to stop the payment. A model can tell you what it thinks; it cannot tell you what it is allowed to do. That decision belongs to the business, and it has to be encoded as policy, not inferred from a score.</p>
+
+<figure class="inline-image">
+  <img src="/assets/writing/article-e94eebc61dfd.png" alt="Illustration from the original article" loading="lazy" decoding="async">
+</figure>
+
+<blockquote>
+  <p>Authority isn&#x27;t a technical property; it&#x27;s a business decision that must be encoded as policy, not left to model confidence.</p>
+</blockquote>
+
+<p>The fraud example makes the difference concrete. A fraud model that flags false positives is annoying. Analysts waste time, customers get asked for verification, and the backlog grows. But the system is still fundamentally in recommendation mode. The business can ignore the flag, adjust thresholds, or accept the noise. The same model set to auto-block payments is no longer a filter; it is a decision-maker. A false positive becomes a revenue incident and a customer experience problem. The cost of being wrong changes category, and the governance has to change with it.</p>
+
+<p>That is why the <em>authority matrix</em> matters. For every automated action, someone has to say who decided that the system may act, under what conditions, and what happens when the model is wrong. This is not a data science artifact. It is an accountability structure. It should name the action, the policy that permits it, the owner who approved it, and the path for a human to override or escalate. The matrix doesn&#x27;t have to be heavy; it has to be explicit. It can start as a table that maps each automated action to its policy owner and escalation path.</p>
+
+<p>I don&#x27;t think this means slowing automation down. It means being explicit about what automation is allowed to do. The bottleneck isn&#x27;t the model; it&#x27;s the absence of a mapping from model output to business authority. When that mapping exists, agents can act faster because the decision to act has already been made by someone accountable. When it doesn&#x27;t exist, the organization is pretending that a confidence score can carry authority it was never given. That is not a technical problem; it is an organizational one.</p>
+
+<p>CIOs will have to build that matrix before the models ship, not after the first revenue incident. The article&#x27;s title asks who gets to decide. The answer has to be: <strong>the business decides, in advance, and the system encodes that decision as policy.</strong> Everything else is just confidence wearing authority&#x27;s clothes.</p>
+
+<p class="source-link">Originally covered at <a href="https://www.cio.com/article/4216532/who-gets-to-decide-the-cio-and-the-new-architecture-of-enterprise-authority.html" rel="noopener">cio.com ↗</a></p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
