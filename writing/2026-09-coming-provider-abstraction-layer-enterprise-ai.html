@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The coming provider abstraction layer in enterprise AI — Denis Baciu</title>
+<meta name="description" content="When ChatGPT, Claude, and Grok went down at once, it exposed the need for provider abstraction, degradation modes, and multi-provider failover.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-09-coming-provider-abstraction-layer-enterprise-ai.html">
+<meta property="og:title" content="The coming provider abstraction layer in enterprise AI">
+<meta property="og:description" content="When ChatGPT, Claude, and Grok went down at once, it exposed the need for provider abstraction, degradation modes, and multi-provider failover.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-09-coming-provider-abstraction-layer-enterprise-ai.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-09-05">
+<meta property="article:modified_time" content="2026-09-05">
+<meta property="og:image" content="https://denisbaciu.com/assets/writing/6dd2bee2997cb870.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "The coming provider abstraction layer in enterprise AI",
+  "description": "When ChatGPT, Claude, and Grok went down at once, it exposed the need for provider abstraction, degradation modes, and multi-provider failover.",
+  "datePublished": "2026-09-05",
+  "dateModified": "2026-09-05",
+  "url": "https://denisbaciu.com/writing/2026-09-coming-provider-abstraction-layer-enterprise-ai.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://denisbaciu.com/writing/2026-09-coming-provider-abstraction-layer-enterprise-ai.html"
+  },
+  "image": "https://denisbaciu.com/assets/writing/6dd2bee2997cb870.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  },
+  "citation": "https://www.cio.com/article/4218403/chatgpt-claude-and-grok-all-went-down-at-once-enterprises-need-a-backup-plan-2.html"
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>The coming provider abstraction layer in enterprise AI</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7501930309291057152">original ↗</a><br>
+  published: 2026-09-05 · status: canonical · expanded from the original post
+</div>
+
+<figure class="lead">
+  <img src="/assets/writing/6dd2bee2997cb870.jpg" alt="The coming provider abstraction layer in enterprise AI" loading="lazy" decoding="async">
+</figure>
+
+<p>I’d bet that within a year, most serious enterprise AI platforms will ship with a <em>provider abstraction layer</em> and <em>defined degradation modes</em>. Not just a fallback model in a config file. The difference matters. A fallback model says, “if one endpoint fails, use another.” An abstraction layer says the routing, retries, caching, and failure semantics are part of the platform contract. Degradation modes say what happens when no provider is fully available: which workflows slow down, which queue, which stop, and who gets told. That is a bigger shift than swapping URLs.</p>
+
+<p>The simultaneous multi-hour outages at ChatGPT, Claude, and Grok are a useful stress test. When three independent vendors fail together, the assumption that “one provider down is fine, I’ll just switch” breaks. It was never that simple. But for a long time it was a comfortable simplification. Teams could tell themselves that provider diversity was enough. That comfort is gone.</p>
+
+<p>For teams automating critical workflows, the implications are immediate. Routing logic, cached completions, and manual runbooks stop being nice-to-haves. They become the difference between an incident and a business halt. If a workflow can’t degrade gracefully, it doesn’t matter whether you have three API keys or ten. The failure surfaces as missing work, wrong output, or a queue that no one notices until customers complain.</p>
+
+<p>Plenty of teams treat LLM APIs like a managed database: swap the endpoint and move on. That misses the point. A managed database has well-understood consistency, failover, and backup semantics. Many teams have learned to trust that layer. But LLM APIs are still a shifting set of products, with different rate limits, different latency profiles, different content policies, and different failure modes. Treating them as interchangeable ignores the operational surface.</p>
+
+<p><strong>The vendors won’t solve this for you.</strong> I am not saying they are indifferent. But their incentives point toward their own uptime, their own capacity, and their own model improvements. They are not in a position to design cross-provider failover for your specific workflows. A provider might offer a fallback to another model, but that is still one vendor’s decision about what counts as degraded. Your definition of critical will differ.</p>
+
+<p>What I am watching is whether procurement conversations start including multi-provider SLOs and per-workflow failover requirements—not just model quality benchmarks. Benchmarks are easy to compare; they are also about the steady state. Failover requirements force a different conversation. They ask what happens when the model is slow, partially available, or gone. They ask who owns the routing layer, who tests the runbooks, and what “degraded” means for each workflow. When those questions start showing up in RFPs and enterprise agreements, the market will move.</p>
+
+<p>If that happens, the platforms that win will be the ones that treat provider abstraction and degradation as first-class features, not configuration flags. That is not a radical prediction. It is the same pattern we have seen with cloud regions, DNS, and payment processors. At first, the fallback is manual and shallow. Then the failure is too expensive to ignore. Then the abstraction becomes part of the product.</p>
+
+<p class="source-link">Originally covered at <a href="https://www.cio.com/article/4218403/chatgpt-claude-and-grok-all-went-down-at-once-enterprises-need-a-backup-plan-2.html" rel="noopener">cio.com ↗</a></p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
