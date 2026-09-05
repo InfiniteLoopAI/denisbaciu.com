@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Denis Baciu</title>
+    <link>https://denisbaciu.com/</link>
+    <description>Writing on industrialising AI in financial services — taking proof-of-concepts into production.</description>
+    <language>en</language>
+    <lastBuildDate>Fri, 04 Sep 2026 16:13:21 +0000</lastBuildDate>
+    <atom:link href="https://denisbaciu.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Why I&#x27;d instrument before building an internal AI cluster</title>
+      <link>https://denisbaciu.com/writing/2026-08-i-d-instrument-before-building-internal.html</link>
+      <guid isPermaLink="true">https://denisbaciu.com/writing/2026-08-i-d-instrument-before-building-internal.html</guid>
+      <pubDate>Sun, 30 Aug 2026 00:00:00 +0000</pubDate>
+      <description>A practical look at Nutanix&#x27;s $20M AI cluster and the build vs buy decision for heavy SaaS AI spend.</description>
+    </item>
+    <item>
+      <title>The coordination tax in a polyrepo estate</title>
+      <link>https://denisbaciu.com/writing/2026-08-coordination-tax-polyrepo-estate.html</link>
+      <guid isPermaLink="true">https://denisbaciu.com/writing/2026-08-coordination-tax-polyrepo-estate.html</guid>
+      <pubDate>Sat, 29 Aug 2026 00:00:00 +0000</pubDate>
+      <description>A polyrepo estate behaves like a distributed system, and recurring coordination work should drive the monorepo decision, not ideology.</description>
+    </item>
+    <item>
+      <title>Open-weight models are moving into production workloads</title>
+      <link>https://denisbaciu.com/writing/2026-08-open-weight-models-moving-production-workloads.html</link>
+      <guid isPermaLink="true">https://denisbaciu.com/writing/2026-08-open-weight-models-moving-production-workloads.html</guid>
+      <pubDate>Thu, 27 Aug 2026 00:00:00 +0000</pubDate>
+      <description>A practical look at evaluating open-weight models on real traffic, piloting them in low-risk tasks, and choosing managed inference.</description>
+    </item>
+    <item>
+      <title>Slack Code moves AI coding out of the terminal into group chat</title>
+      <link>https://denisbaciu.com/writing/2026-08-slack-code-moves-ai-coding-out.html</link>
+      <guid isPermaLink="true">https://denisbaciu.com/writing/2026-08-slack-code-moves-ai-coding-out.html</guid>
+      <pubDate>Mon, 24 Aug 2026 00:00:00 +0000</pubDate>
+      <description>Slack Code puts coding agents in shared channels so teams can prompt, review, and steer AI-generated changes with a searchable record.</description>
+    </item>
+    <item>
+      <title>Boring Infrastructure Sleeps Better</title>
+      <link>https://denisbaciu.com/writing/2026-08-boring-infrastructure-sleeps-better.html</link>
+      <guid isPermaLink="true">https://denisbaciu.com/writing/2026-08-boring-infrastructure-sleeps-better.html</guid>
+      <pubDate>Sun, 23 Aug 2026 00:00:00 +0000</pubDate>
+      <description>Rogue Amoeba&#x27;s move from CGI to FastCGI and MySQL to SQLite shows how deliberately unglamorous upgrades can reduce operational pain and improve resilience.</description>
+    </item>
+    <item>
+      <title>Enterprise AI’s Quiet Shift from Experiments to Unit Economics</title>
+      <link>https://denisbaciu.com/writing/2026-08-enterprise-ais-quiet-shift-experiments-unit.html</link>
+      <guid isPermaLink="true">https://denisbaciu.com/writing/2026-08-enterprise-ais-quiet-shift-experiments-unit.html</guid>
+      <pubDate>Sat, 22 Aug 2026 00:00:00 +0000</pubDate>
+      <description>Enterprise AI adoption is moving from broad experimentation to disciplined, measurable use cases driven by cost observability and per-query ROI.</description>
+    </item>
+    <item>
+      <title>An LLM wiki is not a self-maintaining knowledge base</title>
+      <link>https://denisbaciu.com/writing/2026-08-llm-wiki-not-self-maintaining-knowledge.html</link>
+      <guid isPermaLink="true">https://denisbaciu.com/writing/2026-08-llm-wiki-not-self-maintaining-knowledge.html</guid>
+      <pubDate>Thu, 20 Aug 2026 00:00:00 +0000</pubDate>
+      <description>Casey Newton&#x27;s LLM wiki shows real research gains but also ongoing maintenance, where curation is the real product.</description>
+    </item>
+    <item>
+      <title>MCP session handles are capability tokens, not pointers</title>
+      <link>https://denisbaciu.com/writing/2026-08-mcp-session-handles-capability-tokens-not.html</link>
+      <guid isPermaLink="true">https://denisbaciu.com/writing/2026-08-mcp-session-handles-capability-tokens-not.html</guid>
+      <pubDate>Mon, 17 Aug 2026 00:00:00 +0000</pubDate>
+      <description>MCP&#x27;s shift to model-held session handles trades server affinity for horizontal scale; short-lived capability tokens keep both.</description>
+    </item>
+    <item>
+      <title>Why Regulated Enterprises Will Mix Open and Closed Models</title>
+      <link>https://denisbaciu.com/writing/2026-08-regulated-enterprises-will-mix-open-closed.html</link>
+      <guid isPermaLink="true">https://denisbaciu.com/writing/2026-08-regulated-enterprises-will-mix-open-closed.html</guid>
+      <pubDate>Sun, 16 Aug 2026 00:00:00 +0000</pubDate>
+      <description>Regulated enterprises will increasingly blend open-weight and closed models for AI agents, driven by control, auditability, and customization rather than benchmark scores.</description>
+    </item>
+    <item>
+      <title>Multi-cloud AI observability needs a common transponder</title>
+      <link>https://denisbaciu.com/writing/2026-08-multi-cloud-ai-observability-needs-common.html</link>
+      <guid isPermaLink="true">https://denisbaciu.com/writing/2026-08-multi-cloud-ai-observability-needs-common.html</guid>
+      <pubDate>Sat, 15 Aug 2026 00:00:00 +0000</pubDate>
+      <description>How OpenTelemetry and AWS AgentCore Observability can turn fragmented AI agent monitoring into one operational pane across clouds.</description>
+    </item>
+    <item>
+      <title>AI-assisted PostgreSQL migrations need a human review loop</title>
+      <link>https://denisbaciu.com/writing/2026-08-ai-assisted-postgresql-migrations-need-human.html</link>
+      <guid isPermaLink="true">https://denisbaciu.com/writing/2026-08-ai-assisted-postgresql-migrations-need-human.html</guid>
+      <pubDate>Thu, 13 Aug 2026 00:00:00 +0000</pubDate>
+      <description>Google Cloud&#x27;s Gemini in Database Migration Service drafts PL/pgSQL conversions, but teams must keep a strict review loop to avoid subtle logic changes.</description>
+    </item>
+    <item>
+      <title>The Real Bottleneck in Data Platforms Is Neglected Orchestration</title>
+      <link>https://denisbaciu.com/writing/2026-08-real-bottleneck-data-platforms-neglected-orchestration.html</link>
+      <guid isPermaLink="true">https://denisbaciu.com/writing/2026-08-real-bottleneck-data-platforms-neglected-orchestration.html</guid>
+      <pubDate>Mon, 10 Aug 2026 00:00:00 +0000</pubDate>
+      <description>While tool sprawl gets the blame, the true problem is treating orchestration as a cron job instead of a control plane with SLOs for freshness, failure recovery, and cost.</description>
+    </item>
+    <item>
+      <title>Why I’d Bet on the Agent Access Model for Production</title>
+      <link>https://denisbaciu.com/writing/2026-08-id-bet-agent-access-model-production.html</link>
+      <guid isPermaLink="true">https://denisbaciu.com/writing/2026-08-id-bet-agent-access-model-production.html</guid>
+      <pubDate>Sun, 09 Aug 2026 00:00:00 +0000</pubDate>
+      <description>Cloudflare’s Agent Access Model authorizes each agent action at the task level, using short-lived credentials and a Trust Ratchet to eliminate privilege creep.</description>
+    </item>
+    <item>
+      <title>Memory is the bottleneck nobody budgets for</title>
+      <link>https://denisbaciu.com/writing/2026-08-memory-bottleneck-nobody-budgets.html</link>
+      <guid isPermaLink="true">https://denisbaciu.com/writing/2026-08-memory-bottleneck-nobody-budgets.html</guid>
+      <pubDate>Sat, 08 Aug 2026 00:00:00 +0000</pubDate>
+      <description>CXL memory pooling relieves GPU HBM constraints in RAG and vector search by offloading KV caches and embeddings to shared low-latency memory.</description>
+    </item>
+    <item>
+      <title>The enterprise AI strategy that outlasts any single model</title>
+      <link>https://denisbaciu.com/writing/2026-08-enterprise-ai-strategy-outlasts-any-single.html</link>
+      <guid isPermaLink="true">https://denisbaciu.com/writing/2026-08-enterprise-ai-strategy-outlasts-any-single.html</guid>
+      <pubDate>Thu, 06 Aug 2026 00:00:00 +0000</pubDate>
+      <description>An effective AI strategy abstracts providers, evaluates on real tasks, monitors costs and latency, and avoids vendor lock-in.</description>
+    </item>
+    <item>
+      <title>Agents Are Easy to Build, Hard to Control</title>
+      <link>https://denisbaciu.com/writing/2026-08-agents-easy-build-hard-control.html</link>
+      <guid isPermaLink="true">https://denisbaciu.com/writing/2026-08-agents-easy-build-hard-control.html</guid>
+      <pubDate>Mon, 03 Aug 2026 00:00:00 +0000</pubDate>
+      <description>Real-time observability and governance must be built into AI agents from day one, or organizations face black-box risks and spiraling costs.</description>
+    </item>
+    <item>
+      <title>Overprivileged AI Agents Repeat Old IAM Mistakes</title>
+      <link>https://denisbaciu.com/writing/2026-08-overprivileged-ai-agents-repeat-old-iam.html</link>
+      <guid isPermaLink="true">https://denisbaciu.com/writing/2026-08-overprivileged-ai-agents-repeat-old-iam.html</guid>
+      <pubDate>Sun, 02 Aug 2026 00:00:00 +0000</pubDate>
+      <description>71% of organizations have AI agents that can reach sensitive data; one-third of developers saw incidents from overprivileged non-human identities.</description>
+    </item>
+    <item>
+      <title>Stateful Execution Is the Next Bottleneck for Enterprise AI Agents</title>
+      <link>https://denisbaciu.com/writing/2026-08-stateful-execution-next-bottleneck-enterprise-ai.html</link>
+      <guid isPermaLink="true">https://denisbaciu.com/writing/2026-08-stateful-execution-next-bottleneck-enterprise-ai.html</guid>
+      <pubDate>Sat, 01 Aug 2026 00:00:00 +0000</pubDate>
+      <description>Stateful execution environments are set to become the primary bottleneck for enterprise AI agents, with Perplexity’s SPACE as an early signal.</description>
+    </item>
+    <item>
+      <title>Observability Is a Safety Net, Not a Silver Bullet, for Vibe Coding</title>
+      <link>https://denisbaciu.com/writing/2026-07-observability-safety-net-not-silver-bullet.html</link>
+      <guid isPermaLink="true">https://denisbaciu.com/writing/2026-07-observability-safety-net-not-silver-bullet.html</guid>
+      <pubDate>Thu, 30 Jul 2026 00:00:00 +0000</pubDate>
+      <description>Observability exposes gaps in AI-generated code, but its feedback loop is slow; enforce contracts and use runtime data for targeted fixes.</description>
+    </item>
+    <item>
+      <title>Routine coding tasks don&#x27;t need expensive reasoning models</title>
+      <link>https://denisbaciu.com/writing/2026-07-routine-coding-tasks-don-t-need.html</link>
+      <guid isPermaLink="true">https://denisbaciu.com/writing/2026-07-routine-coding-tasks-don-t-need.html</guid>
+      <pubDate>Mon, 27 Jul 2026 00:00:00 +0000</pubDate>
+      <description>Routine coding tasks don&#x27;t need deep chain-of-thought, and using expensive models for them wastes money; a router sending simple prompts to cheap models solves that.</description>
+    </item>
+  </channel>
+</rss>

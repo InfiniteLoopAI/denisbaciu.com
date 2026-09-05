@@ -450,7 +450,11 @@ h1 {
 
 a { color: var(--blue); text-underline-offset: 3px; text-decoration-thickness: 1px; }
 
-.article a, .about-text a, .band a:not(.more):not(.row):not(.brand) { color: var(--blue); }
+/* .follow-btn is excluded: it manages its own colour, and the primary
+   variant needs white text on the blue fill. */
+.article a,
+.about-text a,
+.band a:not(.more):not(.row):not(.brand):not(.follow-btn) { color: var(--blue); }
 
 .prov {
   font: 400 13px/1.8 var(--mono);
@@ -597,6 +601,98 @@ a { color: var(--blue); text-underline-offset: 3px; text-decoration-thickness: 1
 .graveyard { font: 400 13px/2 var(--mono); color: var(--ink-2); }
 
 time { font-variant-numeric: tabular-nums; }
+
+/* ---------- subscribe / follow buttons ---------- */
+
+.follow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.follow-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 18px;
+  border: 1px solid var(--hair-2);
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--ink);
+  font: 500 14px/1 var(--sg);
+  text-decoration: none;
+  transition: border-color 0.12s ease, color 0.12s ease, transform 0.12s ease;
+}
+
+.follow-btn svg { width: 17px; height: 17px; flex: none; }
+
+.follow-btn:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+  transform: translateY(-1px);
+}
+
+.follow-btn--primary {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: #fff;
+}
+
+.follow-btn--primary:hover {
+  color: #fff;
+  filter: brightness(1.08);
+}
+
+.follow-note {
+  font: 400 14px/1.6 var(--body);
+  color: var(--ink-3);
+  margin: 24px 0 0;
+  max-width: 560px;
+}
+
+.follow-note a { color: var(--blue); }
+
+/* used by the commented-out newsletter form, kept so it works when enabled */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.subscribe-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+  max-width: 460px;
+}
+
+.subscribe-form input {
+  flex: 1 1 240px;
+  padding: 11px 14px;
+  border: 1px solid var(--hair-2);
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--ink);
+  font: 400 15px/1.2 var(--body);
+}
+
+.subscribe-form button {
+  padding: 11px 20px;
+  border: 1px solid var(--blue);
+  border-radius: 8px;
+  background: var(--blue);
+  color: #fff;
+  font: 500 14px/1.2 var(--sg);
+  cursor: pointer;
+}
 
 /* ---------- footer ---------- */
 
