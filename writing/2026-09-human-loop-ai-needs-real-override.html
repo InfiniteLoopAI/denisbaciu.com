@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Human-in-the-loop AI needs real override authority — Denis Baciu</title>
+<meta name="description" content="Many AI review systems give people visibility and a flag button, but no power to halt or override a decision—so it&#x27;s monitoring, not control.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-09-human-loop-ai-needs-real-override.html">
+<meta property="og:title" content="Human-in-the-loop AI needs real override authority">
+<meta property="og:description" content="Many AI review systems give people visibility and a flag button, but no power to halt or override a decision—so it&#x27;s monitoring, not control.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-09-human-loop-ai-needs-real-override.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-09-07">
+<meta property="article:modified_time" content="2026-09-07">
+<meta property="og:image" content="https://denisbaciu.com/assets/writing/14eb79bd52eddbbf.webp">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Human-in-the-loop AI needs real override authority",
+  "description": "Many AI review systems give people visibility and a flag button, but no power to halt or override a decision—so it's monitoring, not control.",
+  "datePublished": "2026-09-07",
+  "dateModified": "2026-09-07",
+  "url": "https://denisbaciu.com/writing/2026-09-human-loop-ai-needs-real-override.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://denisbaciu.com/writing/2026-09-human-loop-ai-needs-real-override.html"
+  },
+  "image": "https://denisbaciu.com/assets/writing/14eb79bd52eddbbf.webp",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  },
+  "citation": "https://www.cio.com/article/4215442/when-ais-human-in-the-loop-really-isnt.html"
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>Human-in-the-loop AI needs real override authority</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7502637543755091968">original ↗</a><br>
+  published: 2026-09-07 · status: canonical · expanded from the original post
+</div>
+
+<figure class="lead">
+  <img src="/assets/writing/14eb79bd52eddbbf.webp" alt="Human-in-the-loop AI needs real override authority" loading="lazy" decoding="async">
+</figure>
+
+<p>In operations, we wouldn&#x27;t call a read-only dashboard a control. You can watch latency climb, error rates spike, and nodes go unhealthy, but if you can&#x27;t stop a rollout, kill a pod, or reroute traffic, you&#x27;re an observer, not an operator. A dashboard is useful telemetry, but telemetry is information, not action. The ability to observe and the ability to act are different things.</p>
+
+<p>The same distinction applies to AI systems that claim to have a human in the loop. Many of them give reviewers visibility into outputs and a button to flag a problem, but no actual authority to halt the system or override a decision. That is the uncomfortable gap a recent article in CIO describes under the title &quot;When AI&#x27;s human in the loop really isn&#x27;t.&quot;</p>
+
+<blockquote>
+  <p>Seeing a suspect output isn&#x27;t oversight if the system keeps serving it.</p>
+</blockquote>
+
+<p>If a reviewer can mark a result as wrong, but that mark doesn&#x27;t change what happens next, then the human is not in the decision path. The human is in the logging path. The system may record the objection, route it to a queue, or attach it to a report, but the original decision continues to move downstream.</p>
+
+<p>Compare that to a real circuit breaker. It doesn&#x27;t just log a short circuit and hope someone notices. It opens the circuit, isolates the fault, and forces the system into a safe state. And we test it—not in theory, but by intentionally faulting a line in staging to confirm that it trips and resets correctly. That is what an operational control looks like.</p>
+
+<p>Effective human-in-the-loop controls need the same engineering discipline. The person reviewing a decision needs the right expertise and enough context to understand what they are seeing. But expertise and context aren&#x27;t enough. They also need genuine override authority, wired into the system so that stopping or overriding a decision actually stops or reverses what the system is doing.</p>
+
+<p>Regular testing matters too. An override button that has never been exercised is like a circuit breaker that has never been tripped. You don&#x27;t know if it works, if it is wired to the right component, or if the people expected to use it know what to do. Testing a human-in-the-loop control means deliberately running scenarios where the system produces a bad output and confirming that the human can catch it and stop it before it causes harm. This has to be an operational practice, not a compliance checkbox.</p>
+
+<p>There is a difference between being asked to supervise a system and being given the means to supervise it. When a bad decision gets flagged and nothing changes, the person who flagged it is left holding a responsibility they never actually had. Over time, that erodes trust in the review process and makes the loop decorative rather than functional.</p>
+
+<p>The bar for human oversight should be the same as the bar for any other operational control. If the human can&#x27;t stop the rollout or kill the pod equivalent, you don&#x27;t have a control. You have a monitoring system with a suggestion box. Oversight isn&#x27;t about having eyes on the system; it&#x27;s about having hands on the controls.</p>
+
+<p class="source-link">Originally covered at <a href="https://www.cio.com/article/4215442/when-ais-human-in-the-loop-really-isnt.html" rel="noopener">cio.com ↗</a></p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
