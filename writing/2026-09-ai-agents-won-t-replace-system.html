@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI agents won&#x27;t replace the system of record—they&#x27;ll wrap it — Denis Baciu</title>
+<meta name="description" content="AI agents need clean domain data, but systems of record are sticky. Wrap legacy backends with governed APIs and event streams rather than replacing them.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-09-ai-agents-won-t-replace-system.html">
+<meta property="og:title" content="AI agents won&#x27;t replace the system of record—they&#x27;ll wrap it">
+<meta property="og:description" content="AI agents need clean domain data, but systems of record are sticky. Wrap legacy backends with governed APIs and event streams rather than replacing them.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-09-ai-agents-won-t-replace-system.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-09-06">
+<meta property="article:modified_time" content="2026-09-06">
+<meta property="og:image" content="https://denisbaciu.com/assets/writing/6fa0e403063af621.webp">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "AI agents won't replace the system of record—they'll wrap it",
+  "description": "AI agents need clean domain data, but systems of record are sticky. Wrap legacy backends with governed APIs and event streams rather than replacing them.",
+  "datePublished": "2026-09-06",
+  "dateModified": "2026-09-06",
+  "url": "https://denisbaciu.com/writing/2026-09-ai-agents-won-t-replace-system.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://denisbaciu.com/writing/2026-09-ai-agents-won-t-replace-system.html"
+  },
+  "image": "https://denisbaciu.com/assets/writing/6fa0e403063af621.webp",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  },
+  "citation": "https://www.battery.com/blog/defying-gravity-the-system-of-record-in-the-age-of-ai/"
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>AI agents won&#x27;t replace the system of record—they&#x27;ll wrap it</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7502308051660521472">original ↗</a><br>
+  published: 2026-09-06 · status: canonical · expanded from the original post
+</div>
+
+<figure class="lead">
+  <img src="/assets/writing/6fa0e403063af621.webp" alt="AI agents won&#x27;t replace the system of record—they&#x27;ll wrap it" loading="lazy" decoding="async">
+</figure>
+
+<p>There&#x27;s a sharp debate about whether AI agents will replace the systems of record that run most companies. On one side, agents create demand for integrated, high-quality domain data. On the other, the systems that hold that data are not going anywhere soon. The conclusion I keep coming back to is less dramatic than either side.</p>
+
+<blockquote>
+  <p>Don&#x27;t replace the system of record; wrap it.</p>
+</blockquote>
+
+<h2>The case for AI-native systems</h2>
+
+<p>AI agents are only as good as the data they can read and act on. That means integrated, high-quality domain data, not a set of disconnected silos. Lightweight systems of action that sit on top of messy enterprise data won&#x27;t cut it. The agent needs a coherent model of customers, orders, assets, or whatever the domain is. Startups can build systems of record from clean foundations, designing schemas and access patterns with agents in mind. Incumbents struggle with legacy schemas and siloed access, which makes it harder to expose that same quality of data. That gap opens real market turnover. And the revenue model shifts from per-seat software pricing to automated labor and outcomes; paying per seat makes little sense when an agent, not a person, is doing the work.</p>
+
+<h2>The case against replacing core systems</h2>
+
+<p>But core systems of record are sticky for reasons that have nothing to do with AI. Auditability, compliance, integrations, and years of accumulated edge-case logic make them hard to move. Most agents today can read data but can&#x27;t reliably write back under transaction guarantees. A write that violates an invariant or bypasses a validation rule is worse than no write at all. Replacing that layer is a multi-year bet, not a feature release. That is not a technology problem as much as an institutional one.</p>
+
+<h2>Where I land</h2>
+
+<p>So the path I&#x27;d take is not to replace the system of record, but to wrap it. Expose legacy backends through APIs, event streams, and clean domain models. Let agents read and act through a governed abstraction layer, with lineage, access controls, and write validation. That means the legacy system remains the source of truth, but the agent interacts with a consistent interface that can enforce rules before anything hits the transaction path.</p>
+
+<figure class="diagram">
+  <img src="/assets/writing/diagram-27d219be106b.png" alt="A wrap layer sits between agents and legacy systems of record." loading="lazy" decoding="async">
+  <figcaption>Fig 1. A wrap layer sits between agents and legacy systems of record.</figcaption>
+</figure>
+
+<p>The abstraction layer is not a thin proxy; it has to carry real governance. Lineage tells you where a piece of data came from. Access controls limit what an agent can see. Write validation ensures that an action is allowed before it touches the system of record. That is what makes the wrap approach viable in production, not just in a demo.</p>
+
+<p>This is the same pattern as microservices adoption. Teams didn&#x27;t rewrite monoliths overnight; they carved out bounded contexts and evolved gradually. The monolith remained, but it was no longer the only interface. A similar move works here: start with read-only APIs for agents, then add event streams for changes, then add write validation for actions that need it. Over time, the abstraction layer becomes the <em>system of engagement</em> for agents while the legacy backend stays as the system of record.</p>
+
+<p>Battery&#x27;s piece, <em>Defying Gravity: The System of Record in the Age of AI</em>, is worth reading for the strategic framing. It lays out the tension more fully than I can here. My conclusion is simple: the next few years won&#x27;t be about replacing existing systems of record with agent-native alternatives. They&#x27;ll be about building the data and governance layer that lets agents use what&#x27;s already there. That layer is the real near-term opportunity.</p>
+
+<p class="source-link">Originally covered at <a href="https://www.battery.com/blog/defying-gravity-the-system-of-record-in-the-age-of-ai/" rel="noopener">battery.com ↗</a></p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
