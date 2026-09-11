@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shuffle-sharding: probabilistic isolation without dedicated hardware — Denis Baciu</title>
+<meta name="description" content="How shuffle-sharding reduces multi-tenant blast radius by assigning tenants to random subsets of workers, avoiding the cost of hard isolation.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-09-shuffle-sharding-probabilistic-isolation-without-dedicated.html">
+<meta property="og:title" content="Shuffle-sharding: probabilistic isolation without dedicated hardware">
+<meta property="og:description" content="How shuffle-sharding reduces multi-tenant blast radius by assigning tenants to random subsets of workers, avoiding the cost of hard isolation.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-09-shuffle-sharding-probabilistic-isolation-without-dedicated.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-09-10">
+<meta property="article:modified_time" content="2026-09-10">
+<meta property="og:image" content="https://denisbaciu.com/assets/writing/2f1a78db8d8f7a0e.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Shuffle-sharding: probabilistic isolation without dedicated hardware",
+  "description": "How shuffle-sharding reduces multi-tenant blast radius by assigning tenants to random subsets of workers, avoiding the cost of hard isolation.",
+  "datePublished": "2026-09-10",
+  "dateModified": "2026-09-10",
+  "url": "https://denisbaciu.com/writing/2026-09-shuffle-sharding-probabilistic-isolation-without-dedicated.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://denisbaciu.com/writing/2026-09-shuffle-sharding-probabilistic-isolation-without-dedicated.html"
+  },
+  "image": "https://denisbaciu.com/assets/writing/2f1a78db8d8f7a0e.png",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  },
+  "citation": "https://sophiabits.com/blog/shuffle-shard-everything"
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>Shuffle-sharding: probabilistic isolation without dedicated hardware</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7503770462858964992">original ↗</a><br>
+  published: 2026-09-10 · status: canonical · expanded from the original post
+</div>
+
+<figure class="lead">
+  <img src="/assets/writing/2f1a78db8d8f7a0e.png" alt="Shuffle-sharding: probabilistic isolation without dedicated hardware" loading="lazy" decoding="async">
+</figure>
+
+<p>When you run a multi-tenant service, the usual worry is the noisy neighbor: one tenant’s spike in traffic or a bad deployment degrades everyone else. The standard answer is to give each tenant its own dedicated resources—separate worker pools, dedicated shards, or even separate clusters. That gives strong isolation, but it’s expensive. You pay for hardware that sits idle most of the time, because each tenant’s peak is provisioned separately. And you add operational overhead managing many isolated pools, each with its own scaling and monitoring.</p>
+
+<p>There is a cheaper alternative that gets most of the benefit. Instead of giving each tenant a dedicated set of resources, you assign each tenant to a small, randomly selected subset of workers from a larger shared pool. This is called <em>shuffle-sharding</em>. The key property is that the assignment is random and the subset is small. For example, with 100 workers and subsets of three, there are over 160,000 possible combinations. The probability of two tenants ending up on the exact same set of workers is tiny. You get <strong>blast-radius reduction without extra hardware</strong>.</p>
+
+<blockquote>
+  <p>The real shift is from fixed partitions to probabilistic isolation.</p>
+</blockquote>
+
+<p>With dedicated pools, you know exactly which tenants share a failure domain—they all share the same pool, so a failure takes down the whole cohort. With shuffle-sharding, a single worker failure affects only the tenants that were randomly assigned to include that worker. Because the subsets are small and random, that’s typically a small fraction of all tenants, not an entire cohort. You trade a deterministic mapping for a probabilistic one, but the trade-off is usually worth it.</p>
+
+<figure class="inline-image">
+  <img src="/assets/writing/article-7e840af39ab7.png" alt="Illustration from the original article" loading="lazy" decoding="async">
+</figure>
+
+<p>That changes how you think about failures. Partial degradation becomes tolerable because failures hit a fraction of tenants, not an entire cohort. A single bad worker still causes some errors, but most tenants never notice. You can let the system degrade gracefully instead of treating every worker failure as a full outage for a group of tenants. That’s a big operational difference: you can keep serving traffic while you replace or restart the bad worker, rather than losing a whole set of customers at once.</p>
+
+<p>Capacity planning also stops being a zero-sum game. With dedicated pools, capacity is allocated per tenant, and you either over-provision to cover each tenant’s peak or risk under-provisioning during combined load. Shuffle-sharding lets you share capacity statistically across a larger pool. Since tenants are spread across many workers, the variance of load per worker is lower, and you can run at higher average utilization without the same risk of one tenant’s peak starving another. You no longer have to choose between idle hardware and noisy neighbors.</p>
+
+<p>Shuffle-sharding isn’t universal. Ordered workloads still need consistent hashing by resource. If a tenant’s requests must be processed in a strict order or must always hit the same worker to maintain state, a random subset assignment breaks that guarantee. Consistent hashing maps a key or resource deterministically to a worker, preserving order. If you apply shuffle-sharding to an ordered queue, you might process events out of order, which is often worse than a temporary outage. So it’s not a drop-in replacement everywhere.</p>
+
+<p>But for stateless services and queues, where no per-tenant ordering or affinity is required, shuffle-sharding is a low-cost reliability win. It gives you most of the isolation benefit of dedicated infrastructure without the cost and complexity. I’ve found it a useful pattern to consider before reaching for more hardware.</p>
+
+<p class="source-link">Originally covered at <a href="https://sophiabits.com/blog/shuffle-shard-everything" rel="noopener">sophiabits.com ↗</a></p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
