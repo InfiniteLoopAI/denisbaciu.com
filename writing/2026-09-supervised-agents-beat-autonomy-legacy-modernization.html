@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Supervised agents beat autonomy for legacy modernization — Denis Baciu</title>
+<meta name="description" content="Mistral&#x27;s Fortran-to-C++ migration shows why a numerical parity harness and human review gates matter more than full AI autonomy.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-09-supervised-agents-beat-autonomy-legacy-modernization.html">
+<meta property="og:title" content="Supervised agents beat autonomy for legacy modernization">
+<meta property="og:description" content="Mistral&#x27;s Fortran-to-C++ migration shows why a numerical parity harness and human review gates matter more than full AI autonomy.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-09-supervised-agents-beat-autonomy-legacy-modernization.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-09-12">
+<meta property="article:modified_time" content="2026-09-12">
+<meta property="og:image" content="https://denisbaciu.com/assets/writing/7629a3a3bc378ac2.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Supervised agents beat autonomy for legacy modernization",
+  "description": "Mistral's Fortran-to-C++ migration shows why a numerical parity harness and human review gates matter more than full AI autonomy.",
+  "datePublished": "2026-09-12",
+  "dateModified": "2026-09-12",
+  "url": "https://denisbaciu.com/writing/2026-09-supervised-agents-beat-autonomy-legacy-modernization.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://denisbaciu.com/writing/2026-09-supervised-agents-beat-autonomy-legacy-modernization.html"
+  },
+  "image": "https://denisbaciu.com/assets/writing/7629a3a3bc378ac2.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  },
+  "citation": "https://mistral.ai/news/legacy-code-modernization/"
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>Supervised agents beat autonomy for legacy modernization</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7504466900366651392">original ↗</a><br>
+  published: 2026-09-12 · status: canonical · expanded from the original post
+</div>
+
+<figure class="lead">
+  <img src="/assets/writing/7629a3a3bc378ac2.jpg" alt="Supervised agents beat autonomy for legacy modernization" loading="lazy" decoding="async">
+</figure>
+
+<p>I&#x27;ve been thinking about the difference between generating code and shipping code, and Mistral&#x27;s recent write-up on modernizing a <code>Fortran 77</code> codebase to <code>C++</code> puts it in sharp focus. The headline result is that 40,000 lines were translated, but that number only matters because of what surrounded it: a numerical parity harness and more than a hundred documentation agents working under explicit constraints.</p>
+
+<p>The first sprint did not try to boil the ocean. It covered only the core of a 300,000-line system. That kind of scoping decision sounds obvious after the fact, but it rarely happens by default. Left to a general-purpose agent, the temptation is to wander across the codebase, touching files outside the agreed boundary. Human review gates kept the work honest—and they weren&#x27;t an afterthought. They were built into the workflow so that each stage had to pass before the next one began.</p>
+
+<p>For scientific or engineering code, the real requirement is not syntactic correctness. It is numerical equivalence. A rewrite that silently drifts from the original physics is a <strong>liability</strong>, not a delivery. A <em>parity harness</em> is to AI migration what a test suite is to refactoring. It turns a fuzzy goal—&#x27;modernize this&#x27;—into a measurable one: every translated routine must produce the same outputs, within tolerance, for the same inputs.</p>
+
+<blockquote>
+  <p>Parity harness first. Always.</p>
+</blockquote>
+
+<p>That principle changes how you design the workflow. Instead of giving an agent a large goal and asking it to be autonomous, you structure the work into stages. You constrain the agents to a bounded scope. You measure every output against ground truth. Autonomy is not the goal; verified progress is.</p>
+
+<figure class="inline-image">
+  <img src="/assets/writing/article-6cf76d996f3e.webp" alt="Illustration from the original article" loading="lazy" decoding="async">
+</figure>
+
+<p>The documentation agents in Mistral&#x27;s case are another underappreciated detail. Over a hundred of them ran to extract and summarize the original system&#x27;s behavior. That creates the ground truth the parity harness needs. Without that, you would be asking an AI to migrate code based on superficial reading, with no way to know if the physics survived.</p>
+
+<p>The point of the harness is not to slow things down. It is to make failure visible early. If a translated routine drifts from the original outputs, the discrepancy shows up in the harness long before it can compound through a larger system. That is the same reason we write tests before refactoring: the test does not prevent every mistake, but it catches the ones that matter at the moment they happen.</p>
+
+<figure class="inline-image">
+  <img src="/assets/writing/article-45a4137803ff.webp" alt="Illustration from the original article" loading="lazy" decoding="async">
+</figure>
+
+<p>In practice, this means three things.</p>
+
+<ul>
+  <li>Structure the workflow into bounded stages.</li>
+  <li>Constrain each agent to a specific scope and set of deliverables.</li>
+  <li>Measure every translated unit against a numerical parity harness.</li>
+</ul>
+
+<p>Most AI migration demos stop at a diff. They show you thousands of lines changed and call it success. That is generating code. Shipping code means the system still works for the people who depend on it. The parity harness is the line between those two outcomes. If you are planning a legacy modernization with AI agents, put the harness first. It will feel slower at the start, but it is the only way to trust the result.</p>
+
+<p class="source-link">Originally covered at <a href="https://mistral.ai/news/legacy-code-modernization/" rel="noopener">mistral.ai ↗</a></p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
