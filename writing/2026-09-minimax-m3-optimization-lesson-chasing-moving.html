@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The MiniMax M3 optimization lesson: chasing the moving bottleneck — Denis Baciu</title>
+<meta name="description" content="A look at how the vLLM team reached a 3.14x speedup on AMD MI355X by verifying tensor shapes, fusing shared experts, and reusing sparse attention blocks.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-09-minimax-m3-optimization-lesson-chasing-moving.html">
+<meta property="og:title" content="The MiniMax M3 optimization lesson: chasing the moving bottleneck">
+<meta property="og:description" content="A look at how the vLLM team reached a 3.14x speedup on AMD MI355X by verifying tensor shapes, fusing shared experts, and reusing sparse attention blocks.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-09-minimax-m3-optimization-lesson-chasing-moving.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-09-13">
+<meta property="article:modified_time" content="2026-09-13">
+<meta property="og:image" content="https://denisbaciu.com/assets/writing/b7a067a94e44db9f.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "The MiniMax M3 optimization lesson: chasing the moving bottleneck",
+  "description": "A look at how the vLLM team reached a 3.14x speedup on AMD MI355X by verifying tensor shapes, fusing shared experts, and reusing sparse attention blocks.",
+  "datePublished": "2026-09-13",
+  "dateModified": "2026-09-13",
+  "url": "https://denisbaciu.com/writing/2026-09-minimax-m3-optimization-lesson-chasing-moving.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://denisbaciu.com/writing/2026-09-minimax-m3-optimization-lesson-chasing-moving.html"
+  },
+  "image": "https://denisbaciu.com/assets/writing/b7a067a94e44db9f.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  },
+  "citation": "https://vllm.ai/blog/2026-09-10-minimax-m3-mi355x"
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>The MiniMax M3 optimization lesson: chasing the moving bottleneck</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7504845039932448769">original ↗</a><br>
+  published: 2026-09-13 · status: canonical · expanded from the original post
+</div>
+
+<figure class="lead">
+  <img src="/assets/writing/b7a067a94e44db9f.jpg" alt="The MiniMax M3 optimization lesson: chasing the moving bottleneck" loading="lazy" decoding="async">
+</figure>
+
+<p>I keep coming back to the vLLM team&#x27;s MiniMax M3 optimization on AMD&#x27;s MI355X because it is a masterclass in <strong>not stopping at the first win</strong>. The published result was a 3.14x throughput improvement, which is easy to read as one big jump. The more instructive part is the sequence of checks the team performed, because each one removed a separate source of waste that was not obvious at the start.</p>
+
+<ul>
+  <li>Check the real tensor shapes that land on each rank after tensor-parallel sharding.</li>
+  <li>Fuse the shared expert into the same grouped GEMMs as the routed experts instead of running a redundant layer pass.</li>
+  <li>Confirm that the claimed fast paths actually executed; assumption is not instrumentation.</li>
+  <li>Reuse sparse-attention block selections across adjacent layers instead of recomputing per layer.</li>
+</ul>
+
+<p>The first check is the least glamorous but probably the most important. It is easy to assume that tensor-parallel sharding divides the work evenly, but the real shapes that land on each rank can differ because of padding, uneven sequence distribution, or a mismatch between the model config and what the runtime actually does. Checking those shapes before doing any kernel work removes a whole class of mental models that are wrong in ways that only show up later as unexplained load imbalance.</p>
+
+<p>The second check found work that was repeated every layer. MiniMax M3 has a shared expert that runs regardless of routing, and in the initial implementation it was launched separately from the routed experts. That separate launch added kernel dispatch and memory movement costs across every layer. Fusing the shared expert into the same grouped GEMMs as the routed experts removed what amounted to a redundant layer pass. At low concurrency, where those overheads are a larger fraction of total latency, this fusion gave up to 30%.</p>
+
+<figure class="inline-image">
+  <img src="/assets/writing/article-c366967bd186.jpg" alt="Illustration from the original article" loading="lazy" decoding="async">
+</figure>
+
+<p>The third check is about not confusing a capability with a result. A kernel can have multiple implementations, and seeing a kernel name in a trace does not tell you which code path actually executed. The team had to confirm that the claimed fast paths were being hit, not just that the kernel was present. The phrase from the post is worth remembering: <em>assumption is not instrumentation</em>. This is a common failure in performance work: the optimized path exists, but a config flag or a shape mismatch silently falls back to a slower path.</p>
+
+<p>The fourth check moved from compute to attention. Sparse attention block selections were being recomputed for every layer, even when adjacent layers could reuse the same selection. Recomputing per layer adds redundant CPU work and scheduling overhead. Reusing the block selections across adjacent layers removes that overhead and is especially relevant when the model&#x27;s sparse patterns are relatively stable across depth.</p>
+
+<figure class="inline-image">
+  <img src="/assets/writing/article-068b089b7134.jpg" alt="Illustration from the original article" loading="lazy" decoding="async">
+</figure>
+
+<p>The 3.14x throughput jump came from chasing the bottleneck as it moved. After the first fix, the limit shifted from compute kernels to memory bandwidth; after the next, it shifted again to queueing and launch overhead. That is not a sign that the earlier fixes were wrong. It is what happens when you keep measuring instead of declaring victory after the first win. Each step revealed the next most expensive thing.</p>
+
+<p>For enterprise inference tuning, the useful next-step filter is to ask what changed in the profile, not just what improved. If throughput went up, the next bottleneck is now more visible. If it did not improve as expected, check whether the optimized path actually ran. The vLLM team&#x27;s MiniMax M3 work on MI355X is a useful case study because it shows how a large aggregate gain can be made of several smaller, verifiable steps, each of which required looking at the system as it actually behaved.</p>
+
+<p class="source-link">Originally covered at <a href="https://vllm.ai/blog/2026-09-10-minimax-m3-mi355x" rel="noopener">vllm.ai ↗</a></p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
