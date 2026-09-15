@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Left Boundary in Shift-Left Has Moved — Denis Baciu</title>
+<meta name="description" content="AI coding agents have made the developer machine security&#x27;s new left boundary, so AppSec must eliminate vulnerability classes instead of chasing tickets.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-09-left-boundary-shift-left-has-moved.html">
+<meta property="og:title" content="The Left Boundary in Shift-Left Has Moved">
+<meta property="og:description" content="AI coding agents have made the developer machine security&#x27;s new left boundary, so AppSec must eliminate vulnerability classes instead of chasing tickets.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-09-left-boundary-shift-left-has-moved.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-09-14">
+<meta property="article:modified_time" content="2026-09-14">
+<meta property="og:image" content="https://denisbaciu.com/assets/writing/23791d45a8669f15.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "The Left Boundary in Shift-Left Has Moved",
+  "description": "AI coding agents have made the developer machine security's new left boundary, so AppSec must eliminate vulnerability classes instead of chasing tickets.",
+  "datePublished": "2026-09-14",
+  "dateModified": "2026-09-14",
+  "url": "https://denisbaciu.com/writing/2026-09-left-boundary-shift-left-has-moved.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://denisbaciu.com/writing/2026-09-left-boundary-shift-left-has-moved.html"
+  },
+  "image": "https://denisbaciu.com/assets/writing/23791d45a8669f15.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  },
+  "citation": "https://www.resilientcyber.io/p/the-left-in-shift-left-moved"
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>The Left Boundary in Shift-Left Has Moved</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7505174218930655234">original ↗</a><br>
+  published: 2026-09-14 · status: canonical · expanded from the original post
+</div>
+
+<figure class="lead">
+  <img src="/assets/writing/23791d45a8669f15.jpg" alt="The Left Boundary in Shift-Left Has Moved" loading="lazy" decoding="async">
+</figure>
+
+<p>For years, the left boundary in <em>shift-left</em> security was the repository. Anything earlier—local edits, throwaway scripts, half-finished experiments on a developer machine—sat outside the security perimeter. The repo was where code became visible, reviewable, and governable. We built review tooling, access controls, and mental models around that assumption. That assumption no longer holds. The left boundary now sits on the developer machine, inside a coding agent that can generate, modify, and execute code with privileges AppSec never explicitly approved. It is not a small drift. It is a change in where security work actually begins.</p>
+
+<p>The instinctive response is to scan everything the agent produces and open a ticket for every AI-discovered vulnerability. That is a losing game. The volume is too high, the noise too loud, and the tickets pile up faster than any human can triage. Every ticket still requires context, prioritization, and eventually a fix or an accepted risk. At AI scale, that pipeline becomes a denial-of-service on the security team. The agent is not just a code source to be audited after the fact; it is making choices about libraries, patterns, and architecture in real time. By the time a finding becomes a ticket, the code has already moved on. Chasing findings one by one does not close anything. <strong>You win by eliminating whole vulnerability classes at the framework or pipeline level.</strong></p>
+
+<figure class="inline-image">
+  <img src="/assets/writing/article-171e869e8fa7.png" alt="Illustration from the original article" loading="lazy" decoding="async">
+</figure>
+
+<p>In practice, that means moving security controls earlier in the chain of causation, not just earlier in time. If an agent pulls in dependencies, enforce an allowlist of known-safe packages at the point of generation. If the code will end up in a container, make the base image comply with policy before the agent writes a single line. If SQL queries are being constructed, make the data access layer enforce parameterization so injection cannot be introduced by any code path, human or agent. These are framework and pipeline controls. They remove the entire class rather than debating individual instances. That is the kind of win that scales with agent throughput instead of being flooded by it.</p>
+
+<blockquote>
+  <p>When agents can write and remediate code, human review stops being a checkbox and becomes a policy decision.</p>
+</blockquote>
+
+<p>That shift changes review from a per-change check to an upfront policy decision. A checkbox review assumes a human has time to look at every change and understand enough context to make a call. That assumption breaks when the agent can produce and fix code faster than the review queue can move. The question is no longer &quot;does this diff look right?&quot; but &quot;what is the agent allowed to do without a human in the loop, what is blocked structurally, and where is judgment actually needed?&quot; Those questions have to be answered before the agent runs, not after it has produced a thousand lines. Policy decisions scale because they are made once about classes of behavior, not once per diff.</p>
+
+<figure class="inline-image">
+  <img src="/assets/writing/article-962d3bd41bf9.jpg" alt="Illustration from the original article" loading="lazy" decoding="async">
+</figure>
+
+<p>None of this means agents are inherently untrustworthy. It means the trust boundary has to be designed into the system, not assumed from the repo outward. The old left boundary gave us a convenient unit of analysis: the pull request. The new boundary gives us an execution environment. Security teams are no longer reviewing a finite stream of pull requests; they are configuring an environment where code generation and remediation happen continuously. If we keep applying the old playbook, we will be generating tickets from a moving target while the real gaps go unaddressed.</p>
+
+<p class="source-link">Originally covered at <a href="https://www.resilientcyber.io/p/the-left-in-shift-left-moved" rel="noopener">resilientcyber.io ↗</a></p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
