@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Access gateways and serving gateways are not the same thing — Denis Baciu</title>
+<meta name="description" content="Commercial model deployments need serving gateways for per-tenant routing, metering, and abuse protection, not just outbound provider selection.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-09-access-gateways-serving-gateways-not-same.html">
+<meta property="og:title" content="Access gateways and serving gateways are not the same thing">
+<meta property="og:description" content="Commercial model deployments need serving gateways for per-tenant routing, metering, and abuse protection, not just outbound provider selection.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-09-access-gateways-serving-gateways-not-same.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-09-20">
+<meta property="article:modified_time" content="2026-09-20">
+<meta property="og:image" content="https://denisbaciu.com/assets/writing/e5422dab5939f72c.webp">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Access gateways and serving gateways are not the same thing",
+  "description": "Commercial model deployments need serving gateways for per-tenant routing, metering, and abuse protection, not just outbound provider selection.",
+  "datePublished": "2026-09-20",
+  "dateModified": "2026-09-20",
+  "url": "https://denisbaciu.com/writing/2026-09-access-gateways-serving-gateways-not-same.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://denisbaciu.com/writing/2026-09-access-gateways-serving-gateways-not-same.html"
+  },
+  "image": "https://denisbaciu.com/assets/writing/e5422dab5939f72c.webp",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  },
+  "citation": "https://www.baseten.co/articles/ai-gateways-production-inference/#what-to-evaluate-in-an-ai-gateway?utm_source=tldrit"
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>Access gateways and serving gateways are not the same thing</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7507381452058267648">original ↗</a><br>
+  published: 2026-09-20 · status: canonical · expanded from the original post
+</div>
+
+<figure class="lead">
+  <img src="/assets/writing/e5422dab5939f72c.webp" alt="Access gateways and serving gateways are not the same thing" loading="lazy" decoding="async">
+</figure>
+
+<p>Most AI gateway discussions I see still assume one architecture: a reverse proxy that routes outbound calls to whichever model provider is cheapest or fastest. That assumption starts to crack the moment your team actually exposes a proprietary model to paying customers. The moment inbound customer traffic arrives, the questions change. You are no longer optimizing someone else&#x27;s API call; you are responsible for who can call your model, what they are allowed to do, how much they consume, and what record you keep of it.</p>
+
+<p>Baseten&#x27;s breakdown of the two patterns separates them into <em>access gateways</em> and <em>serving gateways</em>. Access gateways handle outbound routing across providers: selection, fallback, caching. If one provider is slow or too expensive, the access gateway moves traffic to another. Serving gateways sit in front of your own models and manage inbound customer traffic: identity, routing, abuse protection, metering, audit logs. Both are called gateways, but they are built for different sides of the same transaction.</p>
+
+<p>The practical point I keep coming back to is that if you are operating a model commercially, the serving gateway is not an optimization layer. It is the <strong>control surface for revenue and compliance</strong>. A poorly tuned access gateway might cost you some margin on outbound inference. A poorly built serving gateway can mean customers get access they should not have, billing is wrong, or you cannot demonstrate to an auditor what happened. Those failures are not performance problems; they are business problems.</p>
+
+<figure class="inline-image">
+  <img src="/assets/writing/article-18e0cd3f74d5.png" alt="Illustration from the original article" loading="lazy" decoding="async">
+</figure>
+
+<blockquote>
+  <p>The serving gateway isn&#x27;t an optimization layer; it&#x27;s the control surface for revenue and compliance.</p>
+</blockquote>
+
+<p>One thing I will watch for is teams that invested early in access gateways. They often assume they already have gateway coverage. They do not. An access gateway is designed to make outbound calls cheaper and more reliable across a set of external providers. It does not know which customer is behind a request unless you build that in, and it does not produce per-tenant metering records by itself. When those teams begin serving a proprietary model, they may point their existing proxy at their own endpoint and think the problem is solved. It is not. They have an outbound routing tool in front of an inbound revenue service.</p>
+
+<p>Metering and per-tenant routing require a different posture entirely. You need to attach identity to every request, enforce quotas and rate limits, flag abuse signals, and keep audit logs that hold up under scrutiny. Those are not features you can bolt onto an access gateway with a middleware rule or two. They sit at the core of how the gateway is designed. An access gateway can be fairly stateless; a serving gateway has to maintain tenant state, policy, and billing context on every call. The design constraints are different enough that it is usually cleaner to operate a dedicated serving gateway than to stretch an access gateway into a role it was never meant to play.</p>
+
+<figure class="inline-image">
+  <img src="/assets/writing/article-ba198a5ae9c9.png" alt="Illustration from the original article" loading="lazy" decoding="async">
+</figure>
+
+<p>I expect serving gateways to become a default component in AI product stacks, not a bolted-on afterthought. The moment a model is behind a commercial interface, the serving gateway is the piece of infrastructure that turns raw inference into a managed service. Teams that recognize the difference early will spend less time retrofitting tenant controls later.</p>
+
+<p class="source-link">Originally covered at <a href="https://www.baseten.co/articles/ai-gateways-production-inference/#what-to-evaluate-in-an-ai-gateway?utm_source=tldrit" rel="noopener">baseten.co ↗</a></p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
