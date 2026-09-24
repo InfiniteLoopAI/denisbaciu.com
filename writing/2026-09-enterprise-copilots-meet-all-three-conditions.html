@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Enterprise copilots meet all three conditions for silent exfiltration — Denis Baciu</title>
+<meta name="description" content="Enterprise copilots with private data access, untrusted inputs, and outbound channels enable silent exfiltration; structural egress controls are the fix.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-09-enterprise-copilots-meet-all-three-conditions.html">
+<meta property="og:title" content="Enterprise copilots meet all three conditions for silent exfiltration">
+<meta property="og:description" content="Enterprise copilots with private data access, untrusted inputs, and outbound channels enable silent exfiltration; structural egress controls are the fix.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-09-enterprise-copilots-meet-all-three-conditions.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-09-24">
+<meta property="article:modified_time" content="2026-09-24">
+<meta property="og:image" content="https://denisbaciu.com/assets/writing/c916247cbe1c924f.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Enterprise copilots meet all three conditions for silent exfiltration",
+  "description": "Enterprise copilots with private data access, untrusted inputs, and outbound channels enable silent exfiltration; structural egress controls are the fix.",
+  "datePublished": "2026-09-24",
+  "dateModified": "2026-09-24",
+  "url": "https://denisbaciu.com/writing/2026-09-enterprise-copilots-meet-all-three-conditions.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://denisbaciu.com/writing/2026-09-enterprise-copilots-meet-all-three-conditions.html"
+  },
+  "image": "https://denisbaciu.com/assets/writing/c916247cbe1c924f.png",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  },
+  "citation": "https://aminrj.com/posts/lethal-trifecta-in-production/"
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>Enterprise copilots meet all three conditions for silent exfiltration</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7508844054638424064">original ↗</a><br>
+  published: 2026-09-24 · status: canonical · expanded from the original post
+</div>
+
+<figure class="lead">
+  <img src="/assets/writing/c916247cbe1c924f.png" alt="Enterprise copilots meet all three conditions for silent exfiltration" loading="lazy" decoding="async">
+</figure>
+
+<p>Enterprise copilots now meet all three conditions for silent data exfiltration: access to private data, untrusted content, and an outbound channel. That combination is what I call the <em>lethal trifecta</em>, and it is present in most production deployments today. Copilots are not just chat windows; they are agents that hold permissions on live data, process content from outside the trust boundary, and can make calls to external tools and services.</p>
+
+<p>Private data is the target. Many enterprise copilots are granted broad read access to mailboxes, files, and calendars because that is what makes them useful. But broad access means the assistant can read things that no single user should be able to pull together in one place. If an attacker can influence the copilot, that access becomes an extraction surface.</p>
+
+<p>Untrusted content is the trigger. Inbound email, public forms, and documents from partners or customers all arrive from outside the trust boundary. They can contain hidden instructions, malformed content, or malicious payloads. When a copilot processes that content while holding enterprise permissions, the boundary between untrusted input and privileged action disappears.</p>
+
+<p>The outbound channel is what turns influence into exfiltration. Copilots often have the ability to make web requests, call APIs, send email, or read from external sources. Once private data can be folded into a response and sent somewhere outside your control, you have a leak that may look like legitimate assistant behavior.</p>
+
+<figure class="inline-image">
+  <img src="/assets/writing/article-420e68a1c308.png" alt="Illustration from the original article" loading="lazy" decoding="async">
+</figure>
+
+<p>The &quot;silent&quot; part matters because there is no loud exploit or malware beacon. The assistant is supposed to read data, process messages, and call tools. When an attacker abuses those same capabilities, the activity blends into normal use. Logs may show a copilot reading a mailbox and posting to an API, but that can look identical to a legitimate workflow.</p>
+
+<ul>
+  <li>Scope copilot access to least privilege, not your whole tenant.</li>
+  <li>Treat inbound email and public forms as untrusted input vectors.</li>
+  <li>Restrict outbound calls from copilot contexts; default deny.</li>
+  <li>Map for the lethal trifecta: private data + untrusted input + egress.</li>
+</ul>
+
+<p>These are not detection mechanisms. <strong>Structural controls beat classifiers.</strong> A classifier has to recognize a malicious payload, and attackers only need to be right once. A default-deny egress rule removes the path entirely. If the copilot cannot call outward, it cannot exfiltrate, no matter how clever the prompt injection is.</p>
+
+<blockquote>
+  <p>No egress, no exfiltration.</p>
+</blockquote>
+
+<p>Mapping for the lethal trifecta is a useful audit exercise. For each copilot or agent, ask what private data it can read, what untrusted content it processes, and what outbound channels are reachable from its context. If all three conditions are present, treat it as a high-risk integration until the egress path is closed.</p>
+
+<p>The reason these controls matter more than filtering is that they address the preconditions directly. A classifier may catch a known attack pattern, but it will not close the path. Scope limits reduce what is exposed, untrusted-input treatment reduces what an attacker can influence, and egress denial removes the channel that turns influence into loss.</p>
+
+<p>The documented EchoLeak and ForcedLeak cases show this is not theoretical. Those examples, detailed in &#x27;The Lethal Trifecta in Production,&#x27; demonstrate how these paths combine in practice. The fix is not to trust better prompts or smarter filters. The fix is to design the environment so the exfiltration path does not exist.</p>
+
+<p class="source-link">Originally covered at <a href="https://aminrj.com/posts/lethal-trifecta-in-production/" rel="noopener">aminrj.com ↗</a></p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
