@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pinecone BYOC: managed vector data in your cloud — Denis Baciu</title>
+<meta name="description" content="Pinecone&#x27;s bring-your-own-cloud option keeps vector data and queries inside customer accounts while the vendor manages upgrades and scaling.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-09-pinecone-byoc-managed-vector-data-cloud.html">
+<meta property="og:title" content="Pinecone BYOC: managed vector data in your cloud">
+<meta property="og:description" content="Pinecone&#x27;s bring-your-own-cloud option keeps vector data and queries inside customer accounts while the vendor manages upgrades and scaling.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-09-pinecone-byoc-managed-vector-data-cloud.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-09-26">
+<meta property="article:modified_time" content="2026-09-26">
+<meta property="og:image" content="https://denisbaciu.com/assets/writing/50c509d233d92358.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Pinecone BYOC: managed vector data in your cloud",
+  "description": "Pinecone's bring-your-own-cloud option keeps vector data and queries inside customer accounts while the vendor manages upgrades and scaling.",
+  "datePublished": "2026-09-26",
+  "dateModified": "2026-09-26",
+  "url": "https://denisbaciu.com/writing/2026-09-pinecone-byoc-managed-vector-data-cloud.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://denisbaciu.com/writing/2026-09-pinecone-byoc-managed-vector-data-cloud.html"
+  },
+  "image": "https://denisbaciu.com/assets/writing/50c509d233d92358.png",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  },
+  "citation": "https://www.pinecone.io/blog/byoc-generally-available/"
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>Pinecone BYOC: managed vector data in your cloud</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7509540250940112896">original ↗</a><br>
+  published: 2026-09-26 · status: canonical · expanded from the original post
+</div>
+
+<figure class="lead">
+  <img src="/assets/writing/50c509d233d92358.png" alt="Pinecone BYOC: managed vector data in your cloud" loading="lazy" decoding="async">
+</figure>
+
+<p>When I talk to teams evaluating vector databases, the same tension comes up again and again. A fully managed service takes a lot of operational work off the table: upgrades, scaling, monitoring, and availability are someone else&#x27;s problem. But in many organizations, especially those in regulated industries, the data cannot leave the company&#x27;s own cloud account. For a long time, that has felt like a binary choice—either manage the database yourself or accept that your data lives in a vendor&#x27;s environment. Pinecone&#x27;s bring-your-own-cloud (BYOC) option, now generally available across AWS, Google Cloud, and Azure, changes that calculus.</p>
+
+<p>The core shift is not another compliance checkbox or a checkbox on a data residency form. It is an architectural change in how the managed service connects to your environment. Under BYOC, the vector data and query processing stay inside the customer&#x27;s cloud account. Pinecone still operates the service: it handles upgrades, scaling, and the routine maintenance that makes a managed service appealing. But the boundary between the vendor and the customer looks different from a typical SaaS integration, where the vendor&#x27;s infrastructure necessarily touches the data at rest and in motion.</p>
+
+<figure class="inline-image">
+  <img src="/assets/writing/article-10a26b67aaf0.png" alt="Illustration from the original article" loading="lazy" decoding="async">
+</figure>
+
+<p>The part I find most significant is the management model. Instead of requiring standing inbound access from Pinecone into your VPC or account, the system uses an outbound, pull-based approach. Your environment reaches out to Pinecone&#x27;s management plane when it needs instructions, rather than the vendor having a persistent open door into your infrastructure. That is a meaningful change in security posture. Inbound access rules are often the first thing a security team will flag, because they represent a standing path into the environment. An outbound-only model removes that path almost entirely.</p>
+
+<blockquote>
+  <p>It&#x27;s like giving a contractor a temporary badge instead of your front door key.</p>
+</blockquote>
+
+<p>Because data and queries never leave your cloud, governance and compliance reviews become simpler, not more complex. Teams that previously had to document data flows, encryption boundaries, and third-party access controls can now point to a cleaner boundary: the data plane sits in the customer account, and the management plane is external but only initiates outbound requests. That distinction matters a lot in regulated industries where every external connection is scrutinized. Instead of explaining why a vendor needs direct access to the database, you explain that the database lives in your account and the vendor only sends instructions from outside.</p>
+
+<figure class="inline-image">
+  <img src="/assets/writing/article-930b7bb1254d.png" alt="Illustration from the original article" loading="lazy" decoding="async">
+</figure>
+
+<p>For teams building retrieval-augmented generation systems in those industries, this can be the difference between a pilot and a production deployment. A pilot can often run on a fully managed external vector database because the data is not sensitive, or because the scope is small and temporary. Production is different. Real customer data, PII, or regulated content usually cannot live in a vendor&#x27;s cloud without a much longer security review, and sometimes not at all. BYOC lets the same team keep the operational model of a managed database while satisfying the internal requirement that data stays in the company&#x27;s own accounts. That removes one of the biggest blockers I see for moving from a promising RAG demo to a real system.</p>
+
+<p class="source-link">Originally covered at <a href="https://www.pinecone.io/blog/byoc-generally-available/" rel="noopener">pinecone.io ↗</a></p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
