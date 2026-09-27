@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI proposes, engine proves: a handoff standard for chip design — Denis Baciu</title>
+<meta name="description" content="AI agents can help carry design intent between chip design tools, but every handoff needs machine-checkable evidence before it crosses a boundary.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-09-ai-proposes-engine-proves-handoff-standard.html">
+<meta property="og:title" content="AI proposes, engine proves: a handoff standard for chip design">
+<meta property="og:description" content="AI agents can help carry design intent between chip design tools, but every handoff needs machine-checkable evidence before it crosses a boundary.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-09-ai-proposes-engine-proves-handoff-standard.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-09-27">
+<meta property="article:modified_time" content="2026-09-27">
+<meta property="og:image" content="https://denisbaciu.com/assets/writing/3c9a869731c1f26d.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "AI proposes, engine proves: a handoff standard for chip design",
+  "description": "AI agents can help carry design intent between chip design tools, but every handoff needs machine-checkable evidence before it crosses a boundary.",
+  "datePublished": "2026-09-27",
+  "dateModified": "2026-09-27",
+  "url": "https://denisbaciu.com/writing/2026-09-ai-proposes-engine-proves-handoff-standard.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://denisbaciu.com/writing/2026-09-ai-proposes-engine-proves-handoff-standard.html"
+  },
+  "image": "https://denisbaciu.com/assets/writing/3c9a869731c1f26d.png",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  },
+  "citation": "https://semiengineering.com/edas-future-is-evidence-driven-automation/"
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>AI proposes, engine proves: a handoff standard for chip design</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7509918104530006016">original ↗</a><br>
+  published: 2026-09-27 · status: canonical · expanded from the original post
+</div>
+
+<figure class="lead">
+  <img src="/assets/writing/3c9a869731c1f26d.png" alt="AI proposes, engine proves: a handoff standard for chip design" loading="lazy" decoding="async">
+</figure>
+
+<p>Chip design is full of handoffs. A design moves from architecture to RTL, from RTL to synthesis, from synthesis to place and route, and at each step the tool that produces the handoff has its own definition of &#x27;done.&#x27; A synthesis tool might finish when timing under a specific corner is within bounds. Place and route might finish when routing congestion is below a threshold. Neither of those local definitions captures the intent that mattered upstream—why a latency target was set, why a buffer was sized, why an interface was frozen. That intent gets paraphrased, simplified, or dropped. Silent intent loss is one of the quiet reasons first-silicon success is hard to predict.</p>
+
+<h2>The case for AI as an intermediary</h2>
+
+<p>AI agents could sit at those boundaries. An agent could read the output of one tool, extract the design intent that is still represented there, and generate evidence that the next tool can consume. That evidence might explain what was constrained, what was relaxed, and what was assumed. If the handoff includes that kind of artifact, the next tool does not have to guess. Less intent is lost, and the design has a better chance of coming back from the fab behaving the way the team expected.</p>
+
+<h2>The case against</h2>
+
+<p>The problem with that picture is that an AI-generated assertion is a hypothesis, not proof. If an agent says &#x27;this block meets the original latency spec,&#x27; that statement is not yet verification. If we let agents pass handoffs without independent, deterministic verification, we have not removed a black box; we have replaced one black box with another. Formal proofs and audit trails remain non-negotiable in chip design. But adding evidence checks at every boundary also has a real cost. It can slow the design cycle, and it can create false confidence if teams start treating generated evidence as checked evidence when it has not been checked.</p>
+
+<figure class="inline-image">
+  <img src="/assets/writing/article-2cc338c97c93.webp" alt="Illustration from the original article" loading="lazy" decoding="async">
+</figure>
+
+<h2>What I&#x27;d do instead</h2>
+
+<p>I would treat AI outputs as proposals, not as completed handoffs. Before any proposal crosses a tool boundary, it should be checked against a formal engine. This is the same pattern software learned with inter-service handoffs. When two services talk, you do not trust that the payload is right because the producing team wrote a comment. You define a typed contract and run it through CI gates. The system checks the shape, the constraints, and the invariants automatically. Chip design needs the same discipline.</p>
+
+<p>The artifacts that cross a chip design boundary should be machine-checkable. That means formal properties, golden models, deterministic checks—evidence artifacts that can be verified by tools, not by human judgment alone.</p>
+
+<figure class="inline-image">
+  <img src="/assets/writing/article-8939bd5f2487.png" alt="Illustration from the original article" loading="lazy" decoding="async">
+</figure>
+
+<blockquote>
+  <p>Not &#x27;AI writes, human reviews,&#x27; but &#x27;AI proposes, engine proves.&#x27;</p>
+</blockquote>
+
+<p>This would not be free. Evidence checks at every boundary add latency, and the formal models have to be maintained. But the alternative is worse: letting agents generate plausible-looking handoffs and hoping the downstream tool will catch the problem later. That is how silent intent loss becomes a tapeout surprise.</p>
+
+<p class="source-link">Originally covered at <a href="https://semiengineering.com/edas-future-is-evidence-driven-automation/" rel="noopener">semiengineering.com ↗</a></p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
