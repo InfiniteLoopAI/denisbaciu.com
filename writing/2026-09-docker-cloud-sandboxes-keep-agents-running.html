@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Docker cloud sandboxes keep agents running after you close the laptop — Denis Baciu</title>
+<meta name="description" content="Docker&#x27;s new cloud sandboxes give agents isolated, ephemeral microVMs that keep running after you disconnect, with metered compute from $0.07/hour.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-09-docker-cloud-sandboxes-keep-agents-running.html">
+<meta property="og:title" content="Docker cloud sandboxes keep agents running after you close the laptop">
+<meta property="og:description" content="Docker&#x27;s new cloud sandboxes give agents isolated, ephemeral microVMs that keep running after you disconnect, with metered compute from $0.07/hour.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-09-docker-cloud-sandboxes-keep-agents-running.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-09-28">
+<meta property="article:modified_time" content="2026-09-28">
+<meta property="og:image" content="https://denisbaciu.com/assets/writing/6cb2b030ec346c01.webp">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Docker cloud sandboxes keep agents running after you close the laptop",
+  "description": "Docker's new cloud sandboxes give agents isolated, ephemeral microVMs that keep running after you disconnect, with metered compute from $0.07/hour.",
+  "datePublished": "2026-09-28",
+  "dateModified": "2026-09-28",
+  "url": "https://denisbaciu.com/writing/2026-09-docker-cloud-sandboxes-keep-agents-running.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://denisbaciu.com/writing/2026-09-docker-cloud-sandboxes-keep-agents-running.html"
+  },
+  "image": "https://denisbaciu.com/assets/writing/6cb2b030ec346c01.webp",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  },
+  "citation": "https://www.docker.com/blog/introducing-cloud-sandboxes-start-on-your-laptop-finish-in-the-cloud/"
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>Docker cloud sandboxes keep agents running after you close the laptop</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7510247713758695425">original ↗</a><br>
+  published: 2026-09-28 · status: canonical · expanded from the original post
+</div>
+
+<figure class="lead">
+  <img src="/assets/writing/6cb2b030ec346c01.webp" alt="Docker cloud sandboxes keep agents running after you close the laptop" loading="lazy" decoding="async">
+</figure>
+
+<p>You know the pattern. I&#x27;ve hit it often enough to treat a closed laptop as a destructive action. You start an agent on a local task, and it&#x27;s making progress. Then you need to leave for the day, so you close the laptop, and the whole run dies with it. This is the default experience for anyone experimenting with agent workflows on a developer machine: the process lives inside your terminal session, and when the session goes away, so does the work.</p>
+
+<p>Docker&#x27;s new cloud sandboxes solve this by acting like <code>screen</code> or <code>tmux</code> for containers. If you&#x27;ve used either, you know the trick: you detach a session, the process keeps running on the server, and you reattach later from anywhere. Docker cloud sandboxes do the same for agent workloads, but instead of an SSH session you have to babysit, the agent runs inside a managed microVM. It keeps going after you disconnect.</p>
+
+<p>Each agent gets its own microVM, which means isolation and a clean environment for every run. You can configure network access—some agents need egress to internal APIs, others should only reach the public internet or nothing at all. Moving files between your laptop and the cloud sandbox is a single command, so the context you already have doesn&#x27;t need to be rebuilt from scratch.</p>
+
+<p>You could get a similar effect by SSHing into a cloud VM, starting <code>screen</code>, and detaching. But then you have a VM to provision, patch, and remember to turn off. The microVM is the unit here: it exists for one agent, it&#x27;s isolated by default, and it stops billing when the work stops. That&#x27;s the part <code>screen</code> or <code>tmux</code> alone doesn&#x27;t give you.</p>
+
+<figure class="inline-image">
+  <img src="/assets/writing/article-ad37bbf0fad8.png" alt="Illustration from the original article" loading="lazy" decoding="async">
+</figure>
+
+<p>Compute is metered from $0.07 per hour. The important part isn&#x27;t the exact number; it&#x27;s that you&#x27;re paying for detached execution, not idle infrastructure. A cloud instance usually costs money whether or not your agent is running. The sandbox meter runs only while the microVM is doing work, which changes the economics enough that detaching becomes a rational choice instead of an extra bill.</p>
+
+<p>Teams start agents locally because it&#x27;s fast: no cloud account, no provisioning, no waiting. But a proof of concept that dies when you close the laptop never graduates. The moment an agent is expected to run longer than a coffee break, it needs an execution environment that doesn&#x27;t depend on your machine staying awake.</p>
+
+<figure class="inline-image">
+  <img src="/assets/writing/article-5bf50bbe88b0.png" alt="Illustration from the original article" loading="lazy" decoding="async">
+</figure>
+
+<p>For teams moving agents from proof of concept to something closer to production, this is the operational primitive that has been missing. You get <strong>isolated, ephemeral, cost-controlled execution that survives your laptop closing</strong>. That combination is hard to assemble from raw cloud primitives: you can spin up a VM and keep it running, but now you&#x27;re managing infrastructure. Or you can use a CI runner, but that&#x27;s built for jobs, not long-running agents. A sandbox sits in between.</p>
+
+<p>The pattern behind this matters beyond Docker. Agent workflows are starting to look less like short commands and more like background processes that need to outlive the interactive session that launched them. Closing a laptop shouldn&#x27;t be a destructive act for a task that still has work to do. Detached execution used to be a Unix trick; now it&#x27;s becoming a deployment property.</p>
+
+<p>Docker&#x27;s announcement has the details on how cloud sandboxes work and how to get started. It&#x27;s worth reading if you&#x27;re building agent infrastructure or just tired of losing runs to a closed lid.</p>
+
+<p class="source-link">Originally covered at <a href="https://www.docker.com/blog/introducing-cloud-sandboxes-start-on-your-laptop-finish-in-the-cloud/" rel="noopener">docker.com ↗</a></p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
