@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The quiet shift to right-sized models in security pipelines — Denis Baciu</title>
+<meta name="description" content="A concrete test of Jev on identity resolution shows small calibrated models can beat frontier LLMs on cost and accuracy, pointing to a coming shift in security tooling.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-10-quiet-shift-right-sized-models-security.html">
+<meta property="og:title" content="The quiet shift to right-sized models in security pipelines">
+<meta property="og:description" content="A concrete test of Jev on identity resolution shows small calibrated models can beat frontier LLMs on cost and accuracy, pointing to a coming shift in security tooling.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-10-quiet-shift-right-sized-models-security.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-10-01">
+<meta property="article:modified_time" content="2026-10-01">
+<meta property="og:image" content="https://denisbaciu.com/assets/writing/b6b8ab54bf064242.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "The quiet shift to right-sized models in security pipelines",
+  "description": "A concrete test of Jev on identity resolution shows small calibrated models can beat frontier LLMs on cost and accuracy, pointing to a coming shift in security tooling.",
+  "datePublished": "2026-10-01",
+  "dateModified": "2026-10-01",
+  "url": "https://denisbaciu.com/writing/2026-10-quiet-shift-right-sized-models-security.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://denisbaciu.com/writing/2026-10-quiet-shift-right-sized-models-security.html"
+  },
+  "image": "https://denisbaciu.com/assets/writing/b6b8ab54bf064242.png",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  },
+  "citation": "https://vincenzoiozzo.com/blog/jev-identity-resolution"
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>The quiet shift to right-sized models in security pipelines</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7511380424653283328">original ↗</a><br>
+  published: 2026-10-01 · status: canonical · expanded from the original post
+</div>
+
+<figure class="lead">
+  <img src="/assets/writing/b6b8ab54bf064242.png" alt="The quiet shift to right-sized models in security pipelines" loading="lazy" decoding="async">
+</figure>
+
+<p>Over the next year, I expect more security teams to reconsider defaulting to frontier LLMs for high-volume classification work. <strong>The economics are starting to argue against it.</strong> The reflex for the past couple of years has been to throw the biggest, most capable model at any problem that looks like language understanding. That made sense when the only viable option was a general-purpose model with a convenient API. But classification tasks—especially in security—are often narrow, repeatable, and defined by well-understood failure modes. When you are processing millions of events, the difference between a few cents per call and a few tenths of a cent per call stops being a rounding error.</p>
+
+<p>Vincenzo Iozzo&#x27;s test of <code>Jev</code> on identity resolution is a concrete signal. He ran a small <em>calibrated model</em> against five real organizations&#x27; data and got a 0.948 F1 at $0.62 per 1,000 accounts. That beat <code>Claude Haiku 4.5</code> and <code>Sonnet 5</code> on accuracy while costing roughly a tenth to a fortieth of their price, with far lower latency. Iozzo documented the setup and results in his article &quot;Test-driving Jev on a security task: identity resolution.&quot; The numbers are specific enough to be useful: this is not a synthetic benchmark, and the task is one that security teams actually face.</p>
+
+<blockquote>
+  <p>That&#x27;s not a marginal gain; it&#x27;s a different operating point for bounded, repeatable tasks.</p>
+</blockquote>
+
+<p>Identity resolution is a bounded task: given a set of records, determine which ones refer to the same entity. It requires some judgment about fuzzy matches, but the input space is constrained and the correct output is often checkable against ground truth. The same pattern applies to adjacent problems like fraud scoring and entity matching. If a small model that has been calibrated on your own data can outperform a general-purpose frontier model at a fraction of the cost, the default &quot;just prompt <code>GPT-5</code>&quot; reflex starts to look expensive and imprecise by comparison. That does not mean frontier models are useless. They still matter for open-ended investigation, summarization, and tasks where the input distribution is unpredictable. But for high-volume, structured classification, they are often overkill.</p>
+
+<p>The open question is whether security teams can operationalize these specialized models without building an ML team. Running a small calibrated model is not the same as calling an API. You need to collect labeled data, fine-tune or otherwise adapt the model, evaluate it against your own distribution, and maintain it as that distribution drifts. Some of this is getting easier with tooling, but it is not yet a turnkey process for most security engineers. The signal to watch over the next year is whether teams without significant in-house ML expertise can adopt this approach, or whether the tooling still needs to mature first. If the tooling catches up, the cost advantage will be too large to ignore.</p>
+
+<p>My guess is that we will see a quiet shift toward <em>right-sized</em> models in production security pipelines long before the market consensus catches up. Security teams rarely announce cost optimizations; they just change what they run. The market narrative will keep focusing on bigger models and new capabilities, but the teams actually processing millions of events will be paying attention to the unit economics. The shift will not be dramatic, but it will be real.</p>
+
+<p class="source-link">Originally covered at <a href="https://vincenzoiozzo.com/blog/jev-identity-resolution" rel="noopener">vincenzoiozzo.com ↗</a></p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
