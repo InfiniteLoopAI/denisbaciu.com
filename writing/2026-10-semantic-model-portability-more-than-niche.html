@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Semantic Model Portability Is More Than a Niche Concern — Denis Baciu</title>
+<meta name="description" content="Enterprise semantic models are becoming portable, shared assets as major cloud vendors back Apache Ossie, shifting away from platform-specific definitions.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-10-semantic-model-portability-more-than-niche.html">
+<meta property="og:title" content="Semantic Model Portability Is More Than a Niche Concern">
+<meta property="og:description" content="Enterprise semantic models are becoming portable, shared assets as major cloud vendors back Apache Ossie, shifting away from platform-specific definitions.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-10-semantic-model-portability-more-than-niche.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-10-05">
+<meta property="article:modified_time" content="2026-10-05">
+<meta property="og:image" content="https://denisbaciu.com/assets/writing/28cc798a9adb8a2e.webp">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Semantic Model Portability Is More Than a Niche Concern",
+  "description": "Enterprise semantic models are becoming portable, shared assets as major cloud vendors back Apache Ossie, shifting away from platform-specific definitions.",
+  "datePublished": "2026-10-05",
+  "dateModified": "2026-10-05",
+  "url": "https://denisbaciu.com/writing/2026-10-semantic-model-portability-more-than-niche.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://denisbaciu.com/writing/2026-10-semantic-model-portability-more-than-niche.html"
+  },
+  "image": "https://denisbaciu.com/assets/writing/28cc798a9adb8a2e.webp",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  },
+  "citation": "https://www.cio.com/article/4229751/microsoft-google-back-apache-ossie-to-make-enterprise-data-and-ai-platforms-more-interoperable.html"
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>Semantic Model Portability Is More Than a Niche Concern</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7512784753268346880">original ↗</a><br>
+  published: 2026-10-05 · status: canonical · expanded from the original post
+</div>
+
+<figure class="lead">
+  <img src="/assets/writing/28cc798a9adb8a2e.webp" alt="Semantic Model Portability Is More Than a Niche Concern" loading="lazy" decoding="async">
+</figure>
+
+<p>Many people assume <em>semantic model portability</em> is a niche concern. They expect enterprises to keep rebuilding business definitions inside <code>Power BI</code>, <code>BigQuery</code>, and their AI stacks, treating each platform&#x27;s semantic layer as a local implementation detail. I used to think that was a plausible default. It is hard to imagine a large company agreeing on shared definitions across tools when the tools themselves come from competing vendors. The cost of redefining the same metric three times often feels like a necessary tax for using best-of-breed tools.</p>
+
+<p>The backing of Microsoft, Google, and peers in <code>Apache Ossie</code> challenges that assumption. These are not neutral observers. When the major cloud platforms put weight behind an open standard for semantic models, they are signaling that interoperability matters to their customers. A recent article on CIO.com makes this point clearly without overstating it. The fact that competitors are supporting the same project says more about customer pressure than about any sudden taste for open standards.</p>
+
+<p>Two reasons stand out. First, the commercial weight signals that interoperability is becoming a competitive requirement for cloud AI platforms, not an academic ideal. If a customer cannot move a metric definition from one analytics tool to another without rework, that friction becomes a reason to avoid the platform. Vendors do not usually collaborate on shared foundations unless customers are pushing them to. When a platform can say it works with shared semantic models, it removes one more barrier to adoption.</p>
+
+<p>Second, the article is honest that governance and vendor-specific differences remain obstacles. That does not weaken the case; it clarifies the target. The goal is not a single universal semantic model that every vendor implements identically. The goal is a <strong>shared semantic layer where governance can happen once, not per tool</strong>. Vendor-specific extensions will likely persist, but the core definitions can be portable. Governance is hard enough without having to rebuild the same rules in every environment.</p>
+
+<p>Think of it like SQL. Dialects persist. Oracle, PostgreSQL, and SQL Server all have their own flavors of syntax and functions, but the core concept made data portable across decades. A person who learned SQL in the 1990s can still reason about a modern cloud data warehouse query. The same can happen for semantic models if the industry converges on a portable core. The value was never in the exact dialect; it was in the shared mental model of tables and queries.</p>
+
+<blockquote>
+  <p>The real shift is from semantic models as platform-specific artifacts to enterprise assets that move with the data.</p>
+</blockquote>
+
+<p>The implications are practical. If a metric is defined once in a shared model and then referenced by <code>Power BI</code>, <code>BigQuery</code>, and an AI application, the business owns the definition. Tool migrations become less expensive. Consistency audits become simpler. None of that requires every vendor to abandon its own features; it just requires the portable core to be good enough. It also means the semantic layer can follow the data, not the other way around.</p>
+
+<p>None of this happens quickly. The article is careful not to promise that governance differences disappear. But the direction is now visible. When the largest cloud vendors back a project like <code>Apache Ossie</code>, it stops being a niche concern and becomes the default assumption that enterprises should plan around. That is a meaningful change in how we think about the relationship between data platforms and the definitions that sit on top of them.</p>
+
+<p class="source-link">Originally covered at <a href="https://www.cio.com/article/4229751/microsoft-google-back-apache-ossie-to-make-enterprise-data-and-ai-platforms-more-interoperable.html" rel="noopener">cio.com ↗</a></p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
