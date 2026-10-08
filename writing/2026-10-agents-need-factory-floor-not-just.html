@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agents need a factory floor, not just a model — Denis Baciu</title>
+<meta name="description" content="Teams adopting coding agents should build managed environments, shared skills, cost controls, and validation loops before scaling the agents.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-10-agents-need-factory-floor-not-just.html">
+<meta property="og:title" content="Agents need a factory floor, not just a model">
+<meta property="og:description" content="Teams adopting coding agents should build managed environments, shared skills, cost controls, and validation loops before scaling the agents.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-10-agents-need-factory-floor-not-just.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-10-08">
+<meta property="article:modified_time" content="2026-10-08">
+<meta property="og:image" content="https://denisbaciu.com/assets/writing/65efce52ff59ef62.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Agents need a factory floor, not just a model",
+  "description": "Teams adopting coding agents should build managed environments, shared skills, cost controls, and validation loops before scaling the agents.",
+  "datePublished": "2026-10-08",
+  "dateModified": "2026-10-08",
+  "url": "https://denisbaciu.com/writing/2026-10-agents-need-factory-floor-not-just.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://denisbaciu.com/writing/2026-10-agents-need-factory-floor-not-just.html"
+  },
+  "image": "https://denisbaciu.com/assets/writing/65efce52ff59ef62.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  },
+  "citation": "https://www.theaithinker.com/p/how-to-build-an-ai-native-software"
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>Agents need a factory floor, not just a model</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7513917177939320833">original ↗</a><br>
+  published: 2026-10-08 · status: canonical · expanded from the original post
+</div>
+
+<figure class="lead">
+  <img src="/assets/writing/65efce52ff59ef62.jpg" alt="Agents need a factory floor, not just a model" loading="lazy" decoding="async">
+</figure>
+
+<p>Observing teams adopt autonomous coding agents is like watching a new hire get onboarded without a desk, permissions, or a code review checklist. The agent can write code, but the surrounding environment determines whether that code becomes a liability or an asset.</p>
+
+<p>A new hire without those basics can still produce work, but no one would call that onboarding. The same is true for coding agents. The model&#x27;s ability to generate plausible code is not the bottleneck; the environment around the model decides whether that code is safe to merge.</p>
+
+<p><em>How to build an AI-native software factory</em> shifts the focus from the model to the factory floor. It argues for six platform components, including managed environments, shared skills, cost controls, and validation systems, treated as prerequisites rather than afterthoughts.</p>
+
+<p>Managed environments give the agent a controlled workspace with the right permissions and dependencies. Shared skills capture reusable patterns so an agent is not relearning how the team works on every task. Cost controls prevent an autonomous agent from quietly consuming budget. Validation systems apply automated checks before code reaches reviewers or production.</p>
+
+<p>That reframe matters. Most teams start with the agent, then retrofit the guardrails. They get excited by a demo, let the agent loose on a real codebase, and only later discover that it lacks the context, permissions, or review hooks to work safely. The article suggests the opposite: build the platform foundations first and introduce agents on low-risk tasks such as code reviews and migrations.</p>
+
+<p>Starting with code reviews and migrations is sensible because those tasks have clear inputs and outputs and are easier to verify. An agent can review a pull request against team conventions, or move a module from one framework to another, without immediately touching production-critical paths. That gives the team time to build confidence in the agent and in the surrounding controls.</p>
+
+<figure class="inline-image">
+  <img src="/assets/writing/article-b38558506c4d.jpg" alt="Illustration from the original article" loading="lazy" decoding="async">
+</figure>
+
+<p>Among the points it makes, one lesson stands out.</p>
+
+<blockquote>
+  <p>The highest-leverage investment is not a better model, but a tighter validation loop around whatever the agent produces.</p>
+</blockquote>
+
+<p>I keep returning to that line because it redirects attention away from model benchmarks and toward the systems that catch mistakes. A better model can generate more code, but if the team cannot verify that code quickly and safely, the extra output becomes extra risk. The tighter the validation loop, the faster a team can recover from a bad suggestion and the less damage a mistake can do.</p>
+
+<figure class="inline-image">
+  <img src="/assets/writing/article-d76406a37931.jpg" alt="Illustration from the original article" loading="lazy" decoding="async">
+</figure>
+
+<p>That is why the article&#x27;s prediction lands for me. <strong>Within a year, the differentiator between AI-forward teams won&#x27;t be the number of agents, but the maturity of the platform that contains them.</strong> The platform is what supplies the desk, the permissions, and the code review checklist from the opening analogy.</p>
+
+<p>A team with many ungoverned agents will spend more time investigating unexpected changes, resolving permission failures, and reconciling inconsistent style than a team with a smaller number of agents running inside managed environments with shared skills and validation checks. The number of agents is easy to measure, but it is not a useful measure of capability.</p>
+
+<p>Teams that treat the factory floor as an afterthought will spend most of their time cleaning up after agents. Teams that build the platform first will be able to increase the number of agents without increasing the number of surprises. That is a compounding advantage, and it has less to do with the model than with the environment around it.</p>
+
+<p>If there is one thing I want to remember from the article, it is that the agent is the replaceable part. The platform is the durable investment.</p>
+
+<p class="source-link">Originally covered at <a href="https://www.theaithinker.com/p/how-to-build-an-ai-native-software" rel="noopener">theaithinker.com ↗</a></p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
