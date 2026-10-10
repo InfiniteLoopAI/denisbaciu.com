@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Should the agent even look that up? — Denis Baciu</title>
+<meta name="description" content="Gating retrieval with a decision model can cut context and memory calls without losing accuracy; the real win is knowing which retrievals matter.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-10-should-agent-even-look-up.html">
+<meta property="og:title" content="Should the agent even look that up?">
+<meta property="og:description" content="Gating retrieval with a decision model can cut context and memory calls without losing accuracy; the real win is knowing which retrievals matter.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-10-should-agent-even-look-up.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-10-10">
+<meta property="article:modified_time" content="2026-10-10">
+<meta property="og:image" content="https://denisbaciu.com/assets/writing/abe05a8ae42994e0.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Should the agent even look that up?",
+  "description": "Gating retrieval with a decision model can cut context and memory calls without losing accuracy; the real win is knowing which retrievals matter.",
+  "datePublished": "2026-10-10",
+  "dateModified": "2026-10-10",
+  "url": "https://denisbaciu.com/writing/2026-10-should-agent-even-look-up.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://denisbaciu.com/writing/2026-10-should-agent-even-look-up.html"
+  },
+  "image": "https://denisbaciu.com/assets/writing/abe05a8ae42994e0.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  },
+  "citation": "https://blog.mikegchambers.com/posts/decider-gated-memory/"
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>Should the agent even look that up?</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7514614761985343488">original ↗</a><br>
+  published: 2026-10-10 · status: canonical · expanded from the original post
+</div>
+
+<figure class="lead">
+  <img src="/assets/writing/abe05a8ae42994e0.jpg" alt="Should the agent even look that up?" loading="lazy" decoding="async">
+</figure>
+
+<p>Most agents treat memory like a reflex. Every turn, they pull whatever looks relevant, stuff it into context, and hope the model uses it. I understand why. Retrieval feels safer than omission. The developer imagines the agent failing because it did not look something up, and that feels worse than failing because the context was too cluttered. But the result is often noise, not signal. When you add memory to an agent, you create a new default: always go look. That default is easy to implement and hard to question.</p>
+
+<blockquote>
+  <p>Most retrieval calls are wasted tokens, not intelligence.</p>
+</blockquote>
+
+<p>The issue is not just the token count, though that matters at scale. Every chunk you inject competes for attention inside the model. A clean prompt with the query alone can sometimes produce a better answer than a prompt padded with a dozen retrieved passages, most of which are only loosely connected. Retrieval helps, but only when the question actually requires it. The rest of the time, it dilutes the signal and gives the model more ways to go wrong.</p>
+
+<h2>Why reflex retrieval is expensive</h2>
+
+<p>Retrieval is not free. It adds latency, consumes the context window, and increases the chance that the model will follow a tangent from a retrieved chunk that looks relevant but isn&#x27;t. In a RAG pipeline, the default is usually to retrieve on every turn, because it is easier to justify adding context than to risk missing something. But that default quietly erodes accuracy. The context window is a scarce resource; spending it on irrelevant chunks leaves less room for reasoning.</p>
+
+<p>The cost shows up in subtle ways. A model trying to reconcile eight retrieved passages spends effort deciding what to ignore. That effort could have gone into reasoning about the actual question. When retrieval is called without a specific reason, it is overhead, not assistance. Over time, this overhead compounds across every turn, every user, every session. Some teams compensate by increasing the context window or reranking, but those only soften the symptom.</p>
+
+<figure class="inline-image">
+  <img src="/assets/writing/article-81030aef4e2a.jpg" alt="Illustration from the original article" loading="lazy" decoding="async">
+</figure>
+
+<h2>A decision model for memory</h2>
+
+<p>The alternative is a <em>decision gate</em>. Instead of retrieving by default, run a lightweight model that asks: does this turn need external memory? If yes, retrieve. If no, answer directly. The gate can be a small classifier, a set of rules, or even a heuristic; the point is that it runs before retrieval and has a single job: decide whether external memory is likely to change the answer. Building that gate requires you to know what retrieval is for, which is itself a useful exercise.</p>
+
+<p>In one case, this decision model reduced injected context by 85% and cut five of eight memory calls with no accuracy loss. It is like checking whether a question needs the filing cabinet before opening it. You do not open the drawer for every question; you open it only when the answer is actually inside. Those results came from a model that learned when to look, not from a smaller model asked to do more with less.</p>
+
+<figure class="diagram">
+  <img src="/assets/writing/diagram-00865210353c.png" alt="A decision gate between query and memory, deciding when retrieval is necessary." loading="lazy" decoding="async">
+  <figcaption>Fig 1. A decision gate between query and memory, deciding when retrieval is necessary.</figcaption>
+</figure>
+
+<figure class="inline-image">
+  <img src="/assets/writing/article-4d37af4e4af8.jpg" alt="Illustration from the original article" loading="lazy" decoding="async">
+</figure>
+
+<h2>Instrument what changes the answer</h2>
+
+<p>For teams running RAG in production, the real win is not fewer tokens. Fewer tokens are nice, but they are a side effect. <strong>The real win is knowing which retrievals change the answer.</strong> If a retrieval step can be skipped without changing the output, it was never adding value. That is the signal to optimize.</p>
+
+<p>Instrumenting this is straightforward. Log each retrieval call, what it returned, and whether the final answer used any of it. Over time you see patterns. Some queries always need memory. Others never do. The decision gate learns from those patterns and stops spending effort where it does not matter. Once you have that visibility, the decision gate becomes a natural next step.</p>
+
+<p class="source-link">Originally covered at <a href="https://blog.mikegchambers.com/posts/decider-gated-memory/" rel="noopener">blog.mikegchambers.com ↗</a></p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
