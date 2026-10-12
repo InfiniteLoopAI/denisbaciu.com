@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why Git infrastructure had to change for agent-scale development — Denis Baciu</title>
+<meta name="description" content="How GitHub rebuilt its Git infrastructure to reduce coordination on push, decouple storage from compute, and handle concurrent pushes from coding agents.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-10-git-infrastructure-had-change-agent-scale.html">
+<meta property="og:title" content="Why Git infrastructure had to change for agent-scale development">
+<meta property="og:description" content="How GitHub rebuilt its Git infrastructure to reduce coordination on push, decouple storage from compute, and handle concurrent pushes from coding agents.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-10-git-infrastructure-had-change-agent-scale.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-10-11">
+<meta property="article:modified_time" content="2026-10-11">
+<meta property="og:image" content="https://denisbaciu.com/assets/writing/673c05da01f14058.webp">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Why Git infrastructure had to change for agent-scale development",
+  "description": "How GitHub rebuilt its Git infrastructure to reduce coordination on push, decouple storage from compute, and handle concurrent pushes from coding agents.",
+  "datePublished": "2026-10-11",
+  "dateModified": "2026-10-11",
+  "url": "https://denisbaciu.com/writing/2026-10-git-infrastructure-had-change-agent-scale.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://denisbaciu.com/writing/2026-10-git-infrastructure-had-change-agent-scale.html"
+  },
+  "image": "https://denisbaciu.com/assets/writing/673c05da01f14058.webp",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  },
+  "citation": "https://github.blog/engineering/architecture-optimization/building-git-infrastructure-for-agent-scale-development/"
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>Why Git infrastructure had to change for agent-scale development</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7514991804526514176">original ↗</a><br>
+  published: 2026-10-11 · status: canonical · expanded from the original post
+</div>
+
+<figure class="lead">
+  <img src="/assets/writing/673c05da01f14058.webp" alt="Why Git infrastructure had to change for agent-scale development" loading="lazy" decoding="async">
+</figure>
+
+<p>I keep coming back to a bank branch with one teller line handling every deposit. Human customers trickle in one or two at a time, so the fact that the teller serializes each transaction is not a visible problem. The line stays short, and nobody measures the microseconds spent waiting behind someone else. Replace those humans with hundreds of autonomous agents doing small deposits around the clock, and the workload changes shape. Now the teller window—checking IDs, validating balances, updating the ledger in one locked transaction—is the bottleneck. Every deposit must still pass through that single point, no matter how small, and the queue builds far faster than any human teller can clear it.</p>
+
+<blockquote>
+  <p>You don&#x27;t make that line faster by adding more tellers behind the same glass; you move the deposit intake to an ATM network that accepts cash asynchronously, drops it into a vault, and reconciles later.</p>
+</blockquote>
+
+<p>That&#x27;s the shape of GitHub&#x27;s Git infrastructure rebuild for agent-scale development. The old architecture had too much coordination on every push, making each one wait for a safe moment to proceed. The new design minimizes coordination during pushes, moves heavy maintenance off the serving path, and decouples storage from compute by using <code>Azure Blob Storage</code> for durability. Instead of every push contending for the same lock, writes can land in durable object storage while compute resources handle serving independently.</p>
+
+<p>Decoupling storage from compute is the core shift. In the old model, storage and serving were tied together closely enough that scaling one meant scaling the other, and maintenance work could contend with user traffic. Under the new design, <code>Azure Blob Storage</code> provides durable object storage, while the serving layer can scale independently based on demand. Heavy maintenance no longer shares the request path with user traffic, so a push does not have to wait for housekeeping to finish before it can be acknowledged. Read capacity scales independently from write capacity, because the storage layer is no longer a single coupling point for every operation.</p>
+
+<figure class="diagram">
+  <img src="/assets/writing/diagram-21dd73574168.png" alt="Old coordination-heavy push path versus decoupled, blob-backed architecture" loading="lazy" decoding="async">
+  <figcaption>Fig 1. Old coordination-heavy push path versus decoupled, blob-backed architecture</figcaption>
+</figure>
+
+<p>GitHub&#x27;s internal benchmarks show up to 35x higher write throughput with the new architecture. That number matters less as a precise figure and more as a signal: the bottleneck was coordination, not raw storage or compute. Removing that bottleneck lets throughput climb by an order of magnitude or more. For a platform that hosts many of the world&#x27;s repositories, that is the difference between tolerating the occasional burst of writes from a few agents and absorbing a steady stream of them without degrading.</p>
+
+<p>For anyone letting coding agents touch real repositories, this change is immediately practical. Agents tend to make many small, frequent pushes rather than a few large ones. The old coordination-heavy path turned that pattern into noisy concurrent writes, where each push competed with the others and sometimes with background maintenance. The new path doesn&#x27;t punish parallelism. It treats concurrent writes as normal traffic, the way an ATM network treats cash deposits asynchronously instead of forcing everyone into a single teller line. If you are building tools or workflows that assume Git can handle this kind of load, the architecture underneath now gives you room to stop worrying about write contention and start thinking about what agents should do next. The full engineering write-up is on the GitHub blog.</p>
+
+<p class="source-link">Originally covered at <a href="https://github.blog/engineering/architecture-optimization/building-git-infrastructure-for-agent-scale-development/" rel="noopener">github.blog ↗</a></p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
