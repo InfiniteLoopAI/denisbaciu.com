@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Emergency patches: the four ways to ship critical fixes faster — Denis Baciu</title>
+<meta name="description" content="A plain-English look at the four mechanisms Project Zero identifies for shipping emergency fixes, and the tradeoff between speed and stability.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-10-emergency-patches-four-ways-ship-critical.html">
+<meta property="og:title" content="Emergency patches: the four ways to ship critical fixes faster">
+<meta property="og:description" content="A plain-English look at the four mechanisms Project Zero identifies for shipping emergency fixes, and the tradeoff between speed and stability.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-10-emergency-patches-four-ways-ship-critical.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-10-12">
+<meta property="article:modified_time" content="2026-10-12">
+<meta property="og:image" content="https://denisbaciu.com/assets/writing/1add430f71a4294b.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Emergency patches: the four ways to ship critical fixes faster",
+  "description": "A plain-English look at the four mechanisms Project Zero identifies for shipping emergency fixes, and the tradeoff between speed and stability.",
+  "datePublished": "2026-10-12",
+  "dateModified": "2026-10-12",
+  "url": "https://denisbaciu.com/writing/2026-10-emergency-patches-four-ways-ship-critical.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://denisbaciu.com/writing/2026-10-emergency-patches-four-ways-ship-critical.html"
+  },
+  "image": "https://denisbaciu.com/assets/writing/1add430f71a4294b.png",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  },
+  "citation": "https://projectzero.google/2026/10/emergency-patching.html"
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>Emergency patches: the four ways to ship critical fixes faster</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7515322223742599168">original ↗</a><br>
+  published: 2026-10-12 · status: canonical · expanded from the original post
+</div>
+
+<figure class="lead">
+  <img src="/assets/writing/1add430f71a4294b.png" alt="Emergency patches: the four ways to ship critical fixes faster" loading="lazy" decoding="async">
+</figure>
+
+<p>Emergency patches are how software vendors ship critical fixes faster than their normal release cycle. Normal cycles are built for predictability: changes are bundled, tested, and rolled out in stages. An emergency patch is a deliberate exception to that process—a controlled override that puts a fix in front of users as quickly as possible. Google&#x27;s Project Zero recently broke down the four ways they do it in a piece called &#x27;How to fix a bug in a fix.&#x27; I&#x27;m not going to rehash the entire report here; I want to focus on the part that matters for anyone running a production system.</p>
+
+<p>In plain English: when a vulnerability is being actively exploited, you don&#x27;t wait for the next scheduled update. You need a controlled override that gets the fix out now. The main tension is speed versus stability. Every one of the four mechanisms trades one for the other, and the tradeoff is rarely free. The goal is not to replace the normal process; it&#x27;s to create a narrow, temporary path that can be used under strict conditions.</p>
+
+<p>Project Zero identifies four distinct mechanisms, and they sit at different layers of the stack: two operate inside your own application or infrastructure, one at the network boundary, and one in the release channel itself.</p>
+
+<ul>
+  <li>Feature flags let you turn off a vulnerable code path without redeploying the whole app.</li>
+  <li>Filtering blocks malicious traffic at the network edge before it reaches your code.</li>
+  <li>Alternate channels let vendors push a patch through a side door, bypassing slow app store reviews.</li>
+  <li>Hotpatching modifies running code in memory, avoiding a restart entirely.</li>
+</ul>
+
+<p>The practical impact is clear. A feature flag can neutralize a zero-day in hours instead of days, but only if that flag already exists in the code. Think of it as turning off a water valve versus replacing all the pipes. The valve is instant; replacing pipes is thorough but slow. A feature flag is like a valve that was installed when the plumbing was first put in. If it&#x27;s there, you can shut off the flow in minutes. If it&#x27;s not there, you have to drain the system and cut pipes. Most teams want both: fast mitigation first, stable fix second.</p>
+
+<blockquote>
+  <p><strong>A feature flag can neutralize a zero-day in hours instead of days, but only if that flag already exists in the code.</strong></p>
+</blockquote>
+
+<p>The feature flag example is the one that sticks with me because it exposes a hidden assumption: the fastest fix is only available if you built the capability before you needed it. You can&#x27;t conjure a feature flag retroactively when the vulnerable path is already under attack. The same goes for hotpatching—you need the instrumentation and runtime support in place ahead of time. Filtering and alternate channels are less dependent on your own code, but they come with their own operational costs.</p>
+
+<p>None of this means you need all four mechanisms today. The point is to know which ones fit your stack and to have at least one fast path ready before you need it. For anyone running high-volume transactional platforms, this is a solid reminder that rapid response isn&#x27;t just about finding bugs—it&#x27;s about having pre-built, low-friction paths to ship a fix when every minute counts. If you have to design the override while the incident is already underway, you&#x27;ve already lost time you can&#x27;t get back.</p>
+
+<p class="source-link">Originally covered at <a href="https://projectzero.google/2026/10/emergency-patching.html" rel="noopener">projectzero.google ↗</a></p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
