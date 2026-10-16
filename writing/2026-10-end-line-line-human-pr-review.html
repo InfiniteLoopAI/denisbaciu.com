@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The end of line-by-line human PR review — Denis Baciu</title>
+<meta name="description" content="AI code generation is pushing teams to replace detailed PR reading with pre-code rules, automated checks, and a human sanity check for business logic.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-10-end-line-line-human-pr-review.html">
+<meta property="og:title" content="The end of line-by-line human PR review">
+<meta property="og:description" content="AI code generation is pushing teams to replace detailed PR reading with pre-code rules, automated checks, and a human sanity check for business logic.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-10-end-line-line-human-pr-review.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-10-15">
+<meta property="article:modified_time" content="2026-10-15">
+<meta property="og:image" content="https://denisbaciu.com/assets/writing/2e09f698d9216b29.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "The end of line-by-line human PR review",
+  "description": "AI code generation is pushing teams to replace detailed PR reading with pre-code rules, automated checks, and a human sanity check for business logic.",
+  "datePublished": "2026-10-15",
+  "dateModified": "2026-10-15",
+  "url": "https://denisbaciu.com/writing/2026-10-end-line-line-human-pr-review.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://denisbaciu.com/writing/2026-10-end-line-line-human-pr-review.html"
+  },
+  "image": "https://denisbaciu.com/assets/writing/2e09f698d9216b29.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  },
+  "citation": "https://scienceisneato.substack.com/p/human-pr-review-is-next"
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>The end of line-by-line human PR review</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7516453980839788544">original ↗</a><br>
+  published: 2026-10-15 · status: canonical · expanded from the original post
+</div>
+
+<figure class="lead">
+  <img src="/assets/writing/2e09f698d9216b29.jpg" alt="The end of line-by-line human PR review" loading="lazy" decoding="async">
+</figure>
+
+<p>The era of line-by-line human pull request review is ending. For years, the review process assumed that a person would read every diff, check for style problems, spot edge cases, and reason about whether the change made sense in the wider system. That model still works when a team produces a modest amount of code and most changes are small and deliberate. It does not scale when AI-assisted development produces more code than any reviewer can absorb in a single day. The bottleneck moves from writing code to reading it, and that is a losing position for a human reviewer.</p>
+
+<p>What replaces the old review is a tighter contract. We stop asking reviewers to read every implementation detail. We ask them to define what correct looks like before the code exists. Instead of reacting to a diff after it is written, the team agrees on constraints and expectations up front. That contract is made of four parts:</p>
+
+<ul>
+  <li>Pre-code rules</li>
+  <li>Automated guardrails</li>
+  <li>Multi-model review bots</li>
+  <li>User acceptance testing</li>
+</ul>
+
+<p>Each of these parts moves verification earlier or automates a piece of what a human reviewer used to do by hand. Pre-code rules prevent known unsafe patterns from ever reaching a PR. Automated guardrails catch mechanical issues at the moment of the change, without waiting for a person to notice. Multi-model review bots can compare different interpretations of the same diff and surface disagreement cheaply, which is useful because one model may miss what another catches. User acceptance testing adds the final check that the result matches what the user actually needed, not just what the spec says. None of these replace human judgement; they relocate it from reading code to designing how the code is checked.</p>
+
+<figure class="inline-image">
+  <img src="/assets/writing/article-e00696ad1306.jpg" alt="Illustration from the original article" loading="lazy" decoding="async">
+</figure>
+
+<blockquote>
+  <p>Review the contract, not the code.</p>
+</blockquote>
+
+<p>But this is not a free pass. Lean too hard on automation without a human sanity check for business logic, and you will ship plausible-looking wrong code. The counterexample is an over-reliance on tests that pass but miss intent. A test can be green while the system does the wrong thing for the wrong reason, because the test itself was written against an incorrect assumption. Automated guardrails can reject the wrong patterns and still miss the one that matters. Review bots can agree with each other and be wrong together. The human sanity check is not about reading every line; it is about verifying that the contract itself encodes the business intent, not just a plausible story about it. A human still needs to ask whether the rules and tests reflect what the user actually wants.</p>
+
+<p>The skill shifts from reading code to designing verification. A great reviewer used to be someone who could hold a lot of context in their head and spot subtle defects in a diff. The equivalent skill now is building systems that catch defects before a human ever looks, and deciding where human attention is still worth spending. It is less like proofreading and more like designing an experiment. You specify the hypothesis, set up the conditions, and interpret the result. That is a different kind of rigor, and it is the one most teams will need.</p>
+
+<p>Quality isn&#x27;t inspected in. It&#x27;s designed in. That has been true in manufacturing for decades. Software is finally reaching the same point with review. The question is not how fast we can read AI-generated code. The question is how well we can define what good looks like before the code arrives.</p>
+
+<p class="source-link">Originally covered at <a href="https://scienceisneato.substack.com/p/human-pr-review-is-next" rel="noopener">scienceisneato.substack.com ↗</a></p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
