@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Figma&#x27;s Specs editor works when treated as an executable contract — Denis Baciu</title>
+<meta name="description" content="Figma&#x27;s Specs editor gives designers and AI agents a shared Markdown source of truth, but the real value comes from validating output in CI.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-10-figma-s-specs-editor-works-treated.html">
+<meta property="og:title" content="Figma&#x27;s Specs editor works when treated as an executable contract">
+<meta property="og:description" content="Figma&#x27;s Specs editor gives designers and AI agents a shared Markdown source of truth, but the real value comes from validating output in CI.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-10-figma-s-specs-editor-works-treated.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-10-17">
+<meta property="article:modified_time" content="2026-10-17">
+<meta property="og:image" content="https://denisbaciu.com/assets/denis.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Figma's Specs editor works when treated as an executable contract",
+  "description": "Figma's Specs editor gives designers and AI agents a shared Markdown source of truth, but the real value comes from validating output in CI.",
+  "datePublished": "2026-10-17",
+  "dateModified": "2026-10-17",
+  "url": "https://denisbaciu.com/writing/2026-10-figma-s-specs-editor-works-treated.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://denisbaciu.com/writing/2026-10-figma-s-specs-editor-works-treated.html"
+  },
+  "image": "https://denisbaciu.com/assets/denis.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  },
+  "citation": "https://techcrunch.com/2026/10/14/figma-announces-new-features-to-define-how-agents-work-on-its-platform/"
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>Figma&#x27;s Specs editor works when treated as an executable contract</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7517151433503293440">original ↗</a><br>
+  published: 2026-10-17 · status: canonical · expanded from the original post
+</div>
+
+<p>Figma&#x27;s latest Specs editor proposes a single Markdown source of truth for human designers and AI agents. In enterprise platform work, agents fail when context is scattered across comments, tickets, and tribal knowledge. One versionable document fixes that. It is inspectable, and it narrows the gap between design intent and generated code. That is the strongest version of the case for it.</p>
+
+<h2>The case for a single Markdown source of truth</h2>
+
+<p>The argument in favour is straightforward. A Markdown file can live in the same repository as the code it describes. It can be reviewed, diffed, and versioned. Unlike a Figma canvas or a design system microsite, it does not require a separate tool to inspect. For agent-driven UI work, that proximity matters. The agent can read the spec alongside the component source, the tokens, and the existing lint rules. When context is scattered, agents guess. When it is local and explicit, they guess less.</p>
+
+<h2>The case against narrative specifications</h2>
+
+<p>The case against Specs is just as simple. A Markdown file is easy to write and easier to ignore. Real design constraints live in tokens, components, and code, not prose. If a spec says &quot;use 8px spacing&quot; but the codebase contains 12px margins, the spec is wrong or the code is wrong, and no amount of reading resolves that. If Specs stays narrative, teams might mistake documentation for enforcement. A document that nobody is required to follow becomes a record of intentions, not a source of truth.</p>
+
+<p>There is also a risk that a tool-specific spec becomes another silo. Figma already stores components, variables, and prototypes in its own format. If Specs lives only inside Figma and is not wired into existing pipelines, it can drift from the actual implementation. The spec may describe what the team wanted at some point, while the deployed interface moves on. That is not a failure of Markdown; it is a failure of integration.</p>
+
+<figure class="inline-image">
+  <img src="/assets/writing/article-b857be0dcf8f.jpg" alt="Illustration from the original article" loading="lazy" decoding="async">
+</figure>
+
+<h2>Treat specs as a contract, not a guide</h2>
+
+<p>My take is simple: <strong>treat Specs as a contract, not a guide.</strong> I would parse the Markdown into machine-readable assertions such as JSON Schema, policy rules, or lint checks, so agent output is validated against the spec rather than eyeballed. The document stays human-friendly; enforcement lives in CI. If an agent generates a button that violates a spacing rule, the check fails. If a generated screen misses a required accessibility attribute, the check fails. The spec becomes something the pipeline honours, not something the team hopes the agent read.</p>
+
+<p>This approach keeps the human-readable document but moves the point of enforcement. The Markdown is still where people argue about intent, trade-offs, and edge cases. The assertions are what machines execute. That division of labour is useful because prose is good for context and terrible for validation. JSON Schema and policy rules are the opposite. You want both, but you should not confuse one for the other.</p>
+
+<figure class="inline-image">
+  <img src="/assets/writing/article-5c24847ac825.webp" alt="Illustration from the original article" loading="lazy" decoding="async">
+</figure>
+
+<p>TechCrunch&#x27;s summary of Figma&#x27;s Specs is a useful reference for the feature itself. What matters more is how teams choose to use it. Teams that treat specs as executable contracts will see fewer production UI defects than teams that treat them as documentation. Within two quarters, the difference will be measurable. That is not because agents become perfect. It is because a check that runs on every change catches drift before it reaches production.</p>
+
+<p>The most realistic failure mode is a well-written Markdown file that everyone likes and nobody consults. The most realistic success mode is a short spec, paired with a few enforceable rules, that makes the agent&#x27;s output easier to review and safer to merge. The gap between those two outcomes is not the quality of the prose. It is whether the spec made its way into the pipeline.</p>
+
+<p class="source-link">Originally covered at <a href="https://techcrunch.com/2026/10/14/figma-announces-new-features-to-define-how-agents-work-on-its-platform/" rel="noopener">techcrunch.com ↗</a></p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
