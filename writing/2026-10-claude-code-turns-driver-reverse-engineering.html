@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Code turns driver reverse-engineering into a context problem — Denis Baciu</title>
+<meta name="description" content="Observing USB traffic and generating a SANE driver with Claude Code shows a faster approach for undocumented hardware and legacy interfaces.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-10-claude-code-turns-driver-reverse-engineering.html">
+<meta property="og:title" content="Claude Code turns driver reverse-engineering into a context problem">
+<meta property="og:description" content="Observing USB traffic and generating a SANE driver with Claude Code shows a faster approach for undocumented hardware and legacy interfaces.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-10-claude-code-turns-driver-reverse-engineering.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-10-19">
+<meta property="article:modified_time" content="2026-10-19">
+<meta property="og:image" content="https://denisbaciu.com/assets/writing/3b4fd8514b0a49b7.webp">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Claude Code turns driver reverse-engineering into a context problem",
+  "description": "Observing USB traffic and generating a SANE driver with Claude Code shows a faster approach for undocumented hardware and legacy interfaces.",
+  "datePublished": "2026-10-19",
+  "dateModified": "2026-10-19",
+  "url": "https://denisbaciu.com/writing/2026-10-claude-code-turns-driver-reverse-engineering.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://denisbaciu.com/writing/2026-10-claude-code-turns-driver-reverse-engineering.html"
+  },
+  "image": "https://denisbaciu.com/assets/writing/3b4fd8514b0a49b7.webp",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  },
+  "citation": "https://www.phoronix.com/news/AI-Reverse-Engineer-Linux-HW"
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>Claude Code turns driver reverse-engineering into a context problem</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7517858358826237953">original ↗</a><br>
+  published: 2026-10-19 · status: canonical · expanded from the original post
+</div>
+
+<figure class="lead">
+  <img src="/assets/writing/3b4fd8514b0a49b7.webp" alt="Claude Code turns driver reverse-engineering into a context problem" loading="lazy" decoding="async">
+</figure>
+
+<p>Reverse-engineering proprietary drivers used to be a deep-C rabbit hole. You sat with a disassembler, mapped out undocumented input/output controls, guessed at timing and packet formats, and then wrote a kernel or userspace driver by hand. It was slow, error-prone, and demanded a very specific kind of expertise. Claude Code has changed the shape of the problem. It hasn&#x27;t made the hardware any more documented. It has turned reverse engineering from a C problem into a context problem.</p>
+
+<blockquote>
+  <p>The hardware is still undocumented; only the I/O is observable.</p>
+</blockquote>
+
+<p>That single sentence captures the shift. Instead of starting from a vendor datasheet that does not exist, you start from the traffic between the official driver and the device. In the recent case that caught my attention, Schaller captured USB traffic from the vendor&#x27;s Windows driver inside a VM. That capture becomes ground truth. The model uses that observed sequence of control transfers, bulk data, and timing to infer the protocol well enough to write a working driver. The captured traffic gives the model something concrete to anchor on; it doesn&#x27;t have to rely on guesswork or half-remembered chipset quirks from old forum posts.</p>
+
+<p>Claude Code then generated a SANE driver—the standard userspace scanning interface on Linux—from that captured traffic. The model is not doing anything magical. It is pattern matching over a long context window: the USB descriptors, the control transfers, the bulk data, and the surrounding Linux driver scaffolding. It can hold all of that at once and produce code that a person would otherwise have to stitch together over days or weeks. The result is not necessarily final or bug-free, but it is a working starting point that would have taken far longer to reach by hand.</p>
+
+<figure class="inline-image">
+  <img src="/assets/writing/article-8337f4653c00.webp" alt="Illustration from the original article" loading="lazy" decoding="async">
+</figure>
+
+<p><strong>The pattern generalises beyond scanners.</strong> For enterprise teams, this exact approach applies to legacy APIs and proprietary formats. Too often integration work starts by reading old documentation that is incomplete, asking a vendor for specs that will never arrive, or trying to decompile a binary. The better starting point is to capture the observable traffic first: record the API calls, the wire format, the file structure, the protocol exchanges from a working implementation. Then generate the adapter or client from that captured behaviour. That order matters. Capture first, generate second. The capture is the context, and the context is what lets a model do useful work.</p>
+
+<p>This does not remove the need for engineering judgement. A capture is only a sample. It can miss error paths, edge cases, and variations. But as a way to get from zero to a working adapter, it is dramatically faster than the old method. The cost has moved from writing low-level code to assembling the right context. That context is now something you can collect, curate, and reuse across projects. It also lowers the barrier to entry: the person doing the work doesn&#x27;t need to be a kernel developer or an expert in the specific protocol; they need to know how to capture traffic and how to evaluate the generated code.</p>
+
+<figure class="inline-image">
+  <img src="/assets/writing/article-a6ef4ec083b6.webp" alt="Illustration from the original article" loading="lazy" decoding="async">
+</figure>
+
+<p>The Phoronix article also covers a MIPI webcam fix alongside the scanner work. The fuller write-up is at https://www.phoronix.com/news/AI-Reverse-Engineer-Linux-HW</p>
+
+<p class="source-link">Originally covered at <a href="https://www.phoronix.com/news/AI-Reverse-Engineer-Linux-HW" rel="noopener">phoronix.com ↗</a></p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
