@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GitHub&#x27;s per-reference locking prepares Git for agent traffic — Denis Baciu</title>
+<meta name="description" content="GitHub is moving write coordination from the repository to individual branches and tags because AI agents create far more concurrent pushes than humans.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-10-github-s-per-reference-locking-prepares.html">
+<meta property="og:title" content="GitHub&#x27;s per-reference locking prepares Git for agent traffic">
+<meta property="og:description" content="GitHub is moving write coordination from the repository to individual branches and tags because AI agents create far more concurrent pushes than humans.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-10-github-s-per-reference-locking-prepares.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-10-24">
+<meta property="article:modified_time" content="2026-10-24">
+<meta property="og:image" content="https://denisbaciu.com/assets/writing/855fc08957a2fa78.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "GitHub's per-reference locking prepares Git for agent traffic",
+  "description": "GitHub is moving write coordination from the repository to individual branches and tags because AI agents create far more concurrent pushes than humans.",
+  "datePublished": "2026-10-24",
+  "dateModified": "2026-10-24",
+  "url": "https://denisbaciu.com/writing/2026-10-github-s-per-reference-locking-prepares.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://denisbaciu.com/writing/2026-10-github-s-per-reference-locking-prepares.html"
+  },
+  "image": "https://denisbaciu.com/assets/writing/855fc08957a2fa78.png",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  },
+  "citation": "https://github.blog/engineering/architecture-optimization/the-bridge-to-agent-scale-git-infrastructure/"
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>GitHub&#x27;s per-reference locking prepares Git for agent traffic</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7519687677428916224">original ↗</a><br>
+  published: 2026-10-24 · status: canonical · expanded from the original post
+</div>
+
+<figure class="lead">
+  <img src="/assets/writing/855fc08957a2fa78.png" alt="GitHub&#x27;s per-reference locking prepares Git for agent traffic" loading="lazy" decoding="async">
+</figure>
+
+<p>I think of Git as a version control system for humans. Commits, branches, pull requests—these are the units we work with. That framing hides an assumption: the number of concurrent writers to a repository stays low. A developer works on a few branches, pushes occasionally, opens a pull request. The repository&#x27;s write coordination was designed around that pattern, and for most of Git&#x27;s history that assumption held.</p>
+
+<p>AI agents change the traffic pattern completely. They can open dozens of branches and push changes concurrently, far more than a single developer would. A coding agent might explore several approaches in parallel, update a branch for each experiment, and push all of them at once. When that becomes common, the old assumptions start to break, because the coordination points are no longer occasional human actions but a continuous stream of automated writes.</p>
+
+<p>GitHub is rebuilding Git infrastructure to handle that shift. The core change is about write coordination. Previously, coordination happened at the repository level. If two operations touched the same repository, one waited. That was fine when a few pushes per hour were normal. But with agents, a single repository can see dozens of simultaneous branch updates. A repository-level lock means those updates get serialized, and agents spend more time waiting than working. The lock itself was not broken; it just assumed a low-write world.</p>
+
+<figure class="inline-image">
+  <img src="/assets/writing/article-77650b8e2adf.png" alt="Illustration from the original article" loading="lazy" decoding="async">
+</figure>
+
+<p>The new model moves coordination to <em>individual references</em>: branches or tags. In Git, a reference is a pointer to a commit. Branches and tags are the main reference types. In plain English: instead of locking the whole project when one bot pushes, GitHub locks just that branch, so other branches keep moving. Two agents can push to different branches of the same repository at the same time without contending. Only writes to the same reference need to wait. This aligns the lock granularity with Git&#x27;s own data model.</p>
+
+<figure class="diagram">
+  <img src="/assets/writing/diagram-27277a7c34ad.png" alt="Repository-level locking versus per-reference locking" loading="lazy" decoding="async">
+  <figcaption>Fig 1. Repository-level locking versus per-reference locking</figcaption>
+</figure>
+
+<p>Why that matters: AI-assisted development is not just more code. It is more simultaneous writes to the same project. If the platform serializes those writes, the bottleneck is not compute or memory; it is <strong>the coordination model underneath</strong>. GitHub&#x27;s internal tests show 3-4x higher throughput with per-reference coordination. That is a significant difference when you are running hundreds of agents against the same repository. It means agents spend time working instead of waiting for a lock.</p>
+
+<p>There is a counterexample worth keeping in mind. For normal human workflows—a few pushes per hour—the old repository-level lock was fine. The overhead was invisible. It only becomes a bottleneck when agents behave like a swarm. That distinction is important because most Git users will never notice the change. It is an infrastructure change aimed at a specific usage pattern, not a general speedup for everyone. In fact, for a solo developer, the new per-reference coordination might not change anything observable.</p>
+
+<blockquote>
+  <p>Scaling for AI isn&#x27;t always about GPUs—it&#x27;s about the coordination model underneath.</p>
+</blockquote>
+
+<p>This is a good reminder that scaling for AI is not always about GPUs. Sometimes it is about the coordination model underneath. If you only optimize the compute layer and leave a repository-level lock in place, you will hit a wall long before you run out of GPUs. The quiet work of changing how a platform coordinates writes can matter more than adding more hardware. It is also a reminder that infrastructure assumptions are usually invisible until a new workload breaks them.</p>
+
+<p class="source-link">Originally covered at <a href="https://github.blog/engineering/architecture-optimization/the-bridge-to-agent-scale-git-infrastructure/" rel="noopener">github.blog ↗</a></p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
