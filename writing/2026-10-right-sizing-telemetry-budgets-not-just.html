@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Right-sizing telemetry budgets, not just collecting everything — Denis Baciu</title>
+<meta name="description" content="Enterprise observability is moving from collecting everything to right-sized telemetry budgets, with lower cost and shorter resolution times the goals.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-10-right-sizing-telemetry-budgets-not-just.html">
+<meta property="og:title" content="Right-sizing telemetry budgets, not just collecting everything">
+<meta property="og:description" content="Enterprise observability is moving from collecting everything to right-sized telemetry budgets, with lower cost and shorter resolution times the goals.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-10-right-sizing-telemetry-budgets-not-just.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-10-31">
+<meta property="article:modified_time" content="2026-10-31">
+<meta property="og:image" content="https://denisbaciu.com/assets/writing/34a8d585667ef52e.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Right-sizing telemetry budgets, not just collecting everything",
+  "description": "Enterprise observability is moving from collecting everything to right-sized telemetry budgets, with lower cost and shorter resolution times the goals.",
+  "datePublished": "2026-10-31",
+  "dateModified": "2026-10-31",
+  "url": "https://denisbaciu.com/writing/2026-10-right-sizing-telemetry-budgets-not-just.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://denisbaciu.com/writing/2026-10-right-sizing-telemetry-budgets-not-just.html"
+  },
+  "image": "https://denisbaciu.com/assets/writing/34a8d585667ef52e.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  },
+  "citation": "https://blogs.cisco.com/cisco-on-cisco/cisco-its-endpoint-observability-strategy-right-sized-telemetry-for-splunk-observability-cloud"
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>Right-sizing telemetry budgets, not just collecting everything</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7522225042651357185">original ↗</a><br>
+  published: 2026-10-31 · status: canonical · expanded from the original post
+</div>
+
+<figure class="lead">
+  <img src="/assets/writing/34a8d585667ef52e.jpg" alt="Right-sizing telemetry budgets, not just collecting everything" loading="lazy" decoding="async">
+</figure>
+
+<p>Over the next year, I expect more enterprise observability initiatives to move from collecting everything to negotiating <em>telemetry budgets</em> by user journey and service tier. It is a small shift in language but a large change in practice. Collecting everything has been the default for a long time because storage was cheap enough and it felt safer than missing something. That default is now being questioned, not only because data volume keeps growing, but because the operational value of most of that data is unclear.</p>
+
+<p>The phrase &quot;negotiating telemetry budgets&quot; sounds corporate, but it points at a real engineering decision. For each user journey—login, checkout, search, playback, whatever matters for the product—someone has to ask what telemetry would let an on-call engineer answer the first useful question when something breaks. The answer is rarely &quot;everything at full resolution.&quot; Some journeys justify verbose tracing; others need only a few key metrics and a small set of logs.</p>
+
+<p>Service tier adds another dimension. A tier with tighter SLOs might justify request-level traces, while a lower-risk tier might need only basic health telemetry and error counts. This is not about treating some users as less important. It is about matching the cost of observation to the operational risk and the questions you are likely to ask.</p>
+
+<p>Cisco IT offers a concrete case. They cut endpoint telemetry volume by 75% while improving troubleshooting and resilience in <code>Splunk Observability Cloud</code>. The mechanism was not random downsampling. It was deciding what telemetry is genuinely required to answer operational questions, much like pruning unused code paths keeps a codebase navigable.</p>
+
+<p>That distinction matters. Random downsampling treats telemetry as a statistical sample: you keep some fraction of everything and hope it is representative. The Cisco approach is closer to editing. You keep the records that map to specific questions about user journeys and service tiers, and you stop paying to store the rest. What is notable is that the reduction did not come at the expense of visibility. The team reported better troubleshooting and resilience, which suggests the previous volume included a lot of telemetry that was never being queried.</p>
+
+<p>Pruning unused code paths keeps a codebase navigable because developers can find the parts that matter. Telemetry is the same. A dashboard with a hundred panels is less useful than ten panels that answer the questions the on-call rotation actually asks. When every service emits the same defaults, the signal disappears into the volume.</p>
+
+<p>The practical implication is twofold. First, lower ingest cost and less noise. Second, and more importantly, shorter resolution times because responders are not sifting through irrelevant events. <strong>The real payoff is not the storage bill; it is reducing the time between an incident starting and someone understanding it.</strong></p>
+
+<p>I will be watching teams that pair right-sized telemetry with explicit retention and cardinality policies. These policies should be published and reviewed with the same discipline as SLOs. That means they are not set once and forgotten. They are revisited when services change, when questions change, and when people notice that some high-volume telemetry has not been used to resolve an incident in months. Retention and cardinality determine how long you keep each class of data and how many distinct label values you allow. Without explicit policies, teams drift toward defaults that are either too generous or too restrictive.</p>
+
+<p>The signal to watch is whether MTTR improvements follow the data reduction, or if teams just trade one blind spot for another. A lower ingest bill is easy to measure. The harder question is whether responders can still see what they need when a complex incident crosses service boundaries. Some blind spots only show up later, in the gap between what was kept and what turned out to matter. If MTTR improves, the team removed noise without removing signal. If it stays flat or gets worse, the team may have removed low-volume but high-value data, or made it harder to correlate across services.</p>
+
+<p class="source-link">Originally covered at <a href="https://blogs.cisco.com/cisco-on-cisco/cisco-its-endpoint-observability-strategy-right-sized-telemetry-for-splunk-observability-cloud" rel="noopener">blogs.cisco.com ↗</a></p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
