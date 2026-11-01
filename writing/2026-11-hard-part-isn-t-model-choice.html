@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The hard part isn&#x27;t the model choice; it&#x27;s the harness — Denis Baciu</title>
+<meta name="description" content="Why managed orchestration and governance, not model selection, determine whether agentic AI scales inside an enterprise.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-11-hard-part-isn-t-model-choice.html">
+<meta property="og:title" content="The hard part isn&#x27;t the model choice; it&#x27;s the harness">
+<meta property="og:description" content="Why managed orchestration and governance, not model selection, determine whether agentic AI scales inside an enterprise.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-11-hard-part-isn-t-model-choice.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-11-01">
+<meta property="article:modified_time" content="2026-11-01">
+<meta property="og:image" content="https://denisbaciu.com/assets/writing/a266cf795e4a10e0.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "The hard part isn't the model choice; it's the harness",
+  "description": "Why managed orchestration and governance, not model selection, determine whether agentic AI scales inside an enterprise.",
+  "datePublished": "2026-11-01",
+  "dateModified": "2026-11-01",
+  "url": "https://denisbaciu.com/writing/2026-11-hard-part-isn-t-model-choice.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://denisbaciu.com/writing/2026-11-hard-part-isn-t-model-choice.html"
+  },
+  "image": "https://denisbaciu.com/assets/writing/a266cf795e4a10e0.png",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  },
+  "citation": "https://blogs.microsoft.com/blog/2026/10/28/introducing-the-microsoft-copilot-harness-unlocking-the-potential-of-truly-multi-model-agentic-work/"
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>The hard part isn&#x27;t the model choice; it&#x27;s the harness</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7522602597552132096">original ↗</a><br>
+  published: 2026-11-01 · status: canonical · expanded from the original post
+</div>
+
+<figure class="lead">
+  <img src="/assets/writing/a266cf795e4a10e0.png" alt="The hard part isn&#x27;t the model choice; it&#x27;s the harness" loading="lazy" decoding="async">
+</figure>
+
+<p>Most conversations about building agentic AI systems start with model selection. I understand why. Frontier models are improving quickly, and choosing the right one feels like a strategic decision. But when I look at what actually breaks in production, the model choice is rarely the hard part. The hard part is the <em>harness</em> around it.</p>
+
+<p>Microsoft&#x27;s <code>Copilot harness</code> in <code>Foundry</code> makes that explicit. It routes work across 20+ frontier models, manages sandboxing and governance, and now runs on <code>Rust</code> for performance. On the surface, that reads like an infrastructure detail. In practice, it is the part of the system that determines whether agentic AI can run safely and reliably at enterprise scale. The harness is not a wrapper around a model. It is the <em>control plane</em> that sits between the model and everything the model is allowed to touch.</p>
+
+<p>The reason this matters is straightforward. <strong>Agent loops fail in the control plane, not in the model call.</strong> A single model call is a request and a response. An agent loop is a sequence of decisions, tool calls, retries, context updates, and policy checks. The model is only one component in that sequence. When something breaks, it usually breaks in the orchestration around the model: a bad tool result gets fed back into the context, a permission check is missed, a sandbox boundary is too loose, or a retry loop spins out of control. None of those failures are solved by switching to a better model.</p>
+
+<figure class="inline-image">
+  <img src="/assets/writing/article-57e249e9fd2f.webp" alt="Illustration from the original article" loading="lazy" decoding="async">
+</figure>
+
+<p>Managed orchestration reduces that operational risk. Instead of every team building its own ad hoc control plane, they get a shared layer that handles routing, sandboxing, and governance consistently. That consistency is what makes GenAI viable inside a large enterprise. It also matters because model access is getting commoditized. It is already easy to swap one frontier model for another. What is not commoditized is the layer that decides which model to use, what it is allowed to do, what it can access, and how its outputs are audited. The difference is governance.</p>
+
+<p>Governance is not a checkbox. It is the set of rules that determine whether an agent can act on a user&#x27;s behalf, which systems it can reach, what data it can read, and how every action is logged for audit. Without that layer, models are powerful but unusable in a regulated environment. With it, an organization can adopt new models as they improve without rebuilding its safety and compliance posture from scratch.</p>
+
+<blockquote>
+  <p>Control planes age better than prompts.</p>
+</blockquote>
+
+<p>That is the lesson I keep coming back to. Prompts are tightly coupled to a specific model and a specific version. A control plane, if designed well, persists across model changes. It encodes the rules that don&#x27;t change when the underlying model improves: identity, permissions, data boundaries, logging, retry policy, fallback behavior. Those things outlive any single model generation. Investing in the harness is not as exciting as picking a model, but it is the investment that compounds.</p>
+
+<p>When teams ask me where to focus, I don&#x27;t point them at model benchmarks. I point them at the harness. The model choice will keep changing. The control plane is what stays.</p>
+
+<p class="source-link">Originally covered at <a href="https://blogs.microsoft.com/blog/2026/10/28/introducing-the-microsoft-copilot-harness-unlocking-the-potential-of-truly-multi-model-agentic-work/" rel="noopener">blogs.microsoft.com ↗</a></p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
