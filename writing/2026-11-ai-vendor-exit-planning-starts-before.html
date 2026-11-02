@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI vendor exit planning starts before the contract is signed — Denis Baciu</title>
+<meta name="description" content="Enterprise AI teams need vendor exit plans built into contracts—data export rights, abstraction layers, and failover drills—before signing.">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-11-ai-vendor-exit-planning-starts-before.html">
+<meta property="og:title" content="AI vendor exit planning starts before the contract is signed">
+<meta property="og:description" content="Enterprise AI teams need vendor exit plans built into contracts—data export rights, abstraction layers, and failover drills—before signing.">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-11-ai-vendor-exit-planning-starts-before.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-11-02">
+<meta property="article:modified_time" content="2026-11-02">
+<meta property="og:image" content="https://denisbaciu.com/assets/writing/0599668a2e472a77.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "AI vendor exit planning starts before the contract is signed",
+  "description": "Enterprise AI teams need vendor exit plans built into contracts—data export rights, abstraction layers, and failover drills—before signing.",
+  "datePublished": "2026-11-02",
+  "dateModified": "2026-11-02",
+  "url": "https://denisbaciu.com/writing/2026-11-ai-vendor-exit-planning-starts-before.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://denisbaciu.com/writing/2026-11-ai-vendor-exit-planning-starts-before.html"
+  },
+  "image": "https://denisbaciu.com/assets/writing/0599668a2e472a77.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  },
+  "citation": "https://www.cio.com/article/4241948/when-your-ai-vendor-goes-belly-up.html"
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>AI vendor exit planning starts before the contract is signed</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7522931652436774914">original ↗</a><br>
+  published: 2026-11-02 · status: canonical · expanded from the original post
+</div>
+
+<figure class="lead">
+  <img src="/assets/writing/0599668a2e472a77.jpg" alt="AI vendor exit planning starts before the contract is signed" loading="lazy" decoding="async">
+</figure>
+
+<p>If you&#x27;re accountable for enterprise AI, vendor exit planning should start before the contract is signed. This isn&#x27;t a procurement afterthought; it&#x27;s the same discipline you apply to system design. Good architectures already plan for failure. Vendor failure deserves the same rigor.</p>
+
+<p>Push data export, model weights, and inference rights into the contract—not the renewal. At renewal time, the vendor has all the leverage. If they&#x27;re struggling, they may restrict exports to force a renewal or make migration painful. If they&#x27;re gone, there&#x27;s no one to negotiate with. The contract must specify that you own your fine-tuned weights, that you can export your data in a usable format, and that you retain the right to run inference on your own infrastructure if the relationship ends. Waiting for the renewal means you&#x27;ve already lost the negotiating position.</p>
+
+<p>Wrap every proprietary model call behind an interface. This is plain software engineering: depend on abstractions, not implementations. If your application directly calls a vendor&#x27;s SDK or API in dozens of places, swapping to another model means rewriting those integrations and often rethinking the surrounding logic. But if you define your own internal interface—say, a <code>ModelClient</code> with a <code>predict</code> method—then changing vendors becomes a matter of writing a new adapter. That&#x27;s code, not architecture. It&#x27;s the difference between a week of work and a quarter-long migration.</p>
+
+<p>Track funding runway, leadership churn, and support SLA misses as early exit signals. Public information about a vendor&#x27;s funding often lags reality, but you can watch for signs: delayed product releases, shrinking support responsiveness, key engineers leaving. These are the equivalent of disk SMART errors. They don&#x27;t guarantee failure, but they tell you when to start exercising your exit plan before it&#x27;s an emergency. Support SLA misses are especially telling—if a vendor can&#x27;t meet its contractual support obligations, that&#x27;s a breach, but it&#x27;s also a sign of internal strain.</p>
+
+<p>Run a forced failover drill for each AI vendor. The drill is the only test that matters. You can have a documented plan, but until you actually cut over to a fallback model or a self-hosted alternative, it&#x27;s theory. A failover drill forces you to find the gaps: the missing data export, the hardcoded endpoint, the team that doesn&#x27;t know the runbook. If it&#x27;s not tested, it&#x27;s not an exit plan.</p>
+
+<blockquote>
+  <p>Good architectures already plan for failure. Vendor failure deserves the same rigor.</p>
+</blockquote>
+
+<p>The CIO piece &quot;When your AI vendor goes belly up&quot; is a good read on the failure modes. But the takeaway for anyone accountable for enterprise AI is simple: do the exit planning before you sign, not after. The procurement cycle is your best chance to set terms, build abstractions, and define what a clean break looks like. Once the contract is inked, that leverage disappears. And by the time the vendor starts missing SLAs, it&#x27;s already too late to start planning.</p>
+
+<p class="source-link">Originally covered at <a href="https://www.cio.com/article/4241948/when-your-ai-vendor-goes-belly-up.html" rel="noopener">cio.com ↗</a></p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
