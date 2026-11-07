@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Google explains why its London backup generators failed — Denis Baciu</title>
+<meta name="description" content="Redundant power feeds and backup generators should keep a data centre running through a power failure. Google’s London outage shows why that expectation…">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-11-google-explains-london-backup-generators-failed.html">
+<meta property="og:title" content="Google explains why its London backup generators failed">
+<meta property="og:description" content="Redundant power feeds and backup generators should keep a data centre running through a power failure. Google’s London outage shows why that expectation…">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-11-google-explains-london-backup-generators-failed.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-11-07">
+<meta property="article:modified_time" content="2026-11-07">
+<meta property="og:image" content="https://denisbaciu.com/assets/writing/9b9915da44985078.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Google explains why its London backup generators failed",
+  "description": "Redundant power feeds and backup generators should keep a data centre running through a power failure. Google’s London outage shows why that expectation…",
+  "datePublished": "2026-11-07",
+  "dateModified": "2026-11-07",
+  "url": "https://denisbaciu.com/writing/2026-11-google-explains-london-backup-generators-failed.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://denisbaciu.com/writing/2026-11-google-explains-london-backup-generators-failed.html"
+  },
+  "image": "https://denisbaciu.com/assets/writing/9b9915da44985078.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  },
+  "citation": "https://assets.theregister.com/2026/11/05/20265/"
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>Google explains why its London backup generators failed</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7524761440277139456">original ↗</a><br>
+  published: 2026-11-07 · status: canonical · expanded from the original post
+</div>
+
+<figure class="lead">
+  <img src="/assets/writing/9b9915da44985078.jpg" alt="Google explains why its London backup generators failed" loading="lazy" decoding="async">
+</figure>
+
+<p>Redundant power feeds and backup generators should keep a data centre running through a power failure. Google’s London outage shows why that expectation needs more than an equipment inventory behind it.</p>
+
+<p>First, one feed was already under repair when the other failed. The relevant test wasn’t normal operation; it was recovery during maintenance. For platform teams, that’s the difference between testing database failover with every replica available and testing it while one is offline.</p>
+
+<figure class="inline-image">
+  <img src="/assets/writing/article-3777de2e4cf2.png" alt="Illustration from the original article" loading="lazy" decoding="async">
+</figure>
+
+<p>Second, a voltage-sensing flaw and controller misconfiguration prevented the generators from starting. Battery backups ran out before power could be restored. Backup capacity existed, but the activation path failed.</p>
+
+<p>The real shift is... from counting redundant components to validating the complete recovery sequence under degraded conditions. I’d want that evidence before treating a failover plan as production-ready.</p>
+
+<figure class="inline-image">
+  <img src="/assets/writing/article-68e7026ed21c.png" alt="Illustration from the original article" loading="lazy" decoding="async">
+</figure>
+
+<p>Source: https://assets.theregister.com/2026/11/05/20265/?utm_source=tldrit</p>
+
+<p class="source-link">Originally covered at <a href="https://assets.theregister.com/2026/11/05/20265/" rel="noopener">assets.theregister.com ↗</a></p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
