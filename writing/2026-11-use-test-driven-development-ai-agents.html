@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How to Use Test-Driven Development with AI Agents (Without Lowering Co — Denis Baciu</title>
+<meta name="description" content="AI agents can increase implementation speed while leaving teams with more correctness to verify. That is the tension: generating code faster does not ma…">
+<link rel="canonical" href="https://denisbaciu.com/writing/2026-11-use-test-driven-development-ai-agents.html">
+<meta property="og:title" content="How to Use Test-Driven Development with AI Agents (Without Lowering Co">
+<meta property="og:description" content="AI agents can increase implementation speed while leaving teams with more correctness to verify. That is the tension: generating code faster does not ma…">
+<meta property="og:url" content="https://denisbaciu.com/writing/2026-11-use-test-driven-development-ai-agents.html">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-11-08">
+<meta property="article:modified_time" content="2026-11-08">
+<meta property="og:image" content="https://denisbaciu.com/assets/writing/ff5bc7ae0cbf2ba1.webp">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "How to Use Test-Driven Development with AI Agents (Without Lowering Co",
+  "description": "AI agents can increase implementation speed while leaving teams with more correctness to verify. That is the tension: generating code faster does not ma…",
+  "datePublished": "2026-11-08",
+  "dateModified": "2026-11-08",
+  "url": "https://denisbaciu.com/writing/2026-11-use-test-driven-development-ai-agents.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://denisbaciu.com/writing/2026-11-use-test-driven-development-ai-agents.html"
+  },
+  "image": "https://denisbaciu.com/assets/writing/ff5bc7ae0cbf2ba1.webp",
+  "author": {
+    "@type": "Person",
+    "name": "Denis Baciu",
+    "url": "https://denisbaciu.com/"
+  },
+  "citation": "https://coding-is-like-cooking.info/2026/11/how-to-use-test-driven-development-with-ai-agents-without-lowering-code-quality/"
+}
+</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/">Denis Baciu</a>
+    <nav>
+      <a href="/">home</a>
+      <a href="/writing/" aria-current="page">writing</a>
+      <a href="/projects/">projects</a>
+      <a href="/now.html">now</a>
+      <a href="/about.html">about</a>
+    </nav>
+    <span class="top-meta">canonical archive · est. 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="article">
+
+<p class="eyebrow">Writing</p>
+
+<h1>How to Use Test-Driven Development with AI Agents (Without Lowering Co</h1>
+
+<div class="prov">
+  source: <strong>linkedin</strong> — <a href="https://www.linkedin.com/feed/update/urn:li:share:7525138965125840896">original ↗</a><br>
+  published: 2026-11-08 · status: canonical · expanded from the original post
+</div>
+
+<figure class="lead">
+  <img src="/assets/writing/ff5bc7ae0cbf2ba1.webp" alt="How to Use Test-Driven Development with AI Agents (Without Lowering Co" loading="lazy" decoding="async">
+</figure>
+
+<p>AI agents can increase implementation speed while leaving teams with more correctness to verify. That is the tension: generating code faster does not make agreement on expected behaviour any easier.</p>
+
+<p>I think about this like an API contract between two services. A provider returning HTTP 200 proves little if the consumer expected a different payload. Both sides need an agreed contract before successful execution means anything.</p>
+
+<p>Tests have the same limitation. If an agent interprets an ambiguous requirement and writes both the implementation and its tests, a green build can validate the interpretation rather than the requirement.</p>
+
+<figure class="inline-image">
+  <img src="/assets/writing/article-56d049c88c51.png" alt="Illustration from the original article" loading="lazy" decoding="async">
+</figure>
+
+<p>That is why the collaborative example mapping in EXACT interests me more than another TDD prompt. The workflow combines human modeling, natural-language test lists, and predictive TDD. Its reported experiments show improved correctness and code quality compared with unguided vibe coding or plain TDD prompts.</p>
+
+<p>For an enterprise team, I would evaluate it against escaped defects and review effort—not just how quickly the agent finishes.</p>
+
+<figure class="inline-image">
+  <img src="/assets/writing/article-64e8e6ab275a.png" alt="Illustration from the original article" loading="lazy" decoding="async">
+</figure>
+
+<p>Like agreeing an API contract before implementing either side, EXACT puts collaborative definition of behaviour into the development workflow. The reported results make that worth testing; they do not remove the need to validate it against your own codebase.
+https://coding-is-like-cooking.info/2026/11/how-to-use-test-driven-development-with-ai-agents-without-lowering-code-quality/?utm_source=tldrit</p>
+
+<p class="source-link">Originally covered at <a href="https://coding-is-like-cooking.info/2026/11/how-to-use-test-driven-development-with-ai-agents-without-lowering-code-quality/" rel="noopener">coding-is-like-cooking.info ↗</a></p>
+
+</article>
+
+</main>
+
+<footer>
+  <div class="wrap footer-in">
+    <span>© Denis Baciu</span>
+    <span><a href="/writing/">← back to the archive</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
